@@ -9,16 +9,18 @@ import HeaderBar from "../components/HeaderBar.jsx";
 
 const HERO_IMAGES = [
   "/assets/hero2.png",
+  "/assets/hero3.png",
   "/assets/hero1.png",
-  "/assets/hero3.png"
+  "/assets/hero2.png",
+  "/assets/hero3.png",
 ];
 
 export default function Home() {
   const [index, setIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [animKey, setAnimKey] = useState(0); // used to restart CSS animation if needed
-  const autoplayDelay = 3000; // ms - change this value to speed up/slow down
-  const transitionDuration = 900; // match CSS transition time (ms)
+  const autoplayDelay = 1500; // ms - change this value to speed up/slow down
+  const transitionDuration = 1000; // match CSS transition time (ms)
   const timerRef = useRef(null);
 
   // autoplay
@@ -86,8 +88,9 @@ export default function Home() {
 
       <div className="hero-slider-wrapper"
         style={{
-          transform: `translateX(-${index * 100}%)`,
-          transitionDuration: `${transitionDuration}ms ease-in-out`
+          transform: `translate3d(-${index * 100}%, 0, 0)`,
+          transition: `transform ${transitionDuration}ms ease-in-out`,
+          willChange: "transform",
         }}>
 
         {HERO_IMAGES.map((img, i) => {
