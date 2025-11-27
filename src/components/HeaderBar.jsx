@@ -1,7 +1,14 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function HeaderBar() {
+    const navigate = useNavigate();
+
+    const handleFindHotelClick = (e) => {
+        console.log('Find Your Hotel link clicked');
+        // Optional: Add any additional logic here before navigation
+        navigate('/hotels');
+    };
     return (
         <div className="header-bar">
             <div className="header-inner">
@@ -11,7 +18,7 @@ export default function HeaderBar() {
 
                 <nav className="main-nav" aria-label="Main navigation">
                     <ul>
-                        <li><Link to="/">Find Your Hotel ▾</Link></li>
+                        <li><Link to="/hotels" onClick={handleFindHotelClick}>Find Your Hotel ▾</Link></li>
                         <li><Link to="/hotels">Our Hotels</Link></li>
                         <li><Link to="/offers">Offers</Link></li>
                         <li><Link to="/weddings">Weddings</Link></li>

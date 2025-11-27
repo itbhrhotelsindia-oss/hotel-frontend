@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import HeaderBar from "../components/HeaderBar.jsx";
 
 /*
   Home.jsx - Sliding + Fading Hero with Zoom Parallax, Arrows, Dots
@@ -72,34 +73,7 @@ export default function Home() {
     );
   }
 
-  function HeaderBar() {
-    return (
-      <div className="header-bar" role="navigation">
-        <div className="header-inner">
-          <div className="brand-wrapper">
-            <img src="/assets/hotel-logo.png" alt="Hotel Logo" className="brand-logo" />
-          </div>
 
-          <nav className="main-nav" aria-label="Primary">
-            <ul>
-              <li><a href="#">Find Your Hotel ▾</a></li>
-              <li><a href="#">Our Hotels</a></li>
-              <li><a href="#">Offers</a></li>
-              <li><a href="#">Weddings</a></li>
-              <li><a href="#">Plan Your Events</a></li>
-              <li><a href="#">Dining</a></li>
-              <li><a href="#">Media & News</a></li>
-              <li><a href="#">Partner With Us</a></li>
-            </ul>
-          </nav>
-
-          <div className="header-cta">
-            <button className="book-now">BOOK NOW</button>
-          </div>
-        </div>
-      </div>
-    );
-  }
   function homeFunction() {
     return <section
       className="hero-slider"

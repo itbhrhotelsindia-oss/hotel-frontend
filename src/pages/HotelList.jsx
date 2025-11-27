@@ -1,28 +1,66 @@
 import React, { useState, useEffect } from "react";
 import HotelCard from "../components/HotelCard";
+import { fetchHotels } from "../utils/api";
 
-const SAMPLE = [
-    { id: "h1", name: "Pride Residency", city: "New Delhi", price: 4800, image: "/assets/hero2.png" },
-    { id: "h2", name: "Pride Royal Palace", city: "New Delhi", price: 4300, image: "/assets/hero2.png" },
-    { id: "h3", name: "Pride Residency 2", city: "New Delhi", price: 4300, image: "/assets/hero2.png" }
-];
-
-export default function HotelList() {   // <-- THIS FIXES YOUR ERROR
+export default function HotelList() {
+    console.log('HotelList component rendering...');
     const [hotels, setHotels] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    
+    console.log('Current state:', { loading, error, hotels });
 
     useEffect(() => {
-        setHotels(SAMPLE);
+        const getHotels = async () => {
+            try {
+                console.log('Fetching hotels from API...');
+                const data = await fetchHotels();
+                console.log('API Response:', data);
+                setHotels(data);
+                setError(null);
+            } catch (err) {
+                console.error("Failed to fetch hotels:", err);
+                console.error("Error details:", err.response?.data || err.message);
+                setError("Failed to load hotels. Please try again later.");
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        getHotels();
     }, []);
+
+    if (loading) {
+        return (
+            <div className="container">
+                <h1>Hotels</h1>
+                <p>Loading hotels...</p>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="container">
+                <h1>Hotels</h1>
+                <div className="alert alert-danger">{error}</div>
+            </div>
+        );
+    }
 
     return (
         <div className="container">
             <h1>Hotels</h1>
-
-            <div style={{ display: "flex", flexWrap: "wrap" }}>
-                {hotels.map((h) => (
-                    <HotelCard key={h.id} hotel={h} />
-                ))}
-            </div>
+            
+            {hotels.length === 0 ? (
+                <p>No hotels found.</p>
+            ) : (
+                <div style={{ display: "flex", flexWrap: "wrap" }}>
+                    {hotels.map((h) => (
+                        <HotelCard key={h.id} hotel={h} />
+                    ))}
+                </div>
+            )}
         </div>
     );
 }
