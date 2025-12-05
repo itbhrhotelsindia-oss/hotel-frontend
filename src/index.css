@@ -124,60 +124,291 @@ button {
    HEADER NAVIGATION
    - logo + nav left, action (book) right
    =========================================================== */
+/* Header default state (top of page) */
 .header-bar {
+    position: fixed;
     width: 100%;
-    background: #ffffff;
-    border-bottom: 1px solid #eee;
-    position: sticky;
-    top: 0;
-    z-index: 55;
+    top: 40px;
+    /* below topbar */
+    z-index: 9999;
+    transition: background-color 0.4s ease, box-shadow 0.4s ease, top 0.3s ease;
 }
+
+/* Transparent header merging with hero image */
+.header-transparent {
+    background: transparent;
+    box-shadow: none;
+}
+
+/* Solid header when scrolled */
+.header-solid {
+    background: #ffffff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+    top: 0;
+}
+
+/* Solid header text styles */
+.header-solid .main-nav a,
+.header-solid .main-nav .nav-link {
+    color: #ab7836;
+    /* darker text */
+    font-size: 18px;
+    /* slightly smaller */
+    font-weight: 500;
+}
+
+.header-solid .main-nav a:hover,
+.header-solid .main-nav .nav-link:hover {
+    color: var(--brand-dark);
+}
+
+.header-solid .nav-item.has-dropdown>.nav-link {
+    color: #ab7836;
+    font-weight: 600;
+}
+
+/* Transparent header text styles (at top) */
+.header-transparent .main-nav a,
+.header-transparent .main-nav .nav-link {
+    color: #ffffff;
+    /* white text */
+    font-size: 22px;
+    /* larger */
+    font-weight: 500;
+}
+
+.header-transparent .main-nav a:hover,
+.header-transparent .main-nav .nav-link:hover {
+    color: var(--brand-gold);
+}
+
+.header-transparent .nav-item.has-dropdown>.nav-link {
+    color: #ffffff;
+    font-weight: 600;
+}
+
+/* Optional: adjust brand logo visibility */
+.header-solid .brand-logo {
+    opacity: 1;
+}
+
+.header-transparent .brand-logo {
+    opacity: 0.95;
+}
+
 
 .header-inner {
-    max-width: var(--max-width);
+    max-width: 1400px;
+    /* more room so text doesn't wrap */
     margin: 0 auto;
-    padding: 12px 20px;
+    padding: 14px 32px;
     display: flex;
     align-items: center;
-    /* shift start to left so logo + nav sit left */
-    justify-content: flex-start;
-    gap: 28px;
 }
 
-/* Logo stays left; nav sits immediately after */
+/* Logo */
+.brand-wrapper {
+    flex-shrink: 0;
+    margin-right: 28px;
+    /* logo a little closer to left */
+}
+
 .brand-logo {
-    height: 60px;
+    height: 80px;
     object-fit: contain;
     display: block;
-    margin-right: 8px;
 }
 
-/* Main nav uses flex; we push actions to the far right with margin-left:auto on .header-actions */
+
+/* Main nav */
 .main-nav {
-    margin-left: 8px;
+    flex: 1;
 }
 
 .main-nav ul {
     list-style: none;
     display: flex;
-    gap: 22px;
     align-items: center;
+    justify-content: flex-start;
+    /* align menu from left of logo area */
+    gap: 24px;
+    /* smaller gap so all fit in one row */
     margin: 0;
     padding: 0;
 }
 
-.main-nav a {
-    color: #111;
-    font-size: 15px;
+/* Single-line nav links */
+.main-nav a,
+.main-nav .nav-link {
+    font-size: 20px;
+    font-weight: 500;
+    color: #ffffff;
     text-decoration: none;
+    padding: 6px 2px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    white-space: nowrap;
+    /* â¬…ï¸ keeps "Find Your Hotel â–¾" on one line */
     transition: color 0.18s ease, transform 0.12s ease;
-    padding: 6px 4px;
+}
+
+/* Make "Find Your Hotel" a bit highlighted */
+.nav-item.has-dropdown>.nav-link {
+    color: var(--brand-dark);
+    font-weight: 600;
 }
 
 .main-nav a:hover,
-.main-nav a:focus-visible {
+.main-nav a:focus-visible,
+.main-nav .nav-link:hover,
+.main-nav .nav-link:focus-visible {
     color: var(--brand-dark);
     transform: translateY(-2px);
+}
+
+/* Dropdown wrapper */
+.nav-item.has-dropdown {
+    position: relative;
+}
+
+/* Dropdown panel for Find Your Hotel */
+.hotel-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin-top: 10px;
+    min-width: 260px;
+    background: #101b2f;
+    border-radius: 12px;
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.16);
+    padding: 14px 16px 16px;
+    z-index: 200;
+    pointer-events: auto;
+}
+
+.hotel-dropdown-header {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: #cca15f;
+    margin-bottom: 8px;
+}
+
+.hotel-dropdown-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 12px;
+}
+
+.hotel-dropdown-list a {
+    font-size: 14px;
+    color: #cca15f;
+    text-decoration: none;
+    padding: 4px 0;
+}
+
+.hotel-dropdown-list a:hover {
+    color: var(--brand-gold-dark);
+}
+
+.hotel-dropdown-all {
+    width: 100%;
+    padding: 8px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--brand-gold);
+    background: #fae7bd;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    text-align: center;
+}
+
+.hotel-dropdown-all:hover {
+    background: var(--brand-gold);
+    color: #cca15f;
+}
+
+/* Right BOOK NOW */
+.header-cta {
+    margin-left: 32px;
+    display: flex;
+    align-items: center;
+}
+
+.book-now,
+.btn-primary {
+    background: linear-gradient(135deg, #cfa349, #a6781f);
+    color: #fff;
+    border: none;
+    padding: 10px 26px;
+    border-radius: 999px;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.book-now:hover,
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
+}
+
+/* Hamburger button */
+.hamburger-btn {
+    font-size: 22px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #6A2C2C;
+    /* premium brown color */
+    margin-right: 10px;
+    /* spacing between hamburger and BOOK NOW */
+}
+
+.hamburger-btn:hover {
+    opacity: 0.7;
+}
+
+/* Dropdown panel */
+.hamburger-dropdown {
+    position: absolute;
+    top: 115px;
+    right: 60px;
+    width: 340px;
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 25px 0;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
+    z-index: 500;
+    text-align: center;
+}
+
+.hamburger-dropdown a {
+    display: block;
+    padding: 18px 0;
+    font-size: 22px;
+    color: #333;
+    text-decoration: none;
+    transition: 0.2s;
+}
+
+.hamburger-dropdown a:hover {
+    color: #b47a24;
+    transform: translateY(-3px);
+}
+
+/* Optional: hide any stray hamburger icon on desktop */
+.menu-toggle,
+.hamburger {
+    display: none;
 }
 
 /* Header actions are pushed to the right by margin-left:auto */
@@ -218,6 +449,7 @@ button {
     min-height: 500px;
     overflow: hidden;
     background: #000;
+    z-index: 1;
 }
 
 /* Gradient Overlay for both hero types */

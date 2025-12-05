@@ -30,6 +30,7 @@ export default function Home() {
   const [transitionMs, setTransitionMs] = useState(400);
   const [isPaused, setIsPaused] = useState(false);
   const [chatOpen, setChatOpen] = useState(true);
+  const [dropdownOpen, setDropdownOpen] = useState(false); // NEW: track dropdown state
 
   // refs
   const wrapperRef = useRef(null);
@@ -76,12 +77,23 @@ export default function Home() {
       timerRef.current = setTimeout(() => {
         setIndex((i) => i + 1);
         schedule();
-      }, 1500);
+      }, 8000);
     }
     schedule();
     return () => clearTimeout(timerRef.current);
   }, [isPaused]);
 
+  const [scrolled, setScrolled] = useState(false);
+
+useEffect(() => {
+  function handleScroll() {
+    const isTop = window.scrollY < 50;
+    setScrolled(!isTop);
+  }
+  window.addEventListener("scroll", handleScroll);
+  return () => window.removeEventListener("scroll", handleScroll);
+}, []);
+  
   // pause when page hidden or window blur
   useEffect(() => {
     function onVisibilityChange() {
@@ -207,8 +219,8 @@ export default function Home() {
         <ExitOfferModal open={offerOpen} onClose={() => setOfferOpen(false)} />
       )} */}
       <TopBar />
-      <SafeHeaderBar />
-      {mainSection()}
+      <SafeHeaderBar scrolled={scrolled} dropdownOpen={dropdownOpen} setDropdownOpen={setDropdownOpen} />
+      {mainSection(dropdownOpen)}
       {brandBannerAndChatSection()}
       {ourBrandSection()}
       {planYourEventsSection()}
@@ -382,10 +394,13 @@ export default function Home() {
     </section>;
   }
 
-  function mainSection() {
+  function mainSection(isDropdownOpen = false) {
     return <section
       className="hero-slider"
-      style={{ height: "calc(100vh - 120px)" }}
+      style={{ 
+        height: "calc(100vh - 120px)",
+       pointerEvents: isDropdownOpen ? "none" : "auto" // disable slider if dropdown open
+      }}
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
       aria-label="Hero slideshow"
@@ -501,8 +516,8 @@ export default function Home() {
     if (!HeaderBar) {
       return fallbackHeader();
     }
-    try {
-      return <HeaderBar />;
+        try {
+          return <HeaderBar scrolled={scrolled} dropdownOpen={dropdownOpen} setDropdownOpen={setDropdownOpen} />;
     } catch (e) {
       console.warn("HeaderBar render failed, using fallback header", e);
       return fallbackHeader();
