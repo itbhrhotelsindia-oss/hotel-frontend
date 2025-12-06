@@ -21,8 +21,9 @@ export default function HeaderBar({ scrolled, dropdownOpen, setDropdownOpen }) {
 
   return (
     <div className={`header-bar ${scrolled ? "header-solid" : "header-transparent"}`}>
+       {topBar()}
       <div className="header-inner container">
-        
+       
         {/* Logo */}
         <div className="brand-wrapper">
           <img src="/assets/hotel-logo.jpeg" alt="Hotel Logo" className="brand-logo" />
@@ -55,8 +56,8 @@ export default function HeaderBar({ scrolled, dropdownOpen, setDropdownOpen }) {
               )}
             </li>
 
-            <li><Link className="nav-link" to="/hotels">Our Hotels</Link></li>
-            <li><Link className="nav-link" to="/offers">Offers</Link></li>
+            <button className="nav-link" onClick={() => navigate("/our-hotels")}>Our Hotels </button>
+            <li><Link className="nav-link" >Offers</Link></li>
             <li><Link className="nav-link" to="/weddings">Weddings</Link></li>
             <li><Link className="nav-link" to="/events">Plan Your Events</Link></li>
             <li><Link className="nav-link" to="/dining">Dining</Link></li>
@@ -91,4 +92,20 @@ export default function HeaderBar({ scrolled, dropdownOpen, setDropdownOpen }) {
       )}
     </div>
   );
+
+  function topBar() {
+    return <div className="header-top">
+      <div className="topbar-premium" role="banner" aria-label="Top contact bar">
+        <div className="topbar-inner container">
+          <div className="topbar-left">
+            <span className="topbar-item">✉️ info@bhrhotelsindia.com</span>
+            <span className="topbar-item">📞 Toll Free: +91 921128334</span>
+          </div>
+          <div className="topbar-right">
+            <span className="topbar-tag">Luxury Hospitality · Since 2010</span>
+          </div>
+        </div>
+      </div>
+    </div>;
+  }
 }

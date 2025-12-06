@@ -38,7 +38,11 @@ export default function Home() {
   const transitionFallbackRef = useRef(null);
   const mountedRef = useRef(true);
   const hiddenRef = useRef(false);
-
+  
+  // math for transforms
+  const slideWidthPercent = 100 / total;
+  const translatePercent = index * slideWidthPercent;
+  
   // tiny inline SVG placeholder (dark neutral) — used when image fails
   const PLACEHOLDER_SVG =
     'data:image/svg+xml;utf8,' +
@@ -197,10 +201,6 @@ useEffect(() => {
     setIndex(i + 1);
   }
 
-  // math for transforms
-  const slideWidthPercent = 100 / total;
-  const translatePercent = index * slideWidthPercent;
-
   // image onError for <img>
   function handleImgError(el, src) {
     if (!el) return;
@@ -218,7 +218,7 @@ useEffect(() => {
       {/* {offerOpen && (
         <ExitOfferModal open={offerOpen} onClose={() => setOfferOpen(false)} />
       )} */}
-      <TopBar />
+      
       <SafeHeaderBar scrolled={scrolled} dropdownOpen={dropdownOpen} setDropdownOpen={setDropdownOpen} />
       {mainSection(dropdownOpen)}
       {brandBannerAndChatSection()}
@@ -494,22 +494,6 @@ useEffect(() => {
     </section>;
   }
 
-  // Top bar (premium)
-  function TopBar() {
-    return (
-      <div className="topbar-premium" role="banner" aria-label="Top contact bar">
-        <div className="topbar-inner container">
-          <div className="topbar-left">
-            <span className="topbar-item">✉️ info@bhrhotelsindia.com</span>
-            <span className="topbar-item">📞 Toll Free: +91 921128334</span>
-          </div>
-          <div className="topbar-right">
-            <span className="topbar-tag">Luxury Hospitality · Since 2010</span>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   // Safe header wrapper (falls back if HeaderBar import or render fails)
   function SafeHeaderBar() {

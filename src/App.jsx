@@ -2,6 +2,7 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import HotelList from "./pages/HotelList";
+import OurHotels from "./pages/OurHotels";
 // ... other pages
 
 export default function App() {
@@ -10,6 +11,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/hotels" element={<HotelList />} />
+        <Route path="/our-hotels" element={<OurHotels />} />
         {/* ... */}
       </Routes>
     </>
