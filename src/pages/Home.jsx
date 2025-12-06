@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import HeaderBar from "../components/HeaderBar.jsx";
 import ExitOfferModal from "../components/ExitOfferModal.jsx";
+import Footer from "../components/Footer.jsx";
 
 /*
   Home.jsx - robust hero slider using <img> elements + fallback SVG
@@ -225,6 +226,7 @@ useEffect(() => {
       {ourBrandSection()}
       {planYourEventsSection()}
       {aboutUsSection()}
+      <Footer />
     </div>
   );
 
