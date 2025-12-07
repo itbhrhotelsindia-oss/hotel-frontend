@@ -5,58 +5,62 @@ import {
   FaInstagram,
   FaLinkedinIn,
   FaYoutube,
-  FaUser
+  FaUser,
+  FaEnvelope,
+  FaPhoneAlt,
 } from "react-icons/fa";
 
 export default function Footer() {
   const cities = [
     "Ahmedabad","Alkapuri (Vadodara)","Bangalore","Becharaji","Bharuch","Bhopal",
     "Chennai","Chhatrapati Sambhajinagar","Daman","Dehradun","Deoghar","Digha",
+    "Dwarka","Goa","Haldwani","Haridwar","Indore","Jaipur","Jodhpur","Becharaji","Bharuch","Bhopal",
+    "Chennai","Chhatrapati Sambhajinagar","Daman","Dehradun","Deoghar","Digha",
     "Dwarka","Goa","Haldwani","Haridwar","Indore","Jaipur","Jodhpur"
   ];
 
   return (
     <footer className="footer-wrapper">
-      <div className="footer-top container" style={{ display: "flex", alignItems: "center", gap: "2rem", paddingBottom: "4rem", borderBottom: "0px solid #ccc" }}>
-         <div className="footer-middle">
-          <h4 className="footer-heading">Get In Touch</h4>
-          <div className="footer-social-large">
+      <div className="footer-top" style={{ borderBottom: "0px" }}>
+
+        <div className="footer-left">
+          <img src="/assets/hotel-logo.jpeg" alt="Brand Logo" className="footer-logo" />
+          <div className="footer-address">
+            <h4>BHR Hotels India LLP</h4>
+            <p>
+              Head Office : B-128, C-49, First Floor, Sector-2, Noida, Gautam Buddha Nagar - 201301, India
+            </p>
+            <p>EMAIL: info@bhrhotelsindia.com</p>
+          </div>
+        </div>
+
+        <div className="footer-center">
+        <h4 className="footer-heading">Our Social Presence</h4>
+        <div className="footer-social-large">
             <FaFacebookF />
             <FaLinkedinIn />
             <FaInstagram />
             <FaYoutube />
             <FaUser />
-          </div>
         </div>
-        
-        <div className="footer-right">
-          <h4 className="footer-heading">Subscribe Us</h4>
-          <form className="footer-subscribe">
-            <input type="email" placeholder="Please enter your email" />
-            <button type="submit">Subscribe</button>
-          </form>
-        </div>
+
+        <h4 className="footer-heading" style={{ marginTop: "20px" }}>
+          Subscribe Us
+        </h4>
+
+        <form className="footer-subscribe">
+          <input type="email" placeholder="Please enter your email" />
+          <button type="submit">Subscribe</button>
+        </form>
+    </div>
+ 
       </div>
+      
 
-      <div className="footer-top container" style={{ display: "flex", alignItems: "center", gap: "2rem", paddingBottom: "4rem", borderBottom: "0px solid #ccc" }}>
-        <div className="footer-left">
-          <img src="/assets/hotel-logo.jpeg" alt="Brand Logo" className="footer-logo" />
-          <div className="footer-address">
-            <h4>PRIDE HOTELS LIMITED</h4>
-            <p>
-              THE RUBY, 5TH FLOOR, OFFICE NO.5 SC, SOUTH WING ON LEVEL 8TH,
-              SENAPATI BAPAT MARG, MUMBAI – 400 028
-            </p>
-            <p>EMAIL: centralreservations@pridehotel.com</p>
-          </div>
-
-          <div className="footer-socials">
-            <FaFacebookF />
-            <FaInstagram />
-            <FaLinkedinIn />
-            <FaYoutube />
-          </div>
-        </div>
+      <div className="footer-inner" style={{
+        borderBottom: "2px solid #ccc",
+      }}>
+        
         {/* --- CITY LIST --- */}
         <div className="footer-cities container">
           {cities.map((city, index) => (
@@ -66,7 +70,10 @@ export default function Footer() {
         ))}
         </div>
          {/* --- MENU LINKS --- */}
-        <div className="footer-links container" style={{ display: "flex",paddingBottom: "1rem", borderBottom: "0px solid #ccc", flexWrap: "wrap" }}>
+       
+      </div>
+
+       <div className="footer-links container" style={{paddingBottom: "3rem", paddingTop: "3rem ", borderBottom: "0px" }}>
           <a href="/">Home</a>
           <a href="/hotels">Our Hotels</a>
           <a href="/about">About Us</a>
@@ -82,13 +89,13 @@ export default function Footer() {
           <a href="/investors">Investor Relations</a>
           <a href="/booking">Manage Booking</a>
         </div>
-      </div>
 
       {/* --- COOKIE BAR --- */}
       <div className="cookie-bar">
         This website uses cookies to ensure you get the best experience on our website.
         <button>Accept</button>
       </div>
+
     </footer>
   );
 }

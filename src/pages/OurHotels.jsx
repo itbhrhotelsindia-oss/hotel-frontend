@@ -1,5 +1,6 @@
 import React, { useMemo, useState, useEffect } from "react";
 import HeaderBar from "../components/HeaderBar.jsx";
+import Footer from "../components/Footer.jsx";
 
 const HOTELS = [
   { id: 1, city: "Srinagar", name: "BHR Srinagar", state: "J&K", region: "North", x: 23, y: 12 },
@@ -175,6 +176,8 @@ export default function OurHotels() {
           </div>
         </aside>
       </section>
+
+      <Footer />
     </main>
   );
 }

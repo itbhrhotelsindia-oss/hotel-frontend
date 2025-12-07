@@ -61,11 +61,11 @@ export default function HeaderBar({ scrolled, dropdownOpen, setDropdownOpen, bgC
 
             <button className="nav-link" onClick={() => navigate("/our-hotels")}>Our Hotels </button>
             <button className="nav-link" onClick={() => navigate("/offers")}>Offers</button>
-            <li><Link className="nav-link" to="/weddings">Weddings</Link></li>
-            <li><Link className="nav-link" to="/events">Plan Your Events</Link></li>
-            <li><Link className="nav-link" to="/dining">Dining</Link></li>
-            <li><Link className="nav-link" to="/news">Media & News</Link></li>
-            <li><Link className="nav-link" to="/partners">Partner With Us</Link></li>
+            <button className="nav-link" onClick={() => navigate("/weddings")}>Weddings</button>
+            <button className="nav-link" onClick={() => navigate("/events")}>Plan Your Events</button>
+            <button className="nav-link" onClick={() => navigate("/dining")}>Dining</button>
+            <button className="nav-link" onClick={() => navigate("/news")}>Media & News</button>
+            <button className="nav-link" onClick={() => navigate("/partners")}>Partner With Us</button>
           </ul>
         </nav>
 

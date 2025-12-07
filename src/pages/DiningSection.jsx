@@ -3,7 +3,7 @@ import HeaderBar from "../components/HeaderBar.jsx";
 import "./OffersSection.css";
 import Footer from "../components/Footer.jsx";
 
-export default function OffersSection() {
+export default function DiningSection() {
   const [scrolled, setScrolled] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -65,35 +65,7 @@ export default function OffersSection() {
         <h1 className="offers-heading">--------     EXCLUSIVE OFFERS     ---------</h1>
 
       <section className="offers-section">
-        <div className="offers-grid">
-          {offers.map((offer) => (
-            <div key={offer.id} className="offer-card">
-              
-              {/* IMAGE */}
-              <img src={offer.img} alt={offer.title} className="offer-img" />
-
-              {/* CONTENT */}
-              <div className="offer-content">
-                <h3 className="offer-title">{offer.title}</h3>
-
-                <p className="offer-desc">{offer.desc}</p>
-
-                <p className="offer-validity">
-                  Validity: <strong>{offer.validity}</strong>
-                </p>
-
-                <div className="offer-actions">
-                  <button className="offer-btn">{offer.loginBtn}</button>
-
-                  <button className="offer-more">
-                    KNOW MORE <span>›</span>
-                  </button>
-                </div>
-              </div>
-
-            </div>
-          ))}
-        </div>
+        
       </section>
       
             <Footer />

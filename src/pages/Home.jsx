@@ -225,7 +225,6 @@ useEffect(() => {
       {brandBannerAndChatSection()}
       {ourBrandSection()}
       {planYourEventsSection()}
-      {aboutUsSection()}
       <Footer />
     </div>
   );
