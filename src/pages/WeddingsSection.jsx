@@ -56,8 +56,11 @@ const items = [
 
       {/* Spacer so content does not hide behind sticky header */}
       <div style={{ height: "140px" }}></div>
-      
-      <h1 className="section-heading">--------     Make your Wedding Special With Us     ---------</h1>
+      <h1 className="section-heading">
+        <span className="line" style={{ display: "inline-block", width: "100px", height: "3px", backgroundColor: "#cfa349", marginRight: "10px", marginBottom: "10px" }} />
+        Make your Wedding Special With Us
+       <span className="line" style={{ display: "inline-block", width: "100px", height: "3px", backgroundColor: "#cfa349", marginLeft: "10px", marginBottom: "10px" }} />
+  </h1>
       
       <section className="video-section">
         <video width="100%" height="auto" controls>

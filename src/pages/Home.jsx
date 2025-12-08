@@ -2,6 +2,11 @@ import React, { useEffect, useRef, useState } from "react";
 import HeaderBar from "../components/HeaderBar.jsx";
 import Footer from "../components/Footer.jsx";
 
+import {
+  FaEnvelope,
+  FaPhoneAlt
+} from "react-icons/fa";
+
 /*
   HOME.JSX - OPTION A (Backend Driven + Same Layout)
   --------------------------------------------------
@@ -112,6 +117,23 @@ export default function Home() {
   const [home, setHome] = useState(FALLBACK);
   const [loading, setLoading] = useState(true);
 
+  const cards = [
+    {
+      id: 1,
+      title: "MEETINGS & CONFERENCES",
+      img: "/assets/g1.png", // change to your image path
+    },
+    {
+      id: 2,
+      title: "EVENTS",
+      img: "/assets/g2.png", // change to your image path
+    },
+    {
+      id: 3,
+      title: "TIMELESS WEDDINGS",
+      img: "/assets/g3.png", // change to your image path
+    },
+  ];
   // --------------------------
   // FETCH BACKEND DATA
   // --------------------------
@@ -219,7 +241,8 @@ export default function Home() {
 
       {heroSection()}
       {brandBanner()}
-      {brandsSection()}
+      {/* {brandsSection()} */}
+    {ourBrands()}
       {eventsSection()}
       {/* {aboutSection()} */}
 
@@ -295,22 +318,64 @@ export default function Home() {
           <p className="brand-banner-sub">{banner.subtitle}</p>
 
           <div className="brand-banner-contacts">
-            {banner.contacts.map((c, i) => (
-              <div
-                key={i}
+           <div
                 className="bb-contact"
                 onClick={() =>
                   window.location.href =
-                    c.type === "phone" ? `tel:${c.value}` : `mailto:${c.value}`
+                    `tel:${home.contactSection.reservationPhone}`
                 }
               >
-                {c.type === "phone" ? "📞" : "✉️"} {c.displayValue}
+                {  <FaPhoneAlt /> } {home.contactSection.reservationPhone}
+            </div>
+            <div
+                className="bb-contact"
+                onClick={() =>
+                  window.location.href =
+                    `mailto:${home.contactSection.email}`
+                }
+              >
+                { <FaEnvelope /> } {home.contactSection.email}
               </div>
-            ))}
           </div>
         </div>
       </section>
     );
+  }
+
+
+  function ourBrands() {
+
+  const section = home.brandSection;
+  const title = section.title || "OUR BRANDS";
+  const brands = section.blocks || [];
+    return <section className="events-conf-section" style={{ background: "#e9e6e6ff" }}>
+      {/* HEADER ROW */}
+      <div className="events-conf-header">
+        <div className="events-conf-title-wrap">
+           <span className="line" />
+          <h2 className="events-conf-title">
+            {title}
+          </h2>
+        </div>
+
+        <p className="events-conf-sub">
+          From a luxury urban sanctum to the halls of royalty, an idyllic resort to a jungle clearing, our 5-star hotels and luxury resorts bring your imagination to life.
+        </p>
+      </div>
+
+      {/* CARDS */}
+      <div className="events-conf-cards">
+        {brands.map((brand) => (
+          // <div key={brand.id} className="events-conf-card">
+          <div className="events-conf-card">
+            <img src={brand.imageUrl} alt={brand.title} className="events-conf-image" />
+            <div className="events-conf-caption">
+              <span>{brand.text}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>;
   }
 
   // --------------------------
@@ -383,8 +448,20 @@ export default function Home() {
     const right = events[(idx + 1) % events.length];
 
     return (
-      <section className="events-section">
-        <h2 className="brands-title">{title}</h2>
+      <section className="events-conf-section" >
+          <div className="events-conf-header">
+          <div className="events-conf-title-wrap">
+           <span className="line" />
+          <h2 className="events-conf-title">
+            {title}
+          </h2>
+        </div>
+
+        <p className="events-conf-sub">
+          From a luxury urban sanctum to the halls of royalty, an idyllic resort to a jungle clearing, our 5-star hotels and luxury resorts bring your imagination to life.
+        </p>
+      </div>
+
 
         <div className="left-card">
           {/* Left */}

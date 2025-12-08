@@ -66,9 +66,13 @@ export default function OurHotelsSection() {
 
       {/* Spacer so content does not hide behind sticky header */}
       <div style={{ height: "140px" }}></div>
+      <h1 className="section-heading">
+        <span className="line" style={{ display: "inline-block", width: "100px", height: "3px", backgroundColor: "#cfa349", marginRight: "10px", marginBottom: "10px" }} />
+        OUR DESTINATIONS
+        <span className="line" style={{ display: "inline-block", width: "100px", height: "3px", backgroundColor: "#cfa349", marginLeft: "10px", marginBottom: "10px" }} />
+      </h1>
       
-        <h1 className="section-heading">--------     OUR DESTINATIONS     ---------</h1>
-<section className="our-hotels-descriptions">
+      <div className="our-hotels-descriptions">
   <p>
     From spiritual vows in temple towns to beachside pheras, royal baraats in heritage palaces
     to hilltop mandaps — Pride Hotels, India’s fastest-growing hospitality chain, offers the
@@ -76,7 +80,7 @@ export default function OurHotelsSection() {
     over 200 couples choose to curate their Weddings with Pride. Because when the moment is once
     in a lifetime, your love deserves a celebration steeped in culture, care, and Indian warmth.
   </p>
-</section>
+</div>
       <div className="our-hotels-container">
         <img src={"/assets/g1.png"} className="offer-image" />
       </div>

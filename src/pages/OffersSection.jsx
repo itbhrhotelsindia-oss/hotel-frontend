@@ -79,7 +79,9 @@ export default function OffersSection() {
       <div style={{ height: "140px" }}></div>
 
       <h1 className="section-heading">
-        --------     EXCLUSIVE OFFERS     ---------
+         <span className="line" style={{ display: "inline-block", width: "100px", height: "3px", backgroundColor: "#cfa349", marginRight: "10px", marginBottom: "10px" }} />
+        EXCLUSIVE OFFERS
+        <span className="line" style={{ display: "inline-block", width: "100px", height: "3px", backgroundColor: "#cfa349", marginRight: "10px", marginBottom: "10px" }} />
       </h1>
 
       <section className="offers-section">
