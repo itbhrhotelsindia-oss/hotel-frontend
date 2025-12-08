@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-export default function HeaderBar({ scrolled, dropdownOpen, setDropdownOpen, bgColor = "#ffffff" }) {
+export default function HeaderBar({ scrolled, dropdownOpen, setDropdownOpen, bgColor = "#ffffff", contactInfo = {email: "", reservationPhone: "", hotelPhone: ""} }) {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false); // ← NEW for Hamburger menu
   const dropdownRef = useRef(null);
@@ -101,11 +101,11 @@ export default function HeaderBar({ scrolled, dropdownOpen, setDropdownOpen, bgC
       <div className="topbar-premium" role="banner" aria-label="Top contact bar">
         <div className="topbar-inner container">
           <div className="topbar-left">
-            <span className="topbar-item">✉️ info@bhrhotelsindia.com</span>
-            <span className="topbar-item">📞 Toll Free: +91 921128334</span>
+            <span className="topbar-item">✉️ {contactInfo.email}</span>
+            <span className="topbar-item">📞 For Reservation’s: {contactInfo.reservationPhone}</span>
           </div>
           <div className="topbar-right">
-            <span className="topbar-tag">Luxury Hospitality · Since 2010</span>
+            <span className="topbar-tag">Luxury Hospitality · Since {contactInfo.companySince}</span>
           </div>
         </div>
       </div>

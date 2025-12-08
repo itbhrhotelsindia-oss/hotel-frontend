@@ -9,10 +9,10 @@
 .footer-top {
     width: 100%;
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     /* LEFT | MIDDLE | RIGHT */
     align-items: start;
-    padding: 40px 20px 40px 300px;
+    padding: 40px 100px 40px 250px;
     border-bottom: 1px solid #444;
     gap: 40px;
 }
@@ -59,11 +59,6 @@
   font-size: 40px;
 }
 
-.footer-right {
-    margin-top: 50px;
-  width: 60%;
-  text-align: center;
-}
 
 .footer-subscribe {
   margin-top: 10px;
@@ -237,8 +232,15 @@
 }
 
 .footer-center {
+  margin-top: 50px;
+  width: 70%;
     text-align: center;
     color: #fff;
+}
+
+.footer-right {
+  margin-top: 30px;
+  text-align: center;
 }
 
 .footer-contact {

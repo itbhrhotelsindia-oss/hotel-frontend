@@ -846,6 +846,7 @@ button {
 
 .brand-sub {
     margin-bottom: 22px;
+    width: 100px;
     opacity: 0.95;
     color: #f7f3f2;
     font-size: 16px;
@@ -1006,132 +1007,133 @@ button {
         display: none;
     }
 }
+
 /* DARK OVERLAY */
 .offer-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.65);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 5000;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.65);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 5000;
 }
 
 /* MAIN POPUP BOX */
 .offer-modal {
-  width: 880px;
-  background: #fff;
-  display: flex;
-  border: 4px solid #cfa349;
-  position: relative;
-  border-radius: 4px;
-  overflow: hidden;
+    width: 880px;
+    background: #fff;
+    display: flex;
+    border: 4px solid #cfa349;
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
 }
 
 /* CLOSE BUTTON */
 .offer-close {
-  position: absolute;
-  top: 12px;
-  right: 16px;
-  font-size: 20px;
-  background: transparent;
-  color: #444;
-  cursor: pointer;
-  border: none;
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    font-size: 20px;
+    background: transparent;
+    color: #444;
+    cursor: pointer;
+    border: none;
 }
 
 /* LEFT IMAGE PANEL */
 .offer-left {
-  width: 50%;
-  height: 100%;
+    width: 50%;
+    height: 100%;
 }
 
 .offer-left img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 /* RIGHT CONTENT PANEL */
 .offer-right {
-  width: 50%;
-  padding: 40px 32px;
-  text-align: center;
+    width: 50%;
+    padding: 40px 32px;
+    text-align: center;
 }
 
 .offer-heading-small {
-  letter-spacing: 2px;
-  font-size: 16px;
-  margin-bottom: 10px;
-  color: #333;
+    letter-spacing: 2px;
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #333;
 }
 
 .offer-heading-large {
-  font-family: "Georgia", serif;
-  font-size: 32px;
-  color: #cfa349;
-  margin-bottom: 10px;
-  line-height: 1.2;
+    font-family: "Georgia", serif;
+    font-size: 32px;
+    color: #cfa349;
+    margin-bottom: 10px;
+    line-height: 1.2;
 }
 
 .offer-divider {
-  width: 60px;
-  height: 2px;
-  background: #cfa349;
-  margin: 12px auto 28px;
+    width: 60px;
+    height: 2px;
+    background: #cfa349;
+    margin: 12px auto 28px;
 }
 
 /* BENEFITS GRID */
 .offer-benefits {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
 }
 
 .benefit {
-  width: 30%;
+    width: 30%;
 }
 
 .benefit-icon {
-  font-size: 28px;
-  color: #a6781f;
-  display: block;
-  margin-bottom: 8px;
+    font-size: 28px;
+    color: #a6781f;
+    display: block;
+    margin-bottom: 8px;
 }
 
 .benefit p {
-  font-size: 14px;
-  color: #555;
+    font-size: 14px;
+    color: #555;
 }
 
 /* CTA BAR */
 .offer-cta {
-  width: 100%;
-  padding: 14px 0;
-  background: #cfa349;
-  color: #fff;
-  font-weight: 600;
-  border: none;
-  cursor: pointer;
-  margin-top: 10px;
-  border-radius: 0;
+    width: 100%;
+    padding: 14px 0;
+    background: #cfa349;
+    color: #fff;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+    border-radius: 0;
 }
 
 .offer-cta:hover {
-  background: #a6781f;
+    background: #a6781f;
 }
 
 /* LOGIN LINK */
 .offer-login {
-  display: block;
-  margin-top: 18px;
-  color: #333;
-  font-size: 14px;
-  text-decoration: none;
+    display: block;
+    margin-top: 18px;
+    color: #333;
+    font-size: 14px;
+    text-decoration: none;
 }
 
 .offer-login:hover {
-  text-decoration: underline;
+    text-decoration: underline;
 }
 
 
@@ -1152,12 +1154,12 @@ button {
 
 /* Heading */
 .brands-title {
-    font-family: "Georgia", serif;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     color: var(--brand-dark);
     text-align: center;
     font-size: 36px;
     letter-spacing: 1px;
-    margin-bottom: 30px;
+    margin-bottom: 50px;
     font-weight: 700;
 }
 
@@ -1198,24 +1200,6 @@ button {
     padding: 12px 18px;
     display: flex;
     align-items: center;
-}
-
-/* Sub-row: smaller description + multiple brand logos */
-.brand-sub-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 32px;
-    align-items: center;
-    margin-top: 36px;
-    padding: 0 12px;
-}
-
-/* Sub-left paragraph */
-.brand-sub-desc {
-    color: #444;
-    font-size: 16px;
-    line-height: 1.9;
-    padding: 12px 18px;
 }
 
 /* Sub-right: small logos (centered, card style) */
@@ -1261,6 +1245,7 @@ button {
     height: 780px;
     overflow: hidden;
 }
+
 .center-card {
     position: relative;
     width: 54%;
@@ -1411,8 +1396,7 @@ button {
     }
 
     /* brand layout stacks on narrower screens */
-    .brand-row,
-    .brand-sub-row {
+    .brand-row{
         grid-template-columns: 1fr;
         text-align: center;
     }
@@ -1422,9 +1406,8 @@ button {
         margin: 0 auto;
     }
 
-    .brand-right,
-    .brand-sub-desc {
-        padding: 6px 8px;
+    .brand-right{
+        padding: 600px 80px;
     }
 
     .brand-logos {
@@ -1471,7 +1454,7 @@ button {
     }
 
     .brands-title {
-        font-size: 24px;
+        font-size: 28px;
     }
 
     .brand-large-logo {
@@ -1802,5 +1785,130 @@ input:focus {
 
     .our-hotels-page {
         padding: 24px 16px 60px;
+    }
+}
+
+.brand-sub-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+    margin-bottom: 60px;
+}
+
+.brand-sub-left,
+.brand-sub-right {
+    padding: 20px;
+    /* inner padding so text doesn't stick */
+}
+
+.brand-sub-desc {
+    line-height: 1.8;
+    font-size: 1.2rem;
+}
+
+.brand-img {
+    width: 110%;
+    max-width: 650px;
+    border-radius: 8px;
+}
+
+
+/* ===== OUR BRANDS – EXACT SIDE-BY-SIDE LAYOUT ===== */
+
+.brands-section {
+    width: 100%;
+    background: #fff;
+    padding: 50px 0 50px;
+}
+
+.brands-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 60px;
+}
+
+.brands-title {
+    font-family: "Georgia", serif;
+    color: #6A2C2C;
+    text-align: center;
+    font-size: 40px;
+    letter-spacing: 1px;
+    margin-bottom: 50px;
+    font-weight: 700;
+}
+
+/* One row = image + text with big breathing space */
+.brand-sub-row {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    align-items: center;
+    column-gap: 70px;
+    margin-bottom: 80px;
+}
+
+/* when image-left layout, we still keep same grid, just content order is handled in JSX */
+
+/* WRAPPERS */
+.brand-sub-image-wrap {
+    display: flex;
+    justify-content: center;
+}
+
+.brand-sub-text-wrap {
+    display: flex;
+    align-items: center;
+}
+
+/* IMAGE */
+.brand-sub-image {
+    min-width: 720px;
+    max-width: 720px;
+    height: auto;
+    object-fit: cover;
+    display: block;
+    border-radius: 0;
+}
+
+/* TEXT */
+.brand-sub-desc {
+    font-size: 18px;
+    line-height: 1.9;
+    color: #333;
+}
+
+/* a little extra padding on text so it never touches the image visually */
+.brand-sub-row.image-left .brand-sub-text-wrap {
+    padding-right: 40px;
+}
+
+.brand-sub-row.image-right .brand-sub-text-wrap {
+    padding-left: 40px;
+}
+
+/* Responsive tweaks */
+@media (max-width: 900px) {
+    .brands-inner {
+        padding: 0 20px;
+    }
+
+    .brand-sub-row {
+        grid-template-columns: 1fr;
+        row-gap: 24px;
+        margin-bottom: 50px;
+    }
+
+    .brand-sub-row.image-left .brand-sub-text-wrap,
+    .brand-sub-row.image-right .brand-sub-text-wrap {
+        padding: 0;
+    }
+
+    .brand-sub-image {
+        max-width: 100%;
+    }
+
+    .brand-sub-desc {
+        text-align: left;
+        font-size: 16px;
     }
 }

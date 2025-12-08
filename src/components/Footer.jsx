@@ -3,14 +3,14 @@ import "./Footer.css";
 import {
   FaFacebookF,
   FaInstagram,
-  FaLinkedinIn,
+  FaTwitter,
   FaYoutube,
   FaUser,
   FaEnvelope,
   FaPhoneAlt,
 } from "react-icons/fa";
-
-export default function Footer() {
+  
+export default function Footer({ contactInfo = {corporateAddress: "", email: "", reservationPhone: "", hotelPhone: "", socialLinks: []} }) {
   const cities = [
     "Ahmedabad","Alkapuri (Vadodara)","Bangalore","Becharaji","Bharuch","Bhopal",
     "Chennai","Chhatrapati Sambhajinagar","Daman","Dehradun","Deoghar","Digha",
@@ -19,30 +19,47 @@ export default function Footer() {
     "Dwarka","Goa","Haldwani","Haridwar","Indore","Jaipur","Jodhpur"
   ];
 
+  const handleSocialClick = (platform) => {
+    const socialLinks = {
+      facebook: contactInfo.socialLinks.facebook,
+      instagram: contactInfo.socialLinks.instagram,
+      youtube: contactInfo.socialLinks.youtube,
+      twitterX: contactInfo.socialLinks.twitterX
+    };
+    if (socialLinks[platform]) {
+      window.open(socialLinks[platform], "_blank");
+    }
+  };
+
   return (
     <footer className="footer-wrapper">
       <div className="footer-top" style={{ borderBottom: "0px" }}>
 
         <div className="footer-left">
           <img src="/assets/hotel-logo.jpeg" alt="Brand Logo" className="footer-logo" />
+        
           <div className="footer-address">
-            <h4>BHR Hotels India LLP</h4>
+            <h4>{contactInfo.companyName}</h4>
             <p>
-              Head Office : B-128, C-49, First Floor, Sector-2, Noida, Gautam Buddha Nagar - 201301, India
+              {contactInfo.corporateAddress}
             </p>
-            <p>EMAIL: info@bhrhotelsindia.com</p>
+            <p>EMAIL: {contactInfo.email}</p>
           </div>
         </div>
 
         <div className="footer-center">
-        <h4 className="footer-heading">Our Social Presence</h4>
+          <h4 className="footer-heading">Our Social Presence</h4>
         <div className="footer-social-large">
-            <FaFacebookF />
-            <FaLinkedinIn />
-            <FaInstagram />
-            <FaYoutube />
-            <FaUser />
+            <a onClick={() => handleSocialClick("facebook")} style={{cursor: "pointer"}}><FaFacebookF /></a>
+            <a onClick={() => handleSocialClick("instagram")} style={{cursor: "pointer"}}><FaInstagram /></a>
+            <a onClick={() => handleSocialClick("youtube")} style={{cursor: "pointer"}}><FaYoutube /></a>
+            <a onClick={() => handleSocialClick("twitterX")} style={{cursor: "pointer"}}><FaTwitter /></a>
         </div>
+ </div>
+         
+
+        <div className="footer-right">
+        
 
         <h4 className="footer-heading" style={{ marginTop: "20px" }}>
           Subscribe Us
@@ -52,7 +69,10 @@ export default function Footer() {
           <input type="email" placeholder="Please enter your email" />
           <button type="submit">Subscribe</button>
         </form>
-    </div>
+        
+        </div>
+        
+    
  
       </div>
       
