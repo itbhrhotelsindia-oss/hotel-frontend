@@ -1,6 +1,7 @@
 import React, { useMemo, useState, useEffect } from "react";
 import HeaderBar from "../components/HeaderBar.jsx";
 import Footer from "../components/Footer.jsx";
+import { useLocation } from "react-router-dom";
 
 const HOTELS = [
   { id: 1, city: "Srinagar", name: "BHR Srinagar", state: "J&K", region: "North", x: 23, y: 12 },
@@ -18,6 +19,10 @@ const HOTELS = [
 const REGIONS = ["All", "North", "West", "South", "East"];
 
 export default function OurHotels() {
+
+
+    const location = useLocation();
+    const contactInfo = location.state?.contactInfo || {};
   /* ------------------------------
      HEADER SCROLL EFFECT
   ------------------------------ */
@@ -62,6 +67,7 @@ export default function OurHotels() {
         dropdownOpen={dropdownOpen}
         setDropdownOpen={setDropdownOpen}
         bgColor="#e8e8e8"
+        contactInfo={contactInfo}
           />
 
           {/* Spacer so content does not hide behind sticky header */}
@@ -177,7 +183,7 @@ export default function OurHotels() {
         </aside>
       </section>
 
-      <Footer />
+      <Footer contactInfo={contactInfo} />
     </main>
   );
 }

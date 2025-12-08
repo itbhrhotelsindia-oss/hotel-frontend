@@ -2,10 +2,17 @@ import React, { useState, useEffect } from "react";
 import HeaderBar from "../components/HeaderBar.jsx";
 import "./OffersSection.css";
 import Footer from "../components/Footer.jsx";
+import { useLocation } from "react-router-dom";
 
 export default function OffersSection() {
   const [scrolled, setScrolled] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const [offers, setOffers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const location = useLocation();
+  const contactInfo = location.state?.contactInfo || {};
+  
 
   useEffect(() => {
     function handleScroll() {
@@ -15,40 +22,48 @@ export default function OffersSection() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const offers = [
-    {
-      id: 1,
-      title: "PERFECT STAYCATIONS – THIS JOYFUL SEASON",
-      desc: "This holiday season, enjoy the perfect staycation with exclusive savings crafted just for you.",
-      validity: "04 Dec 2025 – 11 Jan 2026",
-      img: "/assets/g1.png",
-      loginBtn: "LOGIN / JOIN"
-    },
-    {
-      id: 2,
-      title: "SUITE SURPRISES - MEMBER ONLY",
-      desc: "Indulge in a stay that goes beyond the ordinary and experience enhanced comfort, added space, thoughtful touches and unparalleled extravagance.",
-      validity: "Round the Year",
-      img: "/assets/g2.png",
-      loginBtn: "LOGIN / JOIN"
-    },
-    {
-      id: 1,
-      title: "PERFECT STAYCATIONS – THIS JOYFUL SEASON",
-      desc: "This holiday season, enjoy the perfect staycation with exclusive savings crafted just for you.",
-      validity: "04 Dec 2025 – 11 Jan 2026",
-      img: "/assets/g1.png",
-      loginBtn: "LOGIN / JOIN"
-    },
-    {
-      id: 2,
-      title: "SUITE SURPRISES - MEMBER ONLY",
-      desc: "Indulge in a stay that goes beyond the ordinary and experience enhanced comfort, added space, thoughtful touches and unparalleled extravagance.",
-      validity: "Round the Year",
-      img: "/assets/g2.png",
-      loginBtn: "LOGIN / JOIN"
+  /* ======================================================
+     FETCH OFFERS FROM BACKEND /api/offers
+  ====================================================== */
+  useEffect(() => {
+    async function loadOffers() {
+      try {
+        const res = await fetch("http://localhost:8080/api/offers");
+        if (!res.ok) throw new Error("Failed to fetch offers");
+
+        const data = await res.json();
+        setOffers(data);
+
+      } catch (err) {
+        console.error("Offers API Error → Using fallback", err);
+
+        // FALLBACK DATA IF API FAILS
+        setOffers([
+          {
+            id: 1,
+            title: "PERFECT STAYCATIONS – THIS JOYFUL SEASON",
+            desc: "This holiday season, enjoy the perfect staycation with exclusive savings crafted just for you.",
+            validity: "04 Dec 2025 – 11 Jan 2026",
+            img: "/assets/g1.png",
+            loginBtn: "LOGIN / JOIN"
+          },
+          {
+            id: 2,
+            title: "SUITE SURPRISES - MEMBER ONLY",
+            desc: "Indulge in a stay that goes beyond the ordinary...",
+            validity: "Round the Year",
+            img: "/assets/g2.png",
+            loginBtn: "LOGIN / JOIN"
+          }
+        ]);
+
+      } finally {
+        setLoading(false);
+      }
     }
-  ];
+
+    loadOffers();
+  }, []);
 
   return (
     <main className="offers-page">
@@ -57,46 +72,59 @@ export default function OffersSection() {
         dropdownOpen={dropdownOpen}
         setDropdownOpen={setDropdownOpen}
         bgColor="#e8e8e8"
+        contactInfo={contactInfo}
       />
 
       {/* Spacer so content does not hide behind sticky header */}
       <div style={{ height: "140px" }}></div>
-      
-        <h1 className="offers-heading">--------     EXCLUSIVE OFFERS     ---------</h1>
+
+      <h1 className="offers-heading">
+        --------     EXCLUSIVE OFFERS     ---------
+      </h1>
 
       <section className="offers-section">
-        <div className="offers-grid">
-          {offers.map((offer) => (
-            <div key={offer.id} className="offer-card">
-              
-              {/* IMAGE */}
-              <img src={offer.img} alt={offer.title} className="offer-img" />
+        {loading ? (
+          <p style={{ textAlign: "center", fontSize: "20px" }}>
+            Loading offers...
+          </p>
+        ) : (
+          <div className="offers-grid">
+            {offers.map((offer) => (
+              <div key={offer.id} className="offer-card">
 
-              {/* CONTENT */}
-              <div className="offer-content">
-                <h3 className="offer-title">{offer.title}</h3>
+                {/* IMAGE */}
+                <img
+                  src={offer.img}
+                  alt={offer.title}
+                  className="offer-img"
+                />
 
-                <p className="offer-desc">{offer.desc}</p>
+                {/* CONTENT */}
+                <div className="offer-content">
+                  <h3 className="offer-title">{offer.title}</h3>
 
-                <p className="offer-validity">
-                  Validity: <strong>{offer.validity}</strong>
-                </p>
+                  <p className="offer-desc">{offer.desc}</p>
 
-                <div className="offer-actions">
-                  <button className="offer-btn">{offer.loginBtn}</button>
+                  <p className="offer-validity">
+                    Validity: <strong>{offer.validity}</strong>
+                  </p>
 
-                  <button className="offer-more">
-                    KNOW MORE <span>›</span>
-                  </button>
+                  <div className="offer-actions">
+                    <button className="offer-btn">{offer.loginBtn}</button>
+
+                    <button className="offer-more">
+                      KNOW MORE <span>›</span>
+                    </button>
+                  </div>
                 </div>
-              </div>
 
-            </div>
-          ))}
-        </div>
+              </div>
+            ))}
+          </div>
+        )}
       </section>
-      
-            <Footer />
+
+      <Footer contactInfo={contactInfo} />
     </main>
   );
 }

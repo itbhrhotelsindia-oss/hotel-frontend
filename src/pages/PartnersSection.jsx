@@ -2,10 +2,14 @@ import React, { useState, useEffect } from "react";
 import HeaderBar from "../components/HeaderBar.jsx";
 import "./OffersSection.css";
 import Footer from "../components/Footer.jsx";
+import { useLocation } from "react-router-dom";
 
 export default function PartnersSection() {
   const [scrolled, setScrolled] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+
+    const location = useLocation();
+    const contactInfo = location.state?.contactInfo || {};
 
   useEffect(() => {
     function handleScroll() {
@@ -57,6 +61,7 @@ export default function PartnersSection() {
         dropdownOpen={dropdownOpen}
         setDropdownOpen={setDropdownOpen}
         bgColor="#e8e8e8"
+        contactInfo={contactInfo}
       />
 
       {/* Spacer so content does not hide behind sticky header */}
@@ -68,7 +73,7 @@ export default function PartnersSection() {
         
       </section>
       
-            <Footer />
+            <Footer contactInfo={contactInfo} />
     </main>
   );
 }

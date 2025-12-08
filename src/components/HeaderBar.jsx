@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-export default function HeaderBar({ scrolled, dropdownOpen, setDropdownOpen, bgColor = "#ffffff", contactInfo = {email: "", reservationPhone: "", hotelPhone: ""} }) {
+export default function HeaderBar({ scrolled, dropdownOpen, setDropdownOpen, bgColor = "#ffffff", contactInfo = {} }) {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false); // ← NEW for Hamburger menu
   const dropdownRef = useRef(null);
@@ -29,7 +29,13 @@ export default function HeaderBar({ scrolled, dropdownOpen, setDropdownOpen, bgC
        
         {/* Logo */}
         <div className="brand-wrapper">
-          <img src="/assets/hotel-logo.jpeg" alt="Hotel Logo" className="brand-logo" />
+          <img 
+            src="/assets/hotel-logo.jpeg" 
+            alt="Hotel Logo" 
+            className="brand-logo"
+            onClick={() => navigate("/")}
+            style={{ cursor: "pointer" }}
+          />
         </div>
 
         {/* MAIN NAVIGATION */}
@@ -59,13 +65,13 @@ export default function HeaderBar({ scrolled, dropdownOpen, setDropdownOpen, bgC
               )}
             </li>
 
-            <button className="nav-link" onClick={() => navigate("/our-hotels")}>Our Hotels </button>
-            <button className="nav-link" onClick={() => navigate("/offers")}>Offers</button>
-            <button className="nav-link" onClick={() => navigate("/weddings")}>Weddings</button>
-            <button className="nav-link" onClick={() => navigate("/events")}>Plan Your Events</button>
-            <button className="nav-link" onClick={() => navigate("/dining")}>Dining</button>
-            <button className="nav-link" onClick={() => navigate("/news")}>Media & News</button>
-            <button className="nav-link" onClick={() => navigate("/partners")}>Partner With Us</button>
+            <button className="nav-link" onClick={() => navigate("/our-hotels", { state: { contactInfo } })}>Our Hotels </button>
+            <button className="nav-link" onClick={() => navigate("/offers", { state: { contactInfo } })}>Offers</button>
+            <button className="nav-link" onClick={() => navigate("/weddings", { state: { contactInfo } })}>Weddings</button>
+            <button className="nav-link" onClick={() => navigate("/events", { state: { contactInfo } })}>Plan Your Events</button>
+            <button className="nav-link" onClick={() => navigate("/dining", { state: { contactInfo } })}>Dining</button>
+            <button className="nav-link" onClick={() => navigate("/news", { state: { contactInfo } })}>Media & News</button>
+            <button className="nav-link" onClick={() => navigate("/partners", { state: { contactInfo } })}>Partner With Us</button>
           </ul>
         </nav>
 

@@ -386,7 +386,7 @@ export default function Home() {
       <section className="events-section">
         <h2 className="brands-title">{title}</h2>
 
-        <div className="taj-carousel">
+        <div className="left-card">
           {/* Left */}
           <div className="side-card">
             <img src={left.imageUrl} className="side-img" />

@@ -1,0 +1,297 @@
+/* ================================
+   STATS BANNER (3 COLUMN BAR)
+================================ */
+.stats-banner {
+    max-width: 1400px;
+    margin: 40px auto;
+    /* center the banner */
+    background: #6A2C2C;
+    padding: 20px 0;
+    margin-top: 40px;
+}
+
+.stats-banner-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    text-align: center;
+    color: #fff;
+    gap: 20px;
+}
+
+.stat-item h2 {
+    font-size: 48px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.stat-item p {
+    font-size: 22px;
+    font-weight: 500;
+    margin: 0;
+}
+
+/* ================================
+   DESCRIPTION SECTION
+================================ */
+.wedding-description {
+    max-width: 1200px;
+    margin: 60px auto;
+    padding: 0 30px;
+}
+
+.wedding-description p {
+    font-size: 18px;
+    line-height: 1.9;
+    color: #333;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .stats-banner-inner {
+        grid-template-columns: 1fr;
+        row-gap: 30px;
+    }
+
+    .stat-item h2 {
+        font-size: 40px;
+    }
+}
+
+.video-section {
+    margin: 60px auto;
+    max-width: 1400px;
+    text-align: center;
+}
+
+/* ===============================
+   ENQUIRE NOW FORM SECTION
+================================= */
+
+.enquiry-section {
+    max-width: 900px;
+    margin: 60px auto;
+    padding: 0 20px;
+}
+
+.enquiry-title {
+    text-align: center;
+    font-size: 36px;
+    font-family: "Georgia", serif;
+    color: #6A2C2C;
+    margin-bottom: 40px;
+    font-weight: bold;
+}
+
+/* FORM */
+.enquiry-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.enquiry-form label {
+    font-size: 16px;
+    color: #333;
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+/* INPUT FIELD */
+.enquiry-form input,
+.enquiry-form select,
+.enquiry-form textarea {
+    width: 100%;
+    padding: 14px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    outline: none;
+    background: #fafafa;
+}
+
+.enquiry-form input:focus,
+.enquiry-form select:focus,
+.enquiry-form textarea:focus {
+    border-color: #6A2C2C;
+}
+
+/* PHONE INPUT (FLAG + NUMBER) */
+.phone-wrapper {
+    display: flex;
+    gap: 10px;
+}
+
+.phone-code {
+    width: 120px;
+    padding: 14px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    background: #ffffff;
+    font-size: 16px;
+}
+
+/* SUBMIT BUTTON */
+.submit-btn {
+    background: #6A2C2C;
+    color: #fff;
+    padding: 16px;
+    border: none;
+    width: 100%;
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.submit-btn:hover {
+    opacity: 0.9;
+}
+
+/* BOOK A SHOWAROUND */
+.showaround-container {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.showaround-btn {
+    background: #6A2C2C;
+    color: white;
+    padding: 14px 30px;
+    border-radius: 6px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.showaround-btn:hover {
+    opacity: 0.9;
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+    .phone-wrapper {
+        flex-direction: column;
+    }
+
+    .phone-code {
+        width: 100%;
+    }
+}
+
+/* ================================
+   WEDDING FESTIVITIES SECTION
+================================ */
+
+.wedding-section {
+    max-width: 1500px;
+    margin: 80px auto;
+    padding: 0 20px;
+    text-align: center;
+}
+
+.wedding-title {
+    font-size: 36px;
+    font-family: "Georgia", serif;
+    color: #6A2C2C;
+    margin-bottom: 20px;
+}
+
+.wedding-subtitle {
+    max-width: 1500px;
+    margin: 0 auto 60px;
+    line-height: 1.8;
+    font-size: 17px;
+    color: #333;
+}
+
+/* ROW LAYOUT */
+.wedding-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    margin-bottom: 100px;
+}
+
+.wedding-row.reverse {
+    flex-direction: row-reverse;
+}
+
+/* TEXT */
+.wedding-text {
+    flex: 1;
+    text-align: left;
+    padding: 0 20px;
+}
+
+.wedding-text h3 {
+    font-size: 28px;
+    font-family: "Georgia", serif;
+    color: #6A2C2C;
+    margin-bottom: 20px;
+}
+
+.wedding-text p {
+    line-height: 1.8;
+    font-size: 16px;
+    color: #333;
+}
+
+/* IMAGE */
+.wedding-image {
+    flex: 1.2;
+}
+
+.wedding-image img {
+    width: 100%;
+    border-radius: 6px;
+    object-fit: cover;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+    .wedding-row {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .wedding-text {
+        text-align: center;
+    }
+}
+
+.wedding-strip-container {
+    width: 80%;
+    margin: 40px auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border: 1px solid #d6d6d6;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.wedding-strip-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 20px 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: #6a2c2c;
+    /* Brown text */
+    background: #ffffff;
+}
+
+.wedding-strip-box:not(:last-child) {
+    border-right: 1px solid #d6d6d6;
+}
+
+.wedding-icon {
+    font-size: 22px;
+    color: #6a2c2c;
+    /* Brown icon */
+}

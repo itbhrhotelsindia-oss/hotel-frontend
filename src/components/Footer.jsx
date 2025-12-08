@@ -5,12 +5,13 @@ import {
   FaInstagram,
   FaTwitter,
   FaYoutube,
+  FaLinkedinIn,
   FaUser,
   FaEnvelope,
   FaPhoneAlt,
 } from "react-icons/fa";
   
-export default function Footer({ contactInfo = {corporateAddress: "", email: "", reservationPhone: "", hotelPhone: "", socialLinks: []} }) {
+export default function Footer({ contactInfo = {} }) {
   const cities = [
     "Ahmedabad","Alkapuri (Vadodara)","Bangalore","Becharaji","Bharuch","Bhopal",
     "Chennai","Chhatrapati Sambhajinagar","Daman","Dehradun","Deoghar","Digha",
@@ -24,7 +25,8 @@ export default function Footer({ contactInfo = {corporateAddress: "", email: "",
       facebook: contactInfo.socialLinks.facebook,
       instagram: contactInfo.socialLinks.instagram,
       youtube: contactInfo.socialLinks.youtube,
-      twitterX: contactInfo.socialLinks.twitterX
+      twitterX: contactInfo.socialLinks.twitterX,
+      linkedIn: contactInfo.socialLinks.linkedIn
     };
     if (socialLinks[platform]) {
       window.open(socialLinks[platform], "_blank");
@@ -54,12 +56,12 @@ export default function Footer({ contactInfo = {corporateAddress: "", email: "",
             <a onClick={() => handleSocialClick("instagram")} style={{cursor: "pointer"}}><FaInstagram /></a>
             <a onClick={() => handleSocialClick("youtube")} style={{cursor: "pointer"}}><FaYoutube /></a>
             <a onClick={() => handleSocialClick("twitterX")} style={{cursor: "pointer"}}><FaTwitter /></a>
+            <a onClick={() => handleSocialClick("linkedIn")} style={{cursor: "pointer"}}><FaLinkedinIn /></a>
         </div>
  </div>
          
 
         <div className="footer-right">
-        
 
         <h4 className="footer-heading" style={{ marginTop: "20px" }}>
           Subscribe Us
