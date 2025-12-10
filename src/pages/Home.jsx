@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import HeaderBar from "../components/HeaderBar.jsx";
 import Footer from "../components/Footer.jsx";
-
 import {
   FaEnvelope,
   FaPhoneAlt
@@ -145,6 +144,9 @@ export default function Home() {
         const data = await res.json();
 
         // Merge backend values with fallback so layout never breaks
+
+        data.heroImages = data.heroImages.map(imgUrl => "http://localhost:8080" + imgUrl);
+
         setHome({
           heroImages: data.heroImages || FALLBACK.heroImages,
           brandSection: data.brandSection || FALLBACK.brandSection,
@@ -365,10 +367,10 @@ export default function Home() {
 
       {/* CARDS */}
       <div className="events-conf-cards">
-        {brands.map((brand) => (
+        {brands.map((brand) => (          
           // <div key={brand.id} className="events-conf-card">
           <div className="events-conf-card">
-            <img src={brand.imageUrl} alt={brand.title} className="events-conf-image" />
+            <img src={"http://localhost:8080" + brand.imageUrl} alt={brand.title} className="events-conf-image" />
             <div className="events-conf-caption">
               <span>{brand.text}</span>
             </div>
@@ -466,7 +468,7 @@ export default function Home() {
         <div className="left-card">
           {/* Left */}
           <div className="side-card">
-            <img src={left.imageUrl} className="side-img" />
+            <img src={"http://localhost:8080" + left.imageUrl} className="side-img" />
             <div className="side-border" />
             <div className="side-label">{left.title}</div>
             <button className="nav-arrow left" onClick={() => setIdx((idx - 1 + events.length) % events.length)}>‹</button>
@@ -474,7 +476,7 @@ export default function Home() {
 
           {/* Center */}
           <div className="center-card">
-            <img src={center.imageUrl} className="center-img" />
+            <img src={"http://localhost:8080" + center.imageUrl} className="center-img" />
             <div className="center-box">
               <h3>{center.title}</h3>
               <p>{center.description}</p>
@@ -483,7 +485,7 @@ export default function Home() {
 
           {/* Right */}
           <div className="side-card">
-            <img src={right.imageUrl} className="side-img" />
+            <img src={"http://localhost:8080" + right.imageUrl} className="side-img" />
             <div className="side-border" />
             <div className="side-label">{right.title}</div>
             <button className="nav-arrow right" onClick={() => setIdx((idx + 1) % events.length)}>›</button>

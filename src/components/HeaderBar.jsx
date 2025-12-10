@@ -75,7 +75,7 @@ export default function HeaderBar({ scrolled, dropdownOpen, setDropdownOpen, bgC
             <button className="nav-link" onClick={() => navigate("/events", { state: { contactInfo } })}>Plan Your Events</button>
             <button className="nav-link" onClick={() => navigate("/dining", { state: { contactInfo } })}>Dining</button>
             <button className="nav-link" onClick={() => navigate("/news", { state: { contactInfo } })}>Media & News</button>
-            <button className="nav-link" onClick={() => navigate("/partners", { state: { contactInfo } })}>Partner With Us</button>
+            <button className="nav-link" onClick={() => navigate("/")}>Partner With Us</button>
           </ul>
         </nav>
 

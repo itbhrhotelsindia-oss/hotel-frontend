@@ -1,0 +1,93 @@
+.banquet-wrapper {
+    width: 100%;
+    max-width: 1400px;
+    margin: auto;
+    padding: 0px 0;
+}
+
+/* SLIDER */
+.banquet-slider {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.banquet-image {
+    width: 100%;
+    height: 750px;
+    border-radius: 6px;
+    display: block;
+    transition: opacity 0.8s ease-in-out;
+}
+
+.fade {
+    opacity: 1;
+}
+
+/* ARROWS */
+.banquet-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.8);
+    color: #444;
+    border: none;
+    font-size: 40px;
+    width: 45px;
+    height: 45px;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: background 0.2s ease;
+    z-index: 10;
+}
+
+.banquet-arrow:hover {
+    background: white;
+}
+
+.banquet-arrow.left {
+    left: 15px;
+}
+
+.banquet-arrow.right {
+    right: 15px;
+}
+
+/* DOT NAVIGATION */
+.banquet-dots {
+    text-align: center;
+    margin-top: 12px;
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+}
+
+.dot {
+    display: inline-block;
+    height: 11px;
+    width: 11px;
+    margin: 0 4px;
+    background-color: rgba(255, 255, 255, 0.6);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.dot.active {
+    background-color: white;
+}
+
+/* DESCRIPTION */
+.banquet-description {
+    margin-top: 40px;
+    font-size: 16px;
+    line-height: 1.7;
+    color: #444;
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.banquet-description p {
+    margin-bottom: 16px;
+}
