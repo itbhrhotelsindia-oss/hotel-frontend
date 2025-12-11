@@ -1,61 +1,36 @@
 import React, { useState, useEffect } from "react";
 import HeaderBar from "../components/HeaderBar.jsx";
-import "./OffersSection.css";
 import Footer from "../components/Footer.jsx";
+import "./OffersSection.css";
 import { useLocation } from "react-router-dom";
 
 export default function OffersSection() {
-  const [scrolled, setScrolled] = useState(false);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-
   const [offers, setOffers] = useState([]);
   const [loading, setLoading] = useState(true);
   const location = useLocation();
   const contactInfo = location.state?.contactInfo || {};
-  
 
-  useEffect(() => {
-    function handleScroll() {
-      setScrolled(window.scrollY > 40);
-    }
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  const BASE_URL = "http://localhost:8080";
 
-  /* ======================================================
-     FETCH OFFERS FROM BACKEND /api/offers
-  ====================================================== */
   useEffect(() => {
     async function loadOffers() {
       try {
-        const res = await fetch("http://localhost:8080/api/offers");
+        const res = await fetch(`${BASE_URL}/api/offers`);
+
         if (!res.ok) throw new Error("Failed to fetch offers");
 
-        const data = await res.json();
+        let data = await res.json();
+
+        // Clean image URLs (remove double slashes)
+        data = data.map((offer) => ({
+          ...offer,
+          img: offer.img.replace("//", "/")
+        }));
+
         setOffers(data);
 
       } catch (err) {
-        console.error("Offers API Error → Using fallback", err);
-
-        // FALLBACK DATA IF API FAILS
-        setOffers([
-          {
-            id: 1,
-            title: "PERFECT STAYCATIONS – THIS JOYFUL SEASON",
-            desc: "This holiday season, enjoy the perfect staycation with exclusive savings crafted just for you.",
-            validity: "04 Dec 2025 – 11 Jan 2026",
-            img: "/assets/g1.png",
-            loginBtn: "LOGIN / JOIN"
-          },
-          {
-            id: 2,
-            title: "SUITE SURPRISES - MEMBER ONLY",
-            desc: "Indulge in a stay that goes beyond the ordinary...",
-            validity: "Round the Year",
-            img: "/assets/g2.png",
-            loginBtn: "LOGIN / JOIN"
-          }
-        ]);
+        console.error("Error fetching offers:", err);
 
       } finally {
         setLoading(false);
@@ -67,21 +42,42 @@ export default function OffersSection() {
 
   return (
     <main className="offers-page">
+
       <HeaderBar
         scrolled={true}
-        dropdownOpen={dropdownOpen}
-        setDropdownOpen={setDropdownOpen}
+        dropdownOpen={false}
+        setDropdownOpen={() => {}}
         bgColor="#e8e8e8"
         contactInfo={contactInfo}
       />
 
-      {/* Spacer so content does not hide behind sticky header */}
+      {/* Top spacer */}
       <div style={{ height: "140px" }}></div>
 
       <h1 className="section-heading">
-         <span className="line" style={{ display: "inline-block", width: "100px", height: "3px", backgroundColor: "#cfa349", marginRight: "10px", marginBottom: "10px" }} />
+        <span
+          className="line"
+          style={{
+            display: "inline-block",
+            width: "100px",
+            height: "3px",
+            backgroundColor: "#cfa349",
+            marginRight: "10px",
+            marginBottom: "10px",
+          }}
+        />
         EXCLUSIVE OFFERS
-        <span className="line" style={{ display: "inline-block", width: "100px", height: "3px", backgroundColor: "#cfa349", marginRight: "10px", marginBottom: "10px" }} />
+        <span
+          className="line"
+          style={{
+            display: "inline-block",
+            width: "100px",
+            height: "3px",
+            backgroundColor: "#cfa349",
+            marginLeft: "10px",
+            marginBottom: "10px",
+          }}
+        />
       </h1>
 
       <section className="offers-section">
@@ -93,10 +89,10 @@ export default function OffersSection() {
           <div className="offers-grid">
             {offers.map((offer) => (
               <div key={offer.id} className="offer-card">
-
+                
                 {/* IMAGE */}
                 <img
-                  src={offer.img}
+                  src={`${BASE_URL}${offer.img}`}
                   alt={offer.title}
                   className="offer-img"
                 />
@@ -104,22 +100,18 @@ export default function OffersSection() {
                 {/* CONTENT */}
                 <div className="offer-content">
                   <h3 className="offer-title">{offer.title}</h3>
-
                   <p className="offer-desc">{offer.desc}</p>
-
                   <p className="offer-validity">
                     Validity: <strong>{offer.validity}</strong>
                   </p>
 
                   <div className="offer-actions">
                     <button className="offer-btn">{offer.loginBtn}</button>
-
                     <button className="offer-more">
                       KNOW MORE <span>›</span>
                     </button>
                   </div>
                 </div>
-
               </div>
             ))}
           </div>
