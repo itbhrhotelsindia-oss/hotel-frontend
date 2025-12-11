@@ -1,10 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import HeaderBar from "../components/HeaderBar.jsx";
 import Footer from "../components/Footer.jsx";
-import {
-  FaEnvelope,
-  FaPhoneAlt
-} from "react-icons/fa";
+import { FaEnvelope, FaPhoneAlt } from "react-icons/fa";
 
 /*
   HOME.JSX - OPTION A (Backend Driven + Same Layout)
@@ -108,7 +105,7 @@ const FALLBACK = {
       { name: "facebook", url: "https://facebook.com/hrchotel" },
       { name: "twitter", url: "https://twitter.com/hrchotel" },
       { name: "instagram", url: "https://instagram.com/hrchotel" },
-    ]
+    ],
   },
 };
 
@@ -145,7 +142,9 @@ export default function Home() {
 
         // Merge backend values with fallback so layout never breaks
 
-        data.heroImages = data.heroImages.map(imgUrl => "http://localhost:8080" + imgUrl);
+        data.heroImages = data.heroImages.map(
+          (imgUrl) => "http://localhost:8080" + imgUrl
+        );
 
         setHome({
           heroImages: data.heroImages || FALLBACK.heroImages,
@@ -244,7 +243,7 @@ export default function Home() {
       {heroSection()}
       {brandBanner()}
       {/* {brandsSection()} */}
-    {ourBrands()}
+      {ourBrands()}
       {eventsSection()}
       {/* {aboutSection()} */}
 
@@ -274,24 +273,35 @@ export default function Home() {
               className={`hero-slide ${i === index ? "active" : ""}`}
               style={{ flex: `0 0 ${slideWidthPercent}%` }}
             >
-              <img src={s} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+              <img
+                src={s}
+                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+              />
             </div>
           ))}
         </div>
 
-        <button className="slider-arrow left" onClick={prev}>‹</button>
-        <button className="slider-arrow right" onClick={next}>›</button>
+        <button className="slider-arrow left" onClick={prev}>
+          ‹
+        </button>
+        <button className="slider-arrow right" onClick={next}>
+          ›
+        </button>
 
         <div className="hero-overlay">
           <div className="hero-left">
             <h1 className="hero-title">Experience Luxury Stays Across India</h1>
-            <p className="hero-sub">Book directly for best prices & premium offers.</p>
+            <p className="hero-sub">
+              Book directly for best prices & premium offers.
+            </p>
           </div>
 
           <div className="promo-card">
             <h3>Promocode: WWP</h3>
             <p>Save up to 20% on selected stays</p>
-            <a className="promo-btn" href="/hotels">Explore Hotels</a>
+            <a className="promo-btn" href="/hotels">
+              Explore Hotels
+            </a>
           </div>
         </div>
 
@@ -320,123 +330,129 @@ export default function Home() {
           <p className="brand-banner-sub">{banner.subtitle}</p>
 
           <div className="brand-banner-contacts">
-           <div
-                className="bb-contact"
-                onClick={() =>
-                  window.location.href =
-                    `tel:${home.contactSection.reservationPhone}`
-                }
-              >
-                {  <FaPhoneAlt /> } {home.contactSection.reservationPhone}
+            <div
+              className="bb-contact"
+              onClick={() =>
+                (window.location.href = `tel:${home.contactSection.reservationPhone}`)
+              }
+            >
+              {<FaPhoneAlt />} {home.contactSection.reservationPhone}
             </div>
             <div
-                className="bb-contact"
-                onClick={() =>
-                  window.location.href =
-                    `mailto:${home.contactSection.email}`
-                }
-              >
-                { <FaEnvelope /> } {home.contactSection.email}
-              </div>
+              className="bb-contact"
+              onClick={() =>
+                (window.location.href = `mailto:${home.contactSection.email}`)
+              }
+            >
+              {<FaEnvelope />} {home.contactSection.email}
+            </div>
           </div>
         </div>
       </section>
     );
   }
 
-
   function ourBrands() {
+    const section = home.brandSection;
+    const title = section.title || "OUR BRANDS";
+    const brands = section.blocks || [];
+    return (
+      <section
+        className="events-conf-section"
+        style={{ background: "#e9e6e6ff" }}
+      >
+        {/* HEADER ROW */}
+        <div className="events-conf-header">
+          <div className="events-conf-title-wrap">
+            <span className="line" />
+            <h2 className="events-conf-title">{title}</h2>
+          </div>
 
-  const section = home.brandSection;
-  const title = section.title || "OUR BRANDS";
-  const brands = section.blocks || [];
-    return <section className="events-conf-section" style={{ background: "#e9e6e6ff" }}>
-      {/* HEADER ROW */}
-      <div className="events-conf-header">
-        <div className="events-conf-title-wrap">
-           <span className="line" />
-          <h2 className="events-conf-title">
-            {title}
-          </h2>
+          <p className="events-conf-sub">
+            From a luxury urban sanctum to the halls of royalty, an idyllic
+            resort to a jungle clearing, our 5-star hotels and luxury resorts
+            bring your imagination to life.
+          </p>
         </div>
 
-        <p className="events-conf-sub">
-          From a luxury urban sanctum to the halls of royalty, an idyllic resort to a jungle clearing, our 5-star hotels and luxury resorts bring your imagination to life.
-        </p>
-      </div>
-
-      {/* CARDS */}
-      <div className="events-conf-cards">
-        {brands.map((brand) => (          
-          // <div key={brand.id} className="events-conf-card">
-          <div className="events-conf-card">
-            <img src={"http://localhost:8080" + brand.imageUrl} alt={brand.title} className="events-conf-image" />
-            <div className="events-conf-caption">
-              <span>{brand.text}</span>
+        {/* CARDS */}
+        <div className="events-conf-cards">
+          {brands.map((brand) => (
+            // <div key={brand.id} className="events-conf-card">
+            <div className="events-conf-card">
+              <img
+                src={"http://localhost:8080" + brand.imageUrl}
+                alt={brand.title}
+                className="events-conf-image"
+              />
+              <div className="events-conf-caption">
+                <span>{brand.text}</span>
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
-    </section>;
+          ))}
+        </div>
+      </section>
+    );
   }
 
   // --------------------------
   // BRAND BLOCKS
   // --------------------------
   function brandsSection() {
-  const section = home.brandSection;
-  const title = section.title || "OUR BRANDS";
-  const blocks = section.blocks || [];
+    const section = home.brandSection;
+    const title = section.title || "OUR BRANDS";
+    const blocks = section.blocks || [];
 
-  return (
-<section className="brands-section">
-  <h2 className="brands-title">{title}</h2>
+    return (
+      <section className="brands-section">
+        <h2 className="brands-title">{title}</h2>
 
-  <div className="brands-inner">
-    {blocks.map((details, i) => {
-      const isImageLeft = details.layout === "image-left-text-right";
+        <div className="brands-inner">
+          {blocks.map((details, i) => {
+            const isImageLeft = details.layout === "image-left-text-right";
 
-      return (
-        <div
-          className={`brand-sub-row ${isImageLeft ? "image-left" : "image-right"}`}
-          key={i}
-        >
-          {/* LEFT side */}
-          {isImageLeft ? (
-            <>
-              <div className="brand-sub-image-wrap">
-                <img
-                  src={details.imageUrl}
-                  alt=""
-                  className="brand-sub-image"
-                />
+            return (
+              <div
+                className={`brand-sub-row ${
+                  isImageLeft ? "image-left" : "image-right"
+                }`}
+                key={i}
+              >
+                {/* LEFT side */}
+                {isImageLeft ? (
+                  <>
+                    <div className="brand-sub-image-wrap">
+                      <img
+                        src={details.imageUrl}
+                        alt=""
+                        className="brand-sub-image"
+                      />
+                    </div>
+                    <div className="brand-sub-text-wrap">
+                      <p className="brand-sub-desc">{details.text}</p>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="brand-sub-text-wrap">
+                      <p className="brand-sub-desc">{details.text}</p>
+                    </div>
+                    <div className="brand-sub-image-wrap">
+                      <img
+                        src={details.imageUrl}
+                        alt=""
+                        className="brand-sub-image"
+                      />
+                    </div>
+                  </>
+                )}
               </div>
-              <div className="brand-sub-text-wrap">
-                <p className="brand-sub-desc">{details.text}</p>
-              </div>
-            </>
-          ) : (
-            <>
-              <div className="brand-sub-text-wrap">
-                <p className="brand-sub-desc">{details.text}</p>
-              </div>
-              <div className="brand-sub-image-wrap">
-                <img
-                  src={details.imageUrl}
-                  alt=""
-                  className="brand-sub-image"
-                />
-              </div>
-            </>
-          )}
+            );
+          })}
         </div>
-      );
-    })}
-  </div>
-</section>
-  );
-}
-
+      </section>
+    );
+  }
 
   // --------------------------
   // EVENTS SECTION
@@ -450,33 +466,43 @@ export default function Home() {
     const right = events[(idx + 1) % events.length];
 
     return (
-      <section className="events-conf-section" >
-          <div className="events-conf-header">
+      <section className="events-conf-section">
+        <div className="events-conf-header">
           <div className="events-conf-title-wrap">
-           <span className="line" />
-          <h2 className="events-conf-title">
-            {title}
-          </h2>
+            <span className="line" />
+            <h2 className="events-conf-title">{title}</h2>
+          </div>
+
+          <p className="events-conf-sub">
+            From a luxury urban sanctum to the halls of royalty, an idyllic
+            resort to a jungle clearing, our 5-star hotels and luxury resorts
+            bring your imagination to life.
+          </p>
         </div>
-
-        <p className="events-conf-sub">
-          From a luxury urban sanctum to the halls of royalty, an idyllic resort to a jungle clearing, our 5-star hotels and luxury resorts bring your imagination to life.
-        </p>
-      </div>
-
 
         <div className="left-card">
           {/* Left */}
           <div className="side-card">
-            <img src={"http://localhost:8080" + left.imageUrl} className="side-img" />
+            <img
+              src={"http://localhost:8080" + left.imageUrl}
+              className="side-img"
+            />
             <div className="side-border" />
             <div className="side-label">{left.title}</div>
-            <button className="nav-arrow left" onClick={() => setIdx((idx - 1 + events.length) % events.length)}>‹</button>
+            <button
+              className="nav-arrow left"
+              onClick={() => setIdx((idx - 1 + events.length) % events.length)}
+            >
+              ‹
+            </button>
           </div>
 
           {/* Center */}
           <div className="center-card">
-            <img src={"http://localhost:8080" + center.imageUrl} className="center-img" />
+            <img
+              src={"http://localhost:8080" + center.imageUrl}
+              className="center-img"
+            />
             <div className="center-box">
               <h3>{center.title}</h3>
               <p>{center.description}</p>
@@ -485,10 +511,18 @@ export default function Home() {
 
           {/* Right */}
           <div className="side-card">
-            <img src={"http://localhost:8080" + right.imageUrl} className="side-img" />
+            <img
+              src={"http://localhost:8080" + right.imageUrl}
+              className="side-img"
+            />
             <div className="side-border" />
             <div className="side-label">{right.title}</div>
-            <button className="nav-arrow right" onClick={() => setIdx((idx + 1) % events.length)}>›</button>
+            <button
+              className="nav-arrow right"
+              onClick={() => setIdx((idx + 1) % events.length)}
+            >
+              ›
+            </button>
           </div>
         </div>
       </section>
@@ -506,7 +540,10 @@ export default function Home() {
         <div className="about-inner">
           <h4 className="abt-title">{a.title}</h4>
           <p className="abt-text">{a.description}</p>
-          <button className="abt-btn" onClick={() => (window.location.href = a.buttonLink)}>
+          <button
+            className="abt-btn"
+            onClick={() => (window.location.href = a.buttonLink)}
+          >
             {a.buttonText}
           </button>
         </div>

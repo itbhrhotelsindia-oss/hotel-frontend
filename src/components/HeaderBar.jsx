@@ -1,41 +1,80 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  FaEnvelope,
-  FaPhoneAlt
-} from "react-icons/fa";
+import { FaEnvelope, FaPhoneAlt } from "react-icons/fa";
+import CityHotelsModal from "../pages/CityHotelsModal";
 
-export default function HeaderBar({ scrolled, dropdownOpen, setDropdownOpen, bgColor = "#ffffff", contactInfo = {} }) {
+export default function HeaderBar({
+  scrolled,
+  dropdownOpen,
+  setDropdownOpen,
+  bgColor = "#ffffff",
+  contactInfo = {},
+}) {
+  const [cityModalOpen, setCityModalOpen] = useState(false);
+  const [selectedCity, setSelectedCity] = useState("");
+  const [cityHotels, setCityHotels] = useState([]);
+
+  const openCityDialog = (city) => {
+    setSelectedCity(city);
+
+    // Dummy example data (Replace with API data)
+    setCityHotels([
+      {
+        name: "Pride Plaza Ahmedabad",
+        price: "5,460",
+        img: "/assets/g3.png",
+      },
+      {
+        name: "Biznotel by Pride Motera, Ahmedabad",
+        price: "7,605",
+        img: "/assets/g4.png",
+      },
+    ]);
+
+    setCityModalOpen(true);
+  };
+
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false); // ← NEW for Hamburger menu
   const dropdownRef = useRef(null);
+  const hotels = [
+    "Jim Corbett",
+    "Delhi",
+    "Bengaluru",
+    "Hyderabad",
+    "Goa",
+    "Jaipur",
+  ];
 
   // Close dropdowns when clicking outside
   useEffect(() => {
-     function handleClickOutside(e) {
+    function handleClickOutside(e) {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-       setDropdownOpen(false);
-       }
-     }
-     document.addEventListener("mousedown", handleClickOutside);
-     return () => document.removeEventListener("mousedown", handleClickOutside);
-   }, []);
+        setDropdownOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const toggleMenu = () => setMenuOpen((prev) => !prev);
 
   return (
-    <div className={`header-bar ${scrolled ? "header-solid" : "header-transparent"}`}
+    <div
+      className={`header-bar ${
+        scrolled ? "header-solid" : "header-transparent"
+      }`}
       style={{
-        background: scrolled ? bgColor : "transparent"
-      }}>
-       {topBar()}
+        background: scrolled ? bgColor : "transparent",
+      }}
+    >
+      {topBar()}
       <div className="header-inner container">
-       
         {/* Logo */}
         <div className="brand-wrapper">
-          <img 
-            src="/assets/hotel-logo.jpeg" 
-            alt="Hotel Logo" 
+          <img
+            src="/assets/hotel-logo.jpeg"
+            alt="Hotel Logo"
             className="brand-logo"
             onClick={() => navigate("/")}
             style={{ cursor: "pointer" }}
@@ -45,7 +84,7 @@ export default function HeaderBar({ scrolled, dropdownOpen, setDropdownOpen, bgC
         {/* MAIN NAVIGATION */}
         <nav className="main-nav" aria-label="Main navigation">
           <ul>
-            <li 
+            <li
               ref={dropdownRef}
               className="nav-item has-dropdown"
               onMouseEnter={() => setDropdownOpen(true)}
@@ -55,41 +94,110 @@ export default function HeaderBar({ scrolled, dropdownOpen, setDropdownOpen, bgC
 
               {dropdownOpen && (
                 <div className="hotel-dropdown" aria-hidden={!dropdownOpen}>
-                  <div className="hotel-dropdown-header">Popular Destinations</div>
-                  <div className="hotel-dropdown-list">
-                    <Link to="/hotels/mumbai">Mumbai</Link>
-                    <Link to="/hotels/delhi">Delhi</Link>
-                    <Link to="/hotels/bangalore">Bengaluru</Link>
-                    <Link to="/hotels/hyderabad">Hyderabad</Link>
-                    <Link to="/hotels/goa">Goa</Link>
-                    <Link to="/hotels/jaipur">Jaipur</Link>
+                  <div className="hotel-dropdown-header">
+                    Popular Destinations
                   </div>
-                  <button className="hotel-dropdown-all">View all hotels →</button>
+                  {/* <div
+                    className={`hotel-dropdown-list ${
+                      hotels.length > 30
+                        ? "cols-4"
+                        : hotels.length > 20
+                        ? "cols-3"
+                        : hotels.length > 10
+                        ? "cols-2"
+                        : "cols-1"
+                    }`}
+                  >
+                    {hotels.map((city, index) => (
+                      <Link key={index} to={`/hotels/${city.toLowerCase()}`}>
+                        {city}
+                      </Link>
+                    ))}
+                  </div> */}
+
+                  <div
+                    className={`hotel-dropdown-list ${
+                      hotels.length > 30
+                        ? "cols-4"
+                        : hotels.length > 20
+                        ? "cols-3"
+                        : hotels.length > 10
+                        ? "cols-2"
+                        : "cols-1"
+                    }`}
+                  >
+                    {hotels.map((city) => (
+                      <Link
+                        key={city}
+                        className="city-item"
+                        onClick={() => openCityDialog(city)}
+                      >
+                        {city}
+                      </Link>
+                    ))}
+                  </div>
+
+                  <button className="hotel-dropdown-all">
+                    View all hotels →
+                  </button>
                 </div>
               )}
             </li>
 
-            <button className="nav-link" onClick={() => navigate("/our-hotels", { state: { contactInfo } })}>Our Hotels </button>
-            <button className="nav-link" onClick={() => navigate("/offers", { state: { contactInfo } })}>Offers</button>
-            <button className="nav-link" onClick={() => navigate("/weddings", { state: { contactInfo } })}>Weddings</button>
-            <button className="nav-link" onClick={() => navigate("/events", { state: { contactInfo } })}>Plan Your Events</button>
-            <button className="nav-link" onClick={() => navigate("/dining", { state: { contactInfo } })}>Dining</button>
-            <button className="nav-link" onClick={() => navigate("/news", { state: { contactInfo } })}>Media & News</button>
-            <button className="nav-link" onClick={() => navigate("/")}>Partner With Us</button>
+            <button
+              className="nav-link"
+              onClick={() =>
+                navigate("/our-hotels", { state: { contactInfo } })
+              }
+            >
+              Our Hotels{" "}
+            </button>
+            <button
+              className="nav-link"
+              onClick={() => navigate("/offers", { state: { contactInfo } })}
+            >
+              Offers
+            </button>
+            <button
+              className="nav-link"
+              onClick={() => navigate("/weddings", { state: { contactInfo } })}
+            >
+              Weddings
+            </button>
+            <button
+              className="nav-link"
+              onClick={() => navigate("/events", { state: { contactInfo } })}
+            >
+              Plan Your Events
+            </button>
+            <button
+              className="nav-link"
+              onClick={() => navigate("/dining", { state: { contactInfo } })}
+            >
+              Dining
+            </button>
+            <button
+              className="nav-link"
+              onClick={() => navigate("/news", { state: { contactInfo } })}
+            >
+              Media & News
+            </button>
+            <button className="nav-link" onClick={() => navigate("/")}>
+              Partner With Us
+            </button>
           </ul>
         </nav>
 
         {/* HAMBURGER MENU + BOOK NOW */}
-         <div className="header-cta">
-         {/* Hamburger first */}
-         <button className="hamburger-btn" onClick={toggleMenu}>
-           ☰
-        </button>
+        <div className="header-cta">
+          {/* Hamburger first */}
+          <button className="hamburger-btn" onClick={toggleMenu}>
+            ☰
+          </button>
 
-         {/* Then BOOK NOW */}
-        <button className="book-now">BOOK NOW</button>
-         </div>
-
+          {/* Then BOOK NOW */}
+          <button className="book-now">BOOK NOW</button>
+        </div>
       </div>
 
       {/* HAMBURGER MENU DROPDOWN */}
@@ -103,22 +211,42 @@ export default function HeaderBar({ scrolled, dropdownOpen, setDropdownOpen, bgC
           <Link to="/about">About Us</Link>
         </div>
       )}
+
+      {/* ADD THE CITY HOTELS MODAL HERE */}
+      <CityHotelsModal
+        open={cityModalOpen}
+        onClose={() => setCityModalOpen(false)}
+        city={selectedCity}
+        hotels={cityHotels}
+      />
     </div>
   );
 
   function topBar() {
-    return <div className="header-top">
-      <div className="topbar-premium" role="banner" aria-label="Top contact bar">
-        <div className="topbar-inner container">
-          <div className="topbar-left">
-            <span className="topbar-item"><FaEnvelope /> {contactInfo.email}</span>
-            <span className="topbar-item"><FaPhoneAlt /> For Reservation’s: {contactInfo.reservationPhone}</span>
-          </div>
-          <div className="topbar-right">
-            <span className="topbar-tag">Luxury Hospitality · Since {contactInfo.companySince}</span>
+    return (
+      <div className="header-top">
+        <div
+          className="topbar-premium"
+          role="banner"
+          aria-label="Top contact bar"
+        >
+          <div className="topbar-inner container">
+            <div className="topbar-left">
+              <span className="topbar-item">
+                <FaEnvelope /> {contactInfo.email}
+              </span>
+              <span className="topbar-item">
+                <FaPhoneAlt /> For Reservation’s: {contactInfo.reservationPhone}
+              </span>
+            </div>
+            <div className="topbar-right">
+              <span className="topbar-tag">
+                Luxury Hospitality · Since {contactInfo.companySince}
+              </span>
+            </div>
           </div>
         </div>
       </div>
-    </div>;
+    );
   }
 }
