@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FaEnvelope, FaPhoneAlt } from "react-icons/fa";
+import { FaEnvelope, FaPhoneAlt, FaBars } from "react-icons/fa";
 import CityHotelsModal from "../pages/CityHotelsModal";
 
 export default function HeaderBar({
@@ -182,7 +182,7 @@ export default function HeaderBar({
         {/* HAMBURGER + BOOK NOW */}
         <div className="header-cta">
           <button className="hamburger-btn" onClick={toggleMenu}>
-            ☰
+            <FaBars />
           </button>
 
           <button className="book-now">BOOK NOW</button>

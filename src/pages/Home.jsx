@@ -112,27 +112,48 @@ const FALLBACK = {
 export default function Home() {
   const [home, setHome] = useState(FALLBACK);
   const [loading, setLoading] = useState(true);
+  const wrapperRef = useRef(null);
 
-  const cards = [
-    {
-      id: 1,
-      title: "MEETINGS & CONFERENCES",
-      img: "/assets/g1.png", // change to your image path
-    },
-    {
-      id: 2,
-      title: "EVENTS",
-      img: "/assets/g2.png", // change to your image path
-    },
-    {
-      id: 3,
-      title: "TIMELESS WEDDINGS",
-      img: "/assets/g3.png", // change to your image path
-    },
+  const slides = [
+    home.heroImages[home.heroImages.length - 1],
+    ...home.heroImages,
+    home.heroImages[0],
   ];
-  // --------------------------
-  // FETCH BACKEND DATA
-  // --------------------------
+
+  const total = slides.length;
+
+  const next = () => setIndex((i) => i + 1);
+  const prev = () => setIndex((i) => i - 1);
+  const [index, setIndex] = useState(1);
+  const [transitionMs, setTransitionMs] = useState(100); // 1000 is for smooth sliding
+
+  const [scrolled, setScrolled] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  // Auto slide
+  useEffect(() => {
+    const timer = setInterval(() => setIndex((prev) => prev), 4000);
+    return () => clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    if (index === home.heroImages.length + 1) {
+      setTimeout(() => {
+        setTransitionMs(0);
+        setIndex(1);
+        setTimeout(() => setTransitionMs(100), 20); // 1000 is for smooth sliding
+      }, transitionMs);
+    }
+
+    if (index === 0) {
+      setTimeout(() => {
+        setTransitionMs(0);
+        setIndex(home.heroImages.length);
+        setTimeout(() => setTransitionMs(100), 20); // 1000 is for smooth sliding
+      }, transitionMs);
+    }
+  }, [index]);
+
   useEffect(() => {
     async function load() {
       try {
@@ -162,26 +183,9 @@ export default function Home() {
     load();
   }, []);
 
-  // --------------------------
-  // HERO SLIDER ENGINE
-  // --------------------------
-  const wrapperRef = useRef(null);
-
-  const slides = [
-    home.heroImages[home.heroImages.length - 1],
-    ...home.heroImages,
-    home.heroImages[0],
-  ];
-  const total = slides.length;
-
-  const [index, setIndex] = useState(1);
-  const [transitionMs, setTransitionMs] = useState(400);
-  const slideWidthPercent = 100 / total;
-  const translatePercent = index * slideWidthPercent;
-
   // autoplay
   useEffect(() => {
-    const id = setInterval(() => setIndex((i) => i + 1), 8000);
+    const id = setInterval(() => setIndex((i) => i + 1), 5000);
     return () => clearInterval(id);
   }, []);
 
@@ -211,14 +215,9 @@ export default function Home() {
     return () => wrapper.removeEventListener("transitionend", handleEnd);
   }, [index, total]);
 
-  const next = () => setIndex((i) => i + 1);
-  const prev = () => setIndex((i) => i - 1);
-
   // --------------------------
   // SCROLL HEADER
   // --------------------------
-  const [scrolled, setScrolled] = useState(false);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   useEffect(() => {
     function scroll() {
@@ -261,24 +260,28 @@ export default function Home() {
           className="hero-slider-wrapper"
           ref={wrapperRef}
           style={{
-            width: `${total * 100}%`,
-            display: "flex",
-            transform: `translateX(-${translatePercent}%)`,
-            transition: `transform ${transitionMs}ms ease-in-out`,
+            transform: `translateX(-${index * 100}%)`,
+            transition: transitionMs
+              ? `transform ${transitionMs}ms ease-in-out`
+              : "none",
           }}
         >
-          {slides.map((s, i) => (
-            <div
-              key={i}
-              className={`hero-slide ${i === index ? "active" : ""}`}
-              style={{ flex: `0 0 ${slideWidthPercent}%` }}
-            >
-              <img
-                src={s}
-                style={{ width: "100%", height: "100%", objectFit: "cover" }}
-              />
+          {/* Clone last image at beginning */}
+          <div className="hero-slide">
+            <img src={home.heroImages[home.heroImages.length - 1]} />
+          </div>
+
+          {/* Real images */}
+          {home.heroImages.map((src, i) => (
+            <div key={i} className="hero-slide">
+              <img src={src} />
             </div>
           ))}
+
+          {/* Clone first image at end */}
+          <div className="hero-slide">
+            <img src={home.heroImages[0]} />
+          </div>
         </div>
 
         <button className="slider-arrow left" onClick={prev}>
@@ -288,28 +291,11 @@ export default function Home() {
           ›
         </button>
 
-        <div className="hero-overlay">
-          <div className="hero-left">
-            <h1 className="hero-title">Experience Luxury Stays Across India</h1>
-            <p className="hero-sub">
-              Book directly for best prices & premium offers.
-            </p>
-          </div>
-
-          <div className="promo-card">
-            <h3>Promocode: WWP</h3>
-            <p>Save up to 20% on selected stays</p>
-            <a className="promo-btn" href="/hotels">
-              Explore Hotels
-            </a>
-          </div>
-        </div>
-
         <div className="slider-dots">
           {home.heroImages.map((_, i) => (
-            <button
+            <div
               key={i}
-              className={`dot ${index === i + 1 ? "active" : ""}`}
+              className={`dot ${i + 1 === index ? "active" : ""}`}
               onClick={() => setIndex(i + 1)}
             />
           ))}
