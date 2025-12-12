@@ -3,13 +3,42 @@ import HeaderBar from "../components/HeaderBar.jsx";
 import "./OurHotelsSection.css";
 import Footer from "../components/Footer.jsx";
 import { useLocation } from "react-router-dom";
+import {
+  FaFacebookF,
+  FaInstagram,
+  FaTwitter,
+  FaYoutube,
+  FaLinkedinIn,
+  FaUser,
+  FaEnvelope,
+  FaPhoneAlt,
+} from "react-icons/fa";
 
 export default function OurHotelsSection() {
   const [scrolled, setScrolled] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-    const location = useLocation();
-    const contactInfo = location.state?.contactInfo || {};
+  const location = useLocation();
+  const contactInfo = location.state?.contactInfo || {};
+
+  const [ourHotelsData, setOurHotelsData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  const BASE_URL = "http://localhost:8080";
+
+  useEffect(() => {
+    async function loadHotels() {
+      try {
+        const res = await fetch(`${BASE_URL}/api/our-hotels/`);
+        const data = await res.json();
+        setOurHotelsData(data[0]); // API returns list
+      } catch (err) {
+        console.error("API error:", err);
+      }
+      setLoading(false);
+    }
+    loadHotels();
+  }, []);
 
   useEffect(() => {
     function handleScroll() {
@@ -19,40 +48,35 @@ export default function OurHotelsSection() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const offers = [
-    {
-      id: 1,
-      title: "PERFECT STAYCATIONS – THIS JOYFUL SEASON",
-      desc: "This holiday season, enjoy the perfect staycation with exclusive savings crafted just for you.",
-      validity: "04 Dec 2025 – 11 Jan 2026",
-      img: "/assets/g1.png",
-      loginBtn: "LOGIN / JOIN"
-    },
-    {
-      id: 2,
-      title: "SUITE SURPRISES - MEMBER ONLY",
-      desc: "Indulge in a stay that goes beyond the ordinary and experience enhanced comfort, added space, thoughtful touches and unparalleled extravagance.",
-      validity: "Round the Year",
-      img: "/assets/g2.png",
-      loginBtn: "LOGIN / JOIN"
-    },
-    {
-      id: 1,
-      title: "PERFECT STAYCATIONS – THIS JOYFUL SEASON",
-      desc: "This holiday season, enjoy the perfect staycation with exclusive savings crafted just for you.",
-      validity: "04 Dec 2025 – 11 Jan 2026",
-      img: "/assets/g1.png",
-      loginBtn: "LOGIN / JOIN"
-    },
-    {
-      id: 2,
-      title: "SUITE SURPRISES - MEMBER ONLY",
-      desc: "Indulge in a stay that goes beyond the ordinary and experience enhanced comfort, added space, thoughtful touches and unparalleled extravagance.",
-      validity: "Round the Year",
-      img: "/assets/g2.png",
-      loginBtn: "LOGIN / JOIN"
-    }
-  ];
+  // 🔥 Prevent crash while API is loading
+  if (loading || !ourHotelsData) {
+    return (
+      <main className="offers-page">
+        <HeaderBar
+          scrolled={true}
+          dropdownOpen={dropdownOpen}
+          setDropdownOpen={setDropdownOpen}
+          bgColor="#e8e8e8"
+          contactInfo={contactInfo}
+        />
+        <div style={{ height: "180px" }} />
+        <h2 style={{ textAlign: "center" }}>Loading Destinations...</h2>
+      </main>
+    );
+  }
+
+  // 🟢 Safe to destructure now!
+  const {
+    title,
+    text,
+    image,
+    mice,
+    wedding,
+    pilgrim,
+    longWeekends,
+    corporate,
+    leisure,
+  } = ourHotelsData;
 
   return (
     <main className="offers-page">
@@ -67,150 +91,170 @@ export default function OurHotelsSection() {
       {/* Spacer so content does not hide behind sticky header */}
       <div style={{ height: "140px" }}></div>
       <h1 className="section-heading">
-        <span className="line" style={{ display: "inline-block", width: "100px", height: "3px", backgroundColor: "#cfa349", marginRight: "10px", marginBottom: "10px" }} />
-        OUR DESTINATIONS
-        <span className="line" style={{ display: "inline-block", width: "100px", height: "3px", backgroundColor: "#cfa349", marginLeft: "10px", marginBottom: "10px" }} />
+        <span
+          className="line"
+          style={{
+            display: "inline-block",
+            width: "100px",
+            height: "3px",
+            backgroundColor: "#cfa349",
+            marginRight: "10px",
+            marginBottom: "10px",
+          }}
+        />
+        {title}
+        <span
+          className="line"
+          style={{
+            display: "inline-block",
+            width: "100px",
+            height: "3px",
+            backgroundColor: "#cfa349",
+            marginLeft: "10px",
+            marginBottom: "10px",
+          }}
+        />
       </h1>
-      
+
       <div className="our-hotels-descriptions">
-  <p>
-    From spiritual vows in temple towns to beachside pheras, royal baraats in heritage palaces
-    to hilltop mandaps — Pride Hotels, India’s fastest-growing hospitality chain, offers the
-    country’s most diverse wedding destinations, catering to host 20 to 2,000 guests. Each year,
-    over 200 couples choose to curate their Weddings with Pride. Because when the moment is once
-    in a lifetime, your love deserves a celebration steeped in culture, care, and Indian warmth.
-  </p>
-</div>
+        <p>{text}</p>
+      </div>
       <div className="our-hotels-container">
-        <img src={"/assets/g1.png"} className="offer-image" />
-      </div>
-      
-    <section className="event-section">
-      <div className="event-grid">
-
-        {/* MICE */}
-        <div className="event-column">
-          <h2 className="event-title">
-            MICE <span className="event-icon">🏨</span>
-          </h2>
-          <ul className="event-list">
-            <li>New Delhi</li>
-            <li>Kolkata</li>
-            <li>Ahmedabad</li>
-            <li>Jaipur</li>
-            <li>Udaipur</li>
-            <li>Rajkot</li>
-            <li>Bharuch</li>
-            <li>Nagpur</li>
-            <li>Indore</li>
-            <li>Bhopal</li>
-            <li>Phaltan</li>
-            <li>Dehradun</li>
-            <li>Surat</li>
-            <li>Jodhpur</li>
-          </ul>
-        </div>
-
-        {/* WEDDING */}
-        <div className="event-column">
-          <h2 className="event-title">
-            WEDDING <span className="event-icon">💍</span>
-          </h2>
-          <ul className="event-list">
-            <li>New Delhi</li>
-            <li>Jaipur</li>
-            <li>Udaipur</li>
-            <li>Phaltan</li>
-            <li>Kolkata</li>
-            <li>Goa</li>
-            <li>Jodhpur</li>
-            <li>Dehradun</li>
-          </ul>
-        </div>
-
-        {/* PILGRIM */}
-        <div className="event-column">
-          <h2 className="event-title">
-            PILGRIM <span className="event-icon">🛕</span>
-          </h2>
-          <ul className="event-list">
-            <li>Becharaji</li>
-            <li>Puri</li>
-            <li>Haridwar</li>
-          </ul>
-        </div>
-
-      </div>
-    </section>
-
-    <section className="leisure-section">
-
-      {/* TITLE */}
-      <h2 className="leisure-title">
-        LEISURE <span className="leisure-icon">🌂</span>
-      </h2>
-
-      {/* GRID */}
-      <div className="leisure-grid">
-
-        {/* CULTURAL */}
-        <div className="leisure-column">
-          <h3 className="leisure-heading">Cultural</h3>
-          <ul className="leisure-list">
-            <li><a href="#">Ahmedabad</a></li>
-            <li><a href="#">Haridwar</a></li>
-            <li><a href="#">Dwarka</a></li>
-            <li><a href="#">Jaipur</a></li>
-            <li><a href="#">Rishikesh</a></li>
-            <li><a href="#">Puri</a></li>
-            <li><a href="#">Chennai</a></li>
-            <li><a href="#">Jodhpur</a></li>
-          </ul>
-        </div>
-
-        {/* BEACH */}
-        <div className="leisure-column">
-          <h3 className="leisure-heading">Beach</h3>
-          <ul className="leisure-list">
-            <li><a href="#">Goa</a></li>
-            <li><a href="#">Puri</a></li>
-            <li><a href="#">Daman</a></li>
-          </ul>
-        </div>
-
-        {/* HILL SIDE */}
-        <div className="leisure-column">
-          <h3 className="leisure-heading">Hill Side</h3>
-          <ul className="leisure-list">
-            <li><a href="#">Mussoorie</a></li>
-            <li><a href="#">Jaipur</a></li>
-            <li><a href="#">Jodhpur</a></li>
-            <li><a href="#">Dehradun</a></li>
-          </ul>
-        </div>
-
-        {/* ROYAL */}
-        <div className="leisure-column">
-          <h3 className="leisure-heading">Royal</h3>
-          <ul className="leisure-list">
-            <li><a href="#">Phaltan</a></li>
-            <li><a href="#">Jaipur</a></li>
-            <li><a href="#">Udaipur</a></li>
-            <li><a href="#">Jodhpur</a></li>
-          </ul>
-        </div>
-
+        <img src={BASE_URL + image} className="offer-image" />
       </div>
 
-      {/* BOOK BUTTON */}
-      <div className="leisure-btn-wrapper">
-        <button className="leisure-btn">BOOK NOW</button>
-      </div>
+      <section className="event-section">
+        <div className="event-grid">
+          {/* MICE */}
+          <div className="event-column">
+            <h2 className="event-title">
+              {mice.title} <span className="event-icon">🏨</span>
+            </h2>
 
-    </section>
+            <ul className="event-list">
+              {mice.locations.map((loc, i) => (
+                <li key={i}>{loc}</li>
+              ))}
+            </ul>
+          </div>
 
+          {/* Wedding */}
+          <div className="event-column">
+            <h2 className="event-title">
+              {wedding.title} <span className="event-icon">💍</span>
+            </h2>
+            <ul className="event-list">
+              {wedding.locations.map((loc, i) => (
+                <li key={i}>{loc}</li>
+              ))}
+            </ul>
+          </div>
 
-            <Footer contactInfo={contactInfo} />
+          {/* Pilgrim */}
+          <div className="event-column">
+            <h2 className="event-title">
+              {pilgrim.title} <span className="event-icon">🛕</span>
+            </h2>
+            <ul className="event-list">
+              {pilgrim.locations.map((loc, i) => (
+                <li key={i}>{loc}</li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Long Weekends */}
+          <div className="event-column">
+            <h2 className="event-title">
+              {longWeekends.title} <span className="event-icon"></span>
+              {/* <img
+                src={BASE_URL + longWeekends.iconUrl}
+                className="event-icon-img"
+              /> */}
+            </h2>
+            <ul className="event-list">
+              {longWeekends.locations.map((loc, i) => (
+                <li key={i}>{loc}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section className="leisure-section">
+        <h2 className="leisure-title">LEISURE 🌴</h2>
+
+        <div className="leisure-grid">
+          {/* Cultural */}
+          <div className="leisure-column">
+            <h3 className="leisure-heading">
+              {leisure.cultural.title}
+              <img
+                src={BASE_URL + leisure.cultural.iconUrl}
+                className="event-icon-img"
+              />
+            </h3>
+            <ul className="leisure-list">
+              {leisure.cultural.locations.map((loc, i) => (
+                <li key={i}>{loc}</li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Beach */}
+          <div className="leisure-column">
+            <h3 className="leisure-heading">
+              {leisure.beach.title}
+              <img
+                src={BASE_URL + leisure.beach.iconUrl}
+                className="event-icon-img"
+              />
+            </h3>
+            <ul className="leisure-list">
+              {leisure.beach.locations.map((loc, i) => (
+                <li key={i}>{loc}</li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Hillside */}
+          <div className="leisure-column">
+            <h3 className="leisure-heading">
+              {leisure.hillside.title}
+              <img
+                src={BASE_URL + leisure.hillside.iconUrl}
+                className="event-icon-img"
+              />
+            </h3>
+            <ul className="leisure-list">
+              {leisure.hillside.locations.map((loc, i) => (
+                <li key={i}>{loc}</li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Royal */}
+          <div className="leisure-column">
+            <h3 className="leisure-heading">
+              {leisure.royal.title}
+              <img
+                src={BASE_URL + leisure.royal.iconUrl}
+                className="event-icon-img"
+              />
+            </h3>
+            <ul className="leisure-list">
+              {leisure.royal.locations.map((loc, i) => (
+                <li key={i}>{loc}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <div className="leisure-btn-wrapper">
+          <button className="leisure-btn">BOOK NOW</button>
+        </div>
+      </section>
+
+      <Footer contactInfo={contactInfo} />
     </main>
   );
 }

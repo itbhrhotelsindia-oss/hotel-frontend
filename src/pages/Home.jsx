@@ -130,7 +130,7 @@ export default function Home() {
 
   const [scrolled, setScrolled] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [showHeroBooking, setShowHeroBooking] = useState(true);
+  const [showBooking, setShowBooking] = useState(true);
 
   // Auto slide
   useEffect(() => {
@@ -239,10 +239,10 @@ export default function Home() {
         dropdownOpen={dropdownOpen}
         setDropdownOpen={setDropdownOpen}
         contactInfo={home.contactSection}
-        setShowHeroBooking={setShowHeroBooking}
+        setShowBooking={setShowBooking}
       />
 
-      {heroSection()}
+      {sliderSection()}
       {brandBanner()}
       {/* {brandsSection()} */}
       {ourBrands()}
@@ -253,14 +253,11 @@ export default function Home() {
     </div>
   );
 
-  // --------------------------
-  // HERO SECTION
-  // --------------------------
-  function heroSection() {
+  function sliderSection() {
     return (
-      <section className="hero-slider">
+      <section className="main-image-slider">
         <div
-          className="hero-slider-wrapper"
+          className="main-image-slider-wrapper"
           ref={wrapperRef}
           style={{
             transform: `translateX(-${index * 100}%)`,
@@ -269,17 +266,17 @@ export default function Home() {
               : "none",
           }}
         >
-          <div className="hero-slide">
+          <div className="main-image-slide">
             <img src={home.heroImages[home.heroImages.length - 1]} />
           </div>
 
           {home.heroImages.map((src, i) => (
-            <div key={i} className="hero-slide">
+            <div key={i} className="main-image-slide">
               <img src={src} />
             </div>
           ))}
 
-          <div className="hero-slide">
+          <div className="main-image-slide">
             <img src={home.heroImages[0]} />
           </div>
         </div>
@@ -292,7 +289,7 @@ export default function Home() {
         </button>
 
         {/* SHOW BOOKING BOX ONLY IF NOT IN POPUP MODE */}
-        {showHeroBooking && <BookingSearchBox />}
+        {showBooking && <BookingSearchBox />}
 
         <div className="slider-dots">
           {home.heroImages.map((_, i) => (

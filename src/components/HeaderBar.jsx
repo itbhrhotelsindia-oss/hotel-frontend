@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaEnvelope, FaPhoneAlt, FaBars } from "react-icons/fa";
 import CityHotelsModal from "../pages/CityHotelsModal";
+import { bookingDialog } from "./bookingDialog";
 
 export default function HeaderBar({
   scrolled,
@@ -9,11 +10,12 @@ export default function HeaderBar({
   setDropdownOpen,
   bgColor = "#ffffff",
   contactInfo = {},
-  setShowHeroBooking,
+  setShowBooking,
 }) {
   const [cityModalOpen, setCityModalOpen] = useState(false);
   const [selectedCity, setSelectedCity] = useState("");
   const [cityHotels, setCityHotels] = useState([]);
+  const [selectedHotels, setSelectedHotels] = useState([]);
 
   const [cities, setCities] = useState([]); // <-- store cities from API
 
@@ -186,10 +188,11 @@ export default function HeaderBar({
           <button className="hamburger-btn" onClick={toggleMenu}>
             <FaBars />
           </button>
+
           <button
             className="book-now"
             onClick={() => {
-              setShowHeroBooking(false); // ⬅ hide hero booking
+              setShowBooking(false); // ⬅ hide booking
               setBookingOpen(true); // ⬅ open popup
             }}
           >
@@ -210,58 +213,14 @@ export default function HeaderBar({
         </div>
       )}
 
-      {bookingOpen && (
-        <div className="booking-dialog-overlay">
-          <div className="booking-dialog">
-            {/* Close Button */}
-            <button
-              className="booking-dialog-close"
-              onClick={() => {
-                setBookingOpen(false);
-                setShowHeroBooking(true);
-              }}
-            >
-              ✕
-            </button>
-
-            {/* Booking Search Box */}
-            <div className="booking-dialog-content">
-              <div className="booking-box-row">
-                {/* LOCATION */}
-                <div className="booking-field">
-                  <label>Location</label>
-                  <select className="booking-input">
-                    <option>Select Your Destination</option>
-                    {cities.map((city) => (
-                      <option key={city.id}>{city.name}</option>
-                    ))}
-                  </select>
-                </div>
-
-                {/* HOTELS */}
-                <div className="booking-field">
-                  <label>Hotel</label>
-                  <select className="booking-input">
-                    <option>Select Your Destination</option>
-                    {cityHotels.map((city) => (
-                      <option key={city.id}>{city.name}</option>
-                    ))}
-                  </select>
-                </div>
-
-                {/* BOOK BUTTON */}
-                <div className="booking-actions">
-                  <div className="why-book">Why Book Direct?</div>
-                  <button className="booking-btn">BOOK NOW</button>
-                  <div className="price-text">
-                    From <strong>6,435</strong> INR/Night
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      {bookingOpen &&
+        bookingDialog(
+          setBookingOpen,
+          setShowBooking,
+          cities,
+          setSelectedHotels,
+          selectedHotels
+        )}
 
       {/* CITY HOTELS POPUP */}
       <CityHotelsModal
