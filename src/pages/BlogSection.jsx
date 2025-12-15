@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import HeaderBar from "../components/HeaderBar.jsx";
 import Footer from "../components/Footer.jsx";
 import { useLocation } from "react-router-dom";
-import "./DiningSection.css";
+import "./BlogSection.css";
 
 export default function BlogSection() {
   const [scrolled, setScrolled] = useState(false);
@@ -11,26 +11,29 @@ export default function BlogSection() {
   const [showBooking, setShowBooking] = useState(true);
   const contactInfo = location.state?.contactInfo || {};
 
-  const restaurants = [
+  const featured = {
+    title: "Dine With Pride – Culinary Art & Global Flavours",
+    text: "Experience a luxurious dining journey crafted by our celebrated chefs.",
+    image: "/assets/g1.png",
+  };
+  const posts = [
     {
-      id: "1",
-      title: "Café 1",
-      image: "/assets/g1.png",
-      logo: "/assets/g4.png",
+      id: 1,
+      title: "Top 10 Wedding Destinations in India",
+      image: "/assets/jim-cor.jpg",
     },
     {
-      id: "2",
-      title: "Café 2",
-      image: "/assets/g1.png",
-      logo: "/assets/g4.png",
+      id: 2,
+      title: "A Luxury Staycation – What to Expect",
+      image: "/assets/mussorie.jpg",
     },
     {
-      id: "3",
-      title: "BHR restaurent",
-      image: "/assets/g1.png",
-      logo: "/assets/g4.png",
+      id: 3,
+      title: "Wellness Retreats – Relax, Recharge, Revive",
+      image: "/assets/rishikesh.jpg",
     },
   ];
+
   useEffect(() => {
     function handleScroll() {
       setScrolled(window.scrollY > 40);
@@ -80,54 +83,92 @@ export default function BlogSection() {
         />
       </h1>
 
-      <section className="dining-banner">
-        <img
-          src="/assets/g1.png"
-          alt="Dining Banner"
-          className="banner-image"
-        />
-      </section>
+      {blog1()}
 
-      <h1 className="dining-heading">Dine With Us</h1>
-      <p className="dining-description">
-        Our varied dining options coupled with well-appointed rooms, elegantly
-        designed banquet spaces, numerous recreational facilities and seamless
-        service tailored to suit your every whim, add a special touch to all
-        your occasions.
-      </p>
+      {/* {blog2()} */}
 
-      <p className="dining-subtext">
-        With so much to offer, we take pride in delivering exceptional dining
-        experiences!
-        <br />
-        From speciality restaurants and coffee shops to bakeries and more, we
-        have all you need for an ideal culinary journey.
-      </p>
-
-      <section className="dining-grid">
-        {restaurants.map((item, i) => (
-          <div key={i} className="dining-card">
-            <img src={item.image} alt={item.title} className="dining-img" />
-
-            <div className="dining-logo-box">
-              <img src={item.logo} alt={item.title} className="dining-logo" />
-            </div>
-
-            <h3>{item.title}</h3>
-
-            <button
-              className="dining-btn"
-              onClick={() => navigate(`/dining/${item.id}`)}
-            >
-              MORE INFO
-            </button>
-          </div>
-        ))}
-      </section>
-
-      <section className="offers-section"></section>
+      {/* {blog3()} */}
 
       <Footer contactInfo={contactInfo} />
     </main>
   );
+
+  function blog3() {
+    return (
+      <section className="minimal-blog-section">
+        <h2 className="minimal-heading">Latest Insights</h2>
+
+        {/* FEATURED ARTICLE */}
+        <div className="minimal-featured">
+          <img src={featured.image} alt={featured.title} />
+          <div className="minimal-featured-body">
+            <h3>{featured.title}</h3>
+            <p>{featured.text}</p>
+            <button className="minimal-read-btn">READ MORE →</button>
+          </div>
+        </div>
+
+        {/* GRID ARTICLES */}
+        <div className="minimal-grid">
+          {posts.map((post) => (
+            <div key={post.id} className="minimal-card">
+              <img src={post.image} alt={post.title} />
+              <h4>{post.title}</h4>
+              <button className="minimal-link">Read More →</button>
+            </div>
+          ))}
+        </div>
+      </section>
+    );
+  }
+
+  function blog2() {
+    return (
+      <section className="luxury-blog-section">
+        <h2 className="luxury-blog-heading">Latest Stories</h2>
+
+        {/* FEATURED POST */}
+        <div className="luxury-featured">
+          <img src={featured.image} alt={featured.title} />
+          <div className="luxury-featured-text">
+            <h3>{featured.title}</h3>
+            <p>{featured.text}</p>
+            <button className="luxury-btn">READ MORE →</button>
+          </div>
+        </div>
+
+        {/* GRID POSTS */}
+        <div className="luxury-grid">
+          {posts.map((post) => (
+            <div key={post.id} className="luxury-card">
+              <img src={post.image} alt={post.title} />
+              <div className="luxury-card-content">
+                <h4>{post.title}</h4>
+                <button className="luxury-link">Read More →</button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    );
+  }
+
+  function blog1() {
+    return (
+      <div className="blog-section">
+        <h2 className="blog-heading">Latest Stories</h2>
+
+        {/* GRID POSTS */}
+        <div className="blog-grid">
+          {posts.map((post) => (
+            <div className="blog-card" key={post.id}>
+              <img src={post.image} />
+              <h4>{post.title}</h4>
+              <button className="blog-btn small">Read More →</button>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
 }

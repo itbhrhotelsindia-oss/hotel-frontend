@@ -8,8 +8,8 @@ export default function PartnersSection() {
   const [scrolled, setScrolled] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-    const location = useLocation();
-    const contactInfo = location.state?.contactInfo || {};
+  const location = useLocation();
+  const contactInfo = location.state?.contactInfo || {};
 
   useEffect(() => {
     function handleScroll() {
@@ -18,41 +18,6 @@ export default function PartnersSection() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  const offers = [
-    {
-      id: 1,
-      title: "PERFECT STAYCATIONS – THIS JOYFUL SEASON",
-      desc: "This holiday season, enjoy the perfect staycation with exclusive savings crafted just for you.",
-      validity: "04 Dec 2025 – 11 Jan 2026",
-      img: "/assets/g1.png",
-      loginBtn: "LOGIN / JOIN"
-    },
-    {
-      id: 2,
-      title: "SUITE SURPRISES - MEMBER ONLY",
-      desc: "Indulge in a stay that goes beyond the ordinary and experience enhanced comfort, added space, thoughtful touches and unparalleled extravagance.",
-      validity: "Round the Year",
-      img: "/assets/g2.png",
-      loginBtn: "LOGIN / JOIN"
-    },
-    {
-      id: 1,
-      title: "PERFECT STAYCATIONS – THIS JOYFUL SEASON",
-      desc: "This holiday season, enjoy the perfect staycation with exclusive savings crafted just for you.",
-      validity: "04 Dec 2025 – 11 Jan 2026",
-      img: "/assets/g1.png",
-      loginBtn: "LOGIN / JOIN"
-    },
-    {
-      id: 2,
-      title: "SUITE SURPRISES - MEMBER ONLY",
-      desc: "Indulge in a stay that goes beyond the ordinary and experience enhanced comfort, added space, thoughtful touches and unparalleled extravagance.",
-      validity: "Round the Year",
-      img: "/assets/g2.png",
-      loginBtn: "LOGIN / JOIN"
-    }
-  ];
 
   return (
     <main className="offers-page">
@@ -66,14 +31,12 @@ export default function PartnersSection() {
 
       {/* Spacer so content does not hide behind sticky header */}
       <div style={{ height: "140px" }}></div>
-      
-        <h1 className="section-heading">--------     EXCLUSIVE OFFERS     ---------</h1>
 
-      <section className="offers-section">
-        
-      </section>
-      
-            <Footer contactInfo={contactInfo} />
+      <h1 className="section-heading">-------- EXCLUSIVE OFFERS ---------</h1>
+
+      <section className="offers-section"></section>
+
+      <Footer contactInfo={contactInfo} />
     </main>
   );
 }

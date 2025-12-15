@@ -171,9 +171,7 @@ export default function WeddingsSection() {
       <section className="wedding-section">
         <h2 className="wedding-title">{festivities.title}</h2>
 
-        <p className="wedding-subtitle">
-          {festivities.description}
-        </p>
+        <p className="wedding-subtitle">{festivities.description}</p>
 
         <div className="wedding-list">
           {festivities.festivitiesList.map((item, i) => (

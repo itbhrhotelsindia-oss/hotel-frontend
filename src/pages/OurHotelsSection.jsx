@@ -74,7 +74,43 @@ export default function OurHotelsSection() {
       </main>
     );
   }
-
+  const destinations = [
+    {
+      city: "Delhi",
+      subtitle: "Exciting! From 9999",
+      image: "/assets/india-gate.jpeg",
+    },
+    {
+      city: "Agra",
+      subtitle: "Taj Mahal Awaits",
+      image: "/assets/taj.jpg",
+    },
+    {
+      city: "Jim Corrbet",
+      subtitle: "Future City",
+      image: "/assets/jim-cor.jpg",
+    },
+    {
+      city: "Mussorie",
+      subtitle: "Future City",
+      image: "/assets/mussorie.jpg",
+    },
+    {
+      city: "Rishikesh",
+      subtitle: "Future City",
+      image: "/assets/rishikesh.jpg",
+    },
+    {
+      city: "Ayodhya",
+      subtitle: "Future City",
+      image: "/assets/g4.png",
+    },
+    {
+      city: "Lucknow",
+      subtitle: "Future City",
+      image: "/assets/g3.png",
+    },
+  ];
   // 🟢 Safe to destructure now!
   const {
     title,
@@ -127,180 +163,92 @@ export default function OurHotelsSection() {
         />
       </h1>
 
-      <div className="our-hotels-descriptions">
-        <p>{text}</p>
+      <div className="destinations-wrapper">
+        <div className="our-hotels-descriptions">
+          <p>
+            "Embark on a journey where culture meets comfort and luxury
+            blends....
+          </p>
+        </div>
+        <div className="destinations-grid">
+          {destinations.map((item, index) => (
+            <div key={index} className="destination-card">
+              {/* Badge Icon */}
+              {/* <span className="badge-icon">🏨</span> */}
+
+              {/* Image */}
+              <img
+                className="destination-image"
+                src={item.image}
+                alt={item.city}
+              />
+
+              {/* Text Container */}
+              <div className="destination-text">
+                <h3>{item.city}</h3>
+                <p>{item.subtitle}</p>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
-      <div className="our-hotels-container">
+
+      {/* <div className="our-hotels-container">
         <img src={BASE_URL + image} className="offer-image" />
-      </div>
+      </div> */}
 
-      <section className="event-section">
-        <div className="event-grid">
-          {/* MICE */}
-          <div className="event-column">
-            <h2 className="event-title">
-              {mice.title} <span className="event-icon">🏨</span>
-            </h2>
+      <section className="destination-list-section">
+        {/* Row 1 - MICE */}
+        <div className="destination-row">
+          <img src="/assets/jim-cor.jpg" alt="MICE" className="dl-image" />
 
-            <ul className="event-list">
-              {mice.locations.map((loc, i) => (
-                <li key={i}>{loc}</li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Wedding */}
-          <div className="event-column">
-            <h2 className="event-title">
-              {wedding.title} <span className="event-icon">💍</span>
-            </h2>
-            <ul className="event-list">
-              {wedding.locations.map((loc, i) => (
-                <li key={i}>{loc}</li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Pilgrim */}
-          <div className="event-column">
-            <h2 className="event-title">
-              {pilgrim.title} <span className="event-icon">🛕</span>
-            </h2>
-            <ul className="event-list">
-              {pilgrim.locations.map((loc, i) => (
-                <li key={i}>{loc}</li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Long Weekends */}
-          <div className="event-column">
-            <h2 className="event-title">
-              {longWeekends.title} 🥥<span className="event-icon"></span>
-              {/* <img
-                src={BASE_URL + longWeekends.iconUrl}
-                className="event-icon-img"
-              /> */}
-            </h2>
-            <ul className="event-list">
-              {longWeekends.locations.map((loc, i) => (
-                <li key={i}>{loc}</li>
+          <div className="dl-text">
+            <h2 className="dl-title">MICE 🏨</h2>
+            <ul className="dl-list">
+              {mice.locations.map((item, i) => (
+                <li key={i}>{item}</li>
               ))}
             </ul>
           </div>
         </div>
-      </section>
 
-      <section className="leisure-section">
-        <h2 className="leisure-title">LEISURE 🌴</h2>
+        <div className="destination-row reverse">
+          <img src="/assets/rishikesh.jpg" alt="Wedding" className="dl-image" />
 
-        <div className="leisure-grid">
-          {/* Cultural */}
-          <div className="leisure-column">
-            <h3 className="leisure-heading">
-              {leisure.cultural.title}
-              {/* <img
-                src={BASE_URL + leisure.cultural.iconUrl}
-                className="event-icon-img"
-              /> */}
-            </h3>
-            <ul className="leisure-list">
-              {leisure.cultural.locations.map((loc, i) => (
-                <li key={i}>{loc}</li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Beach */}
-          <div className="leisure-column">
-            <h3 className="leisure-heading">
-              {leisure.beach.title}
-              {/* <img
-                src={BASE_URL + leisure.beach.iconUrl}
-                className="event-icon-img"
-              /> */}
-            </h3>
-            <ul className="leisure-list">
-              {leisure.beach.locations.map((loc, i) => (
-                <li key={i}>{loc}</li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Hillside */}
-          <div className="leisure-column">
-            <h3 className="leisure-heading">
-              {leisure.hillside.title}
-              {/* <img
-                src={BASE_URL + leisure.hillside.iconUrl}
-                className="event-icon-img"
-              /> */}
-            </h3>
-            <ul className="leisure-list">
-              {leisure.hillside.locations.map((loc, i) => (
-                <li key={i}>{loc}</li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Royal */}
-          <div className="leisure-column">
-            <h3 className="leisure-heading">
-              {leisure.royal.title}
-              {/* <img
-                src={BASE_URL + leisure.royal.iconUrl}
-                className="event-icon-img"
-              /> */}
-            </h3>
-            <ul className="leisure-list">
-              {leisure.royal.locations.map((loc, i) => (
-                <li key={i}>{loc}</li>
+          <div className="dl-text">
+            <h2 className="dl-title">Wedding 💍</h2>
+            <ul className="dl-list">
+              {wedding.locations.map((item, i) => (
+                <li key={i}>{item}</li>
               ))}
             </ul>
           </div>
         </div>
-      </section>
 
-      <section className="leisure-section">
-        <h2 className="leisure-title">{corporate.title} 💻</h2>
+        <div className="destination-row">
+          <img src="/assets/jim-cor.jpg" alt="MICE" className="dl-image" />
 
-        <div className="leisure-grid">
-          <div className="leisure-column">
-            <ul className="leisure-list">
-              {corporate.staycation.map((loc, i) => (
-                <li key={i}>{loc}</li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="leisure-column">
-            <ul className="leisure-list">
-              {corporate.workcation.map((loc, i) => (
-                <li key={i}>{loc}</li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="leisure-column">
-            <ul className="leisure-list">
-              {corporate.city.map((loc, i) => (
-                <li key={i}>{loc}</li>
+          <div className="dl-text">
+            <h2 className="dl-title">PILIGRAM 🏨</h2>
+            <ul className="dl-list">
+              {mice.locations.map((item, i) => (
+                <li key={i}>{item}</li>
               ))}
             </ul>
           </div>
         </div>
-      </section>
-      <section className="leisure-section">
-        <div className="leisure-btn-wrapper">
-          <button
-            className="leisure-btn"
-            onClick={() => {
-              setShowBooking(false); // ⬅ hide booking
-              setBookingOpen(true); // ⬅ open popup
-            }}
-          >
-            BOOK NOW
-          </button>
+
+        <div className="destination-row reverse">
+          <img src="/assets/rishikesh.jpg" alt="Wedding" className="dl-image" />
+
+          <div className="dl-text">
+            <h2 className="dl-title">WEEKEND 💍</h2>
+            <ul className="dl-list">
+              {wedding.locations.map((item, i) => (
+                <li key={i}>{item}</li>
+              ))}
+            </ul>
+          </div>
         </div>
       </section>
 
