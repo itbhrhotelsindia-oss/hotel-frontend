@@ -5,6 +5,7 @@ import HotelList from "./pages/HotelList";
 import OffersSection from "./pages/OffersSection";
 import WeddingsSection from "./pages/WeddingsSection";
 import EventsSection from "./pages/EventsSection";
+import BlogSection from "./pages/BlogSection";
 import DiningSection from "./pages/DiningSection";
 import NewsSection from "./pages/NewsSection";
 import PartnersSection from "./pages/PartnersSection";
@@ -23,6 +24,7 @@ export default function App() {
         <Route path="/weddings" element={<WeddingsSection />} />
         <Route path="/events" element={<EventsSection />} />
         <Route path="/dining" element={<DiningSection />} />
+        <Route path="/blog" element={<BlogSection />} />
         <Route path="/news" element={<NewsSection />} />
         <Route path="/partners" element={<PartnersSection />} />
         <Route path="/dining/:restaurantId" element={<DiningDetails />} />

@@ -163,12 +163,21 @@ export default function HeaderBar({
               Plan Your Events
             </button>
 
+
+
             <button
               className="nav-link"
               onClick={() => navigate("/dining", { state: { contactInfo } })}
             >
-              Dining
+              Blog
             </button>
+
+            {/* <button
+              className="nav-link"
+              onClick={() => navigate("/dining", { state: { contactInfo } })}
+            >
+              Dining
+            </button> */}
 
             {/* <button
               className="nav-link"
