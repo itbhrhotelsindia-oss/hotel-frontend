@@ -184,7 +184,7 @@ export default function HeaderBar({
               Media & News
             </button> */}
 
-            <button className="nav-link" onClick={() => navigate("/")}>
+            <button className="nav-link" onClick={() => navigate("/partners")}>
               Partner With Us
             </button>
           </ul>

@@ -11,6 +11,7 @@ import NewsSection from "./pages/NewsSection";
 import PartnersSection from "./pages/PartnersSection";
 import OurHotelsSection from "./pages/OurHotelsSection";
 import DiningDetails from "./pages/DiningDetails";
+import BlogDetail from "./pages/BlogDetail";
 // ... other pages
 
 export default function App() {
@@ -28,6 +29,7 @@ export default function App() {
         <Route path="/news" element={<NewsSection />} />
         <Route path="/partners" element={<PartnersSection />} />
         <Route path="/dining/:restaurantId" element={<DiningDetails />} />
+        <Route path="/blog/:slug" element={<BlogDetail />} />
         {/* ... */}
       </Routes>
     </>

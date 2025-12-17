@@ -165,10 +165,7 @@ export default function OurHotelsSection() {
 
       <div className="destinations-wrapper">
         <div className="our-hotels-descriptions">
-          <p>
-            "Embark on a journey where culture meets comfort and luxury
-            blends....
-          </p>
+          <p>{text}</p>
         </div>
         <div className="destinations-grid">
           {destinations.map((item, index) => (
