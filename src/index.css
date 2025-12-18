@@ -17,6 +17,7 @@
   --brand-black: #111111;
   --brand-gold-dark: #a6781f;
   --accent-blue: #1976d2;
+  --base-gold:#f7f2ec;
   --bg-grey:#e9e6e6ff
   --max-width: 1200px;
   --page-header-height: 120px;
@@ -2174,6 +2175,7 @@ input:focus {
 
 .booking-field label {
   font-size: 16px;
+  color: var(--brand-white);
   margin-bottom: 8px;
   font-weight: 600;
 }

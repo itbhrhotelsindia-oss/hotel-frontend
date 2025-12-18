@@ -1,7 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import HeaderBar from "../components/HeaderBar.jsx";
 import Footer from "../components/Footer.jsx";
-import { FaEnvelope, FaPhoneAlt } from "react-icons/fa";
+import "./HotelDetails.css";
+import {
+  FaSwimmingPool,
+  FaChair,
+  FaHome,
+  FaUmbrellaBeach,
+} from "react-icons/fa";
 import BookingSearchBox from "./BookingSearchBox.jsx";
 
 const FALLBACK = {
@@ -99,7 +105,7 @@ const FALLBACK = {
   },
 };
 
-export default function Home() {
+export default function HotelDetails() {
   const [home, setHome] = useState(FALLBACK);
   const [loading, setLoading] = useState(true);
   const wrapperRef = useRef(null);
@@ -121,6 +127,79 @@ export default function Home() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [showBooking, setShowBooking] = useState(true);
 
+  const rooms = [
+    {
+      id: "01",
+      title: "Exclusive Deluxe",
+      price: "$690 / NIGHT",
+      stars: 5,
+      bed: "King Bed",
+      size: "1500 sqft / Room",
+      desc: "We have sixteen Executive Deluxe rooms for only BDT. 5555+ with King size bed.",
+      image: "/assets/jim-cor.jpg",
+    },
+    {
+      id: "02",
+      title: "Premier Suite",
+      price: "$890 / NIGHT",
+      stars: 5,
+      bed: "King Bed",
+      size: "1500 sqft / Room",
+      desc: "Experience premier luxury with spacious interiors & premium amenities.",
+      image: "/assets/rishikesh.jpg",
+    },
+    {
+      id: "03",
+      title: "Oceanview Suite",
+      price: "$690 / NIGHT",
+      stars: 5,
+      bed: "King Bed",
+      size: "1500 sqft / Room",
+      desc: "Wake up to breathtaking ocean views and luxurious comfort.",
+      image: "/assets/taj.jpg",
+    },
+    {
+      id: "04",
+      title: "Deluxe Twine",
+      price: "$690 / NIGHT",
+      stars: 5,
+      bed: "2 King Beds",
+      size: "1500 sqft / Room",
+      desc: "Perfect for families — two king beds and spacious interiors.",
+      image: "/assets/mussorie.jpg",
+    },
+  ];
+
+  const features = [
+    {
+      id: 1,
+      title: "Infinity Pool",
+      desc: "Lorem ipsum dolor sit amet consectetur. Eget nibh nibh ut.",
+      icon: <FaSwimmingPool />,
+      highlight: true,
+    },
+    {
+      id: 2,
+      title: "Coworking Space",
+      desc: "Lorem ipsum dolor sit amet consectetur. Intege.",
+      icon: <FaChair />,
+      highlight: false,
+    },
+    {
+      id: 3,
+      title: "Homy & Cozy Place",
+      desc: "Lorem ipsum dolor sit amet consectetur. Diam mattis.",
+      icon: <FaHome />,
+      highlight: false,
+    },
+    {
+      id: 4,
+      title: "Many Food Menus",
+      desc: "Lorem ipsum dolor sit amet consectetur. Et augue.",
+      icon: <FaUmbrellaBeach />,
+      highlight: false,
+    },
+  ];
   // Auto slide
   useEffect(() => {
     const timer = setInterval(() => setIndex((prev) => prev), 4000);
@@ -151,8 +230,6 @@ export default function Home() {
         const res = await fetch("http://localhost:8080/api/home");
         if (!res.ok) throw new Error("API failed");
         const data = await res.json();
-
-        // Merge backend values with fallback so layout never breaks
 
         data.heroImages = data.heroImages.map(
           (imgUrl) => "http://localhost:8080" + imgUrl
@@ -217,23 +294,123 @@ export default function Home() {
   return (
     <div className="page-home">
       <HeaderBar
-        scrolled={scrolled}
+        scrolled={true}
         dropdownOpen={dropdownOpen}
         setDropdownOpen={setDropdownOpen}
         contactInfo={home.contactSection}
         setShowBooking={setShowBooking}
       />
 
-      {sliderSection()}
-      {brandBanner()}
-      {/* {brandsSection()} */}
-      {ourBrands()}
-      {eventsSection()}
-      {/* {aboutSection()} */}
+      {/* {sliderSection()} */}
+
+      {imageSection()}
+
+      {roomSection()}
+
+      {servicesSection()}
 
       <Footer contactInfo={home.contactSection} />
     </div>
   );
+
+  function imageSection() {
+    return (
+      <div className="everleaf-wrapper">
+        {/* IMAGE GRID */}
+        <div className="el-grid">
+          <img src="/assets/jim-cor.jpg" alt="Forest" />
+          <img src="/assets/mussorie.jpg" alt="Walk" />
+          <img src="/assets/rishikesh.jpg" alt="Cabin" />
+          <img src="/assets/taj.jpg" alt="Room" />
+        </div>
+
+        {/* TEXT SECTION */}
+        <section className="el-text-section">
+          <h2>Where the Forest Inspires Every Step</h2>
+
+          <p>
+            We believe that nature holds the key to balance, clarity, and
+            inspiration. That's why everything we create is rooted in the calm
+            strength of the forest — a place where stillness and beauty grow
+            side by side. Our mission is to bring a sense of natural harmony
+            into your everyday life through thoughtful design and intentional
+            simplicity.
+          </p>
+        </section>
+
+        {showBooking && <BookingSearchBox />}
+      </div>
+    );
+  }
+
+  function servicesSection() {
+    return (
+      <section className="rc-container">
+        <h4 className="rc-subtitle">ROYAL CULTURE</h4>
+        <h2 className="rc-title">
+          We take pride in our attention to detail, personalized service, and
+          commitment to exceeding your expectations.
+        </h2>
+
+        <div className="rc-grid">
+          {features.map((item) => (
+            <div
+              key={item.id}
+              className={`rc-card ${item.highlight ? "rc-card-dark" : ""}`}
+            >
+              <div className="rc-icon">{item.icon}</div>
+              <h3 className="rc-card-title">{item.title}</h3>
+              <p className="rc-card-desc">{item.desc}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+    );
+  }
+
+  function roomSection() {
+    return (
+      <section className="rooms-section">
+        <div className="rooms-header">
+          <h4 className="rooms-subtitle">ROOMS & SUITES</h4>
+          <h2 className="rooms-title">
+            Experience Top-Notch Best <br /> On Hospitality At Our Hotels
+          </h2>
+        </div>
+
+        <div className="rooms-grid">
+          {rooms.map((room) => (
+            <div key={room.id} className="room-card">
+              <div className="room-image-wrapper">
+                <img src={room.image} alt={room.title} className="room-image" />
+                <div className="room-price">{room.price}</div>
+              </div>
+
+              <div className="room-content">
+                <div className="room-id">{room.id}</div>
+                <h3 className="room-name">{room.title}</h3>
+
+                <div className="room-stars">{"⭐".repeat(room.stars)}</div>
+
+                <p className="room-desc">{room.desc}</p>
+
+                <div className="room-features">
+                  <span>🛏 {room.bed}</span>
+                  <span>📐 {room.size}</span>
+                </div>
+
+                <button className="room-btn">VIEW DETAILS</button>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="rooms-explore-wrapper">
+          <button className="explore-btn">EXPLORE ALL →</button>
+        </div>
+      </section>
+    );
+  }
 
   function sliderSection() {
     return (
@@ -280,236 +457,6 @@ export default function Home() {
               className={`dot ${i + 1 === index ? "active" : ""}`}
               onClick={() => setIndex(i + 1)}
             />
-          ))}
-        </div>
-      </section>
-    );
-  }
-
-  function brandBanner() {
-    const banner = home.brandBanner;
-    return (
-      <section className="brand-banner-premium">
-        <div className="brand-banner-inner">
-          <h2 className="brand-banner-title">{banner.title}</h2>
-          <p className="brand-banner-sub">{banner.subtitle}</p>
-
-          <div className="brand-banner-contacts">
-            <div
-              className="bb-contact"
-              onClick={() =>
-                (window.location.href = `tel:${home.contactSection.reservationPhone}`)
-              }
-            >
-              {<FaPhoneAlt />} {home.contactSection.reservationPhone}
-            </div>
-            <div
-              className="bb-contact"
-              onClick={() =>
-                (window.location.href = `mailto:${home.contactSection.email}`)
-              }
-            >
-              {<FaEnvelope />} {home.contactSection.email}
-            </div>
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  function ourBrands() {
-    const section = home.brandSection;
-    const title = section.title || "OUR BRANDS";
-    const brands = section.blocks || [];
-    return (
-      <section
-        className="events-conf-section"
-        style={{ background: "#e9e6e6ff" }}
-      >
-        {/* HEADER ROW */}
-        <div className="events-conf-header">
-          <div className="events-conf-title-wrap">
-            <span className="line" />
-            <h2 className="events-conf-title">{title}</h2>
-          </div>
-
-          <p className="events-conf-sub">
-            From a luxury urban sanctum to the halls of royalty, an idyllic
-            resort to a jungle clearing, our 5-star hotels and luxury resorts
-            bring your imagination to life.
-          </p>
-        </div>
-
-        {/* CARDS */}
-        <div className="events-conf-cards">
-          {brands.map((brand) => (
-            // <div key={brand.id} className="events-conf-card">
-            <div className="events-conf-card">
-              <img
-                src={"http://localhost:8080" + brand.imageUrl}
-                alt={brand.title}
-                className="events-conf-image"
-              />
-              <div className="events-conf-caption">
-                <span>{brand.text}</span>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-    );
-  }
-
-  function brandsSection() {
-    const section = home.brandSection;
-    const title = section.title || "OUR BRANDS";
-    const blocks = section.blocks || [];
-
-    return (
-      <section className="brands-section">
-        <h2 className="brands-title">{title}</h2>
-
-        <div className="brands-inner">
-          {blocks.map((details, i) => {
-            const isImageLeft = details.layout === "image-left-text-right";
-
-            return (
-              <div
-                className={`brand-sub-row ${
-                  isImageLeft ? "image-left" : "image-right"
-                }`}
-                key={i}
-              >
-                {/* LEFT side */}
-                {isImageLeft ? (
-                  <>
-                    <div className="brand-sub-image-wrap">
-                      <img
-                        src={details.imageUrl}
-                        alt=""
-                        className="brand-sub-image"
-                      />
-                    </div>
-                    <div className="brand-sub-text-wrap">
-                      <p className="brand-sub-desc">{details.text}</p>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <div className="brand-sub-text-wrap">
-                      <p className="brand-sub-desc">{details.text}</p>
-                    </div>
-                    <div className="brand-sub-image-wrap">
-                      <img
-                        src={details.imageUrl}
-                        alt=""
-                        className="brand-sub-image"
-                      />
-                    </div>
-                  </>
-                )}
-              </div>
-            );
-          })}
-        </div>
-      </section>
-    );
-  }
-
-  function eventsSection() {
-    const { title, events } = home.eventsSection;
-    const [idx, setIdx] = useState(0);
-
-    const left = events[(idx - 1 + events.length) % events.length];
-    const center = events[idx];
-    const right = events[(idx + 1) % events.length];
-
-    return (
-      <section className="events-conf-section">
-        <div className="events-conf-header">
-          <div className="events-conf-title-wrap">
-            <span className="line" />
-            <h2 className="events-conf-title">{title}</h2>
-          </div>
-
-          <p className="events-conf-sub">
-            From a luxury urban sanctum to the halls of royalty, an idyllic
-            resort to a jungle clearing, our 5-star hotels and luxury resorts
-            bring your imagination to life.
-          </p>
-        </div>
-
-        <div className="left-card">
-          {/* Left */}
-          <div className="side-card">
-            <img
-              src={"http://localhost:8080" + left.imageUrl}
-              className="side-img"
-            />
-            <div className="side-border" />
-            <div className="side-label">{left.title}</div>
-            <button
-              className="nav-arrow left"
-              onClick={() => setIdx((idx - 1 + events.length) % events.length)}
-            >
-              ‹
-            </button>
-          </div>
-
-          {/* Center */}
-          <div className="center-card">
-            <img
-              src={"http://localhost:8080" + center.imageUrl}
-              className="center-img"
-            />
-            <div className="center-box">
-              <h3>{center.title}</h3>
-              <p>{center.description}</p>
-            </div>
-          </div>
-
-          {/* Right */}
-          <div className="side-card">
-            <img
-              src={"http://localhost:8080" + right.imageUrl}
-              className="side-img"
-            />
-            <div className="side-border" />
-            <div className="side-label">{right.title}</div>
-            <button
-              className="nav-arrow right"
-              onClick={() => setIdx((idx + 1) % events.length)}
-            >
-              ›
-            </button>
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  function aboutSection() {
-    const a = home.aboutSection;
-
-    return (
-      <section className="about-section">
-        <div className="about-inner">
-          <h4 className="abt-title">{a.title}</h4>
-          <p className="abt-text">{a.description}</p>
-          <button
-            className="abt-btn"
-            onClick={() => (window.location.href = a.buttonLink)}
-          >
-            {a.buttonText}
-          </button>
-        </div>
-
-        <div className="stats-row">
-          {a.stats.map((s, i) => (
-            <div className="stat-box" key={i}>
-              <h2>{s.value}</h2>
-              <p>{s.label}</p>
-            </div>
           ))}
         </div>
       </section>

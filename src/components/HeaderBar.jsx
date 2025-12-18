@@ -195,9 +195,9 @@ export default function HeaderBar({
 
         {/* HAMBURGER + BOOK NOW */}
         <div className="header-cta">
-          <button className="hamburger-btn" onClick={toggleMenu}>
+          {/* <button className="hamburger-btn" onClick={toggleMenu}>
             <FaBars />
-          </button>
+          </button> */}
 
           <button
             className="book-now"

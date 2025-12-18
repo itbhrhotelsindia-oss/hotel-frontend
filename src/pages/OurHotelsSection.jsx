@@ -5,6 +5,7 @@ import Footer from "../components/Footer.jsx";
 import { useLocation } from "react-router-dom";
 import { FaFacebookF } from "react-icons/fa";
 import { bookingDialog } from "../components/bookingDialog.jsx";
+import { useNavigate } from "react-router-dom";
 
 export default function OurHotelsSection() {
   const [scrolled, setScrolled] = useState(false);
@@ -20,6 +21,7 @@ export default function OurHotelsSection() {
 
   const [ourHotelsData, setOurHotelsData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   const BASE_URL = "http://localhost:8080";
 
@@ -203,7 +205,13 @@ export default function OurHotelsSection() {
             <h2 className="dl-title">MICE 🏨</h2>
             <ul className="dl-list">
               {mice.locations.map((item, i) => (
-                <li key={i}>{item}</li>
+                <li
+                  key={i}
+                  className="dl-list-item"
+                  onClick={() => navigate(`/hotel-details/${item.i}`)}
+                >
+                  {item}
+                </li>
               ))}
             </ul>
           </div>

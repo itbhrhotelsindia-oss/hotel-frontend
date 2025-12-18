@@ -151,7 +151,7 @@
   text-align: center;
   padding: 60px;
   margin: 40px 0;
-  background-color: #e9e6e6ff;
+  background-color: var(--base-gold);
 }
 
 .destinations-title {
@@ -442,4 +442,13 @@
   .dl-text {
     width: 100%;
   }
+}
+
+.dl-list-item {
+  cursor: pointer;
+  color: #cfa349;
+}
+
+.dl-list-item:hover {
+  text-decoration: underline;
 }
