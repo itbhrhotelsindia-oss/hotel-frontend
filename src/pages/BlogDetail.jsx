@@ -6,7 +6,7 @@ export default function BlogDetail() {
   const blog = {
     title: "How to Increase Your Home’s Curb Appeal in a Weekend",
     slug: "increase-home-curb-appeal",
-    image: "/assets/india-gate.jpeg",
+    image: "/assets/g1.png",
     date: "Feb 19, 2025",
     category: "News",
     content:

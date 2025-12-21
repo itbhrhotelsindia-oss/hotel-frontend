@@ -6,11 +6,11 @@ import BookingSearchBox from "./BookingSearchBox.jsx";
 
 const FALLBACK = {
   heroImages: [
-    "/assets/hero1.png",
-    "/assets/hero2.png",
-    "/assets/brand-2.png",
-    "/assets/hero2.png",
-    "/assets/brand-2.png",
+    "/assets/img1.jpg",
+    "/assets/img2.jpg",
+    "/assets/slider-3.jpg",
+    "/assets/slider-1.jpg",
+    "/assets/slider-2.jpg",
   ],
   brandSection: {
     title: "OUR BRANDS",
@@ -18,22 +18,22 @@ const FALLBACK = {
       {
         layout: "text-left-image-right",
         text: "Experience the pinnacle of refined Indian luxury...",
-        imageUrl: "/assets/brand-1.png",
+        imageUrl: "/assets/slider-2.jpg",
       },
       {
         layout: "image-left-text-right",
         text: "Dynamic, stylish, and connected to India’s urban lifestyle...",
-        imageUrl: "/assets/brand-1.png",
+        imageUrl: "/assets/slider-1.jpg",
       },
       {
         layout: "image-left-text-right",
         text: "Dynamic, stylish, and connected to India’s evolving lifestyle...",
-        imageUrl: "/assets/brand-1.png",
+        imageUrl: "/assets/img1.jpg",
       },
       {
         layout: "text-left-image-right",
         text: "Dynamic, stylish, and connected to India’s evolving lifestyle...",
-        imageUrl: "/assets/brand-1.png",
+        imageUrl: "/assets/img3.jpg",
       },
     ],
   },

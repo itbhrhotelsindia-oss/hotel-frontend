@@ -21,9 +21,9 @@ export default function EventsSection() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
   const slides = [
-    "/assets/jim-cor.jpg",
-    "/assets/mussorie.jpg",
-    "/assets/rishikesh.jpg",
+    "/assets/slider-1.jpg",
+    "/assets/img1.jpg",
+    "/assets/img2.jpg",
   ];
 
   return (
@@ -89,7 +89,7 @@ export default function EventsSection() {
             onClick={() => setSelected("family")}
           >
             <img
-              src="/assets/brand-1.png"
+              src="/assets/img1.jpg"
               alt="Family Events"
               className="event-img"
             />
@@ -102,7 +102,7 @@ export default function EventsSection() {
             onClick={() => setSelected("business")}
           >
             <img
-              src="/assets/brand-2.png"
+              src="/assets/img2.jpg"
               alt="Business Meetings"
               className="event-img"
             />

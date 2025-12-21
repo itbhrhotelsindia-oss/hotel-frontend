@@ -79,37 +79,37 @@ export default function OurHotelsSection() {
     {
       city: "Delhi",
       subtitle: "Exciting! From 9999",
-      image: "/assets/india-gate.jpeg",
+      image: "/assets/img1.jpg",
     },
     {
       city: "Agra",
       subtitle: "Taj Mahal Awaits",
-      image: "/assets/taj.jpg",
+      image: "/assets/img2.jpg",
     },
     {
       city: "Jim Corrbet",
       subtitle: "Future City",
-      image: "/assets/jim-cor.jpg",
+      image: "/assets/img3.jpg",
     },
     {
       city: "Mussorie",
       subtitle: "Future City",
-      image: "/assets/mussorie.jpg",
+      image: "/assets/slider-2.jpg",
     },
     {
       city: "Rishikesh",
       subtitle: "Future City",
-      image: "/assets/rishikesh.jpg",
+      image: "/assets/slider-1.jpg",
     },
     {
       city: "Ayodhya",
       subtitle: "Future City",
-      image: "/assets/g4.png",
+      image: "/assets/slider-3.jpg",
     },
     {
       city: "Lucknow",
       subtitle: "Future City",
-      image: "/assets/g3.png",
+      image: "/assets/slider-1.jpg",
     },
   ];
   // 🟢 Safe to destructure now!
@@ -198,7 +198,7 @@ export default function OurHotelsSection() {
       <section className="destination-list-section">
         {/* Row 1 - MICE */}
         <div className="destination-row">
-          <img src="/assets/jim-cor.jpg" alt="MICE" className="dl-image" />
+          <img src="/assets/img1.jpg" alt="MICE" className="dl-image" />
 
           <div className="dl-text">
             <h2 className="dl-title">MICE 🏨</h2>
@@ -217,7 +217,7 @@ export default function OurHotelsSection() {
         </div>
 
         <div className="destination-row reverse">
-          <img src="/assets/rishikesh.jpg" alt="Wedding" className="dl-image" />
+          <img src="/assets/slider-2.jpg" alt="Wedding" className="dl-image" />
 
           <div className="dl-text">
             <h2 className="dl-title">Wedding 💍</h2>
@@ -230,7 +230,7 @@ export default function OurHotelsSection() {
         </div>
 
         <div className="destination-row">
-          <img src="/assets/jim-cor.jpg" alt="MICE" className="dl-image" />
+          <img src="/assets/img3.jpg" alt="MICE" className="dl-image" />
 
           <div className="dl-text">
             <h2 className="dl-title">PILIGRAM 🏨</h2>
@@ -243,7 +243,7 @@ export default function OurHotelsSection() {
         </div>
 
         <div className="destination-row reverse">
-          <img src="/assets/rishikesh.jpg" alt="Wedding" className="dl-image" />
+          <img src="/assets/img2.jpg" alt="Wedding" className="dl-image" />
 
           <div className="dl-text">
             <h2 className="dl-title">WEEKEND 💍</h2>

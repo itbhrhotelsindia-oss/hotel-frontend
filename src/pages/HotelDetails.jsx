@@ -12,11 +12,11 @@ import BookingSearchBox from "./BookingSearchBox.jsx";
 
 const FALLBACK = {
   heroImages: [
-    "/assets/hero1.png",
-    "/assets/hero2.png",
-    "/assets/brand-2.png",
-    "/assets/hero2.png",
-    "/assets/brand-2.png",
+    "/assets/img1.jpg",
+    "/assets/img2.jpg",
+    "/assets/slider-1.jpg",
+    "/assets/slider-2.jpg",
+    "/assets/img3.jpg",
   ],
   brandSection: {
     title: "OUR BRANDS",
@@ -24,22 +24,22 @@ const FALLBACK = {
       {
         layout: "text-left-image-right",
         text: "Experience the pinnacle of refined Indian luxury...",
-        imageUrl: "/assets/brand-1.png",
+        imageUrl: "/assets/slider-1.jpg",
       },
       {
         layout: "image-left-text-right",
         text: "Dynamic, stylish, and connected to India’s urban lifestyle...",
-        imageUrl: "/assets/brand-1.png",
+        imageUrl: "/assets/slider-2.jpg",
       },
       {
         layout: "image-left-text-right",
         text: "Dynamic, stylish, and connected to India’s evolving lifestyle...",
-        imageUrl: "/assets/brand-1.png",
+        imageUrl: "/assets/slider-3.jpg",
       },
       {
         layout: "text-left-image-right",
         text: "Dynamic, stylish, and connected to India’s evolving lifestyle...",
-        imageUrl: "/assets/brand-1.png",
+        imageUrl: "/assets/img2.jpg",
       },
     ],
   },
@@ -137,7 +137,7 @@ export default function HotelDetails() {
       bed: "King Bed",
       size: "1500 sqft / Room",
       desc: "We have sixteen Executive Deluxe rooms for only BDT. 5555+ with King size bed.",
-      image: "/assets/jim-cor.jpg",
+      image: "/assets/g1.png",
     },
     {
       id: "02",
@@ -147,7 +147,7 @@ export default function HotelDetails() {
       bed: "King Bed",
       size: "1500 sqft / Room",
       desc: "Experience premier luxury with spacious interiors & premium amenities.",
-      image: "/assets/rishikesh.jpg",
+      image: "/assets/img1.jpg",
     },
     {
       id: "03",
@@ -157,7 +157,7 @@ export default function HotelDetails() {
       bed: "King Bed",
       size: "1500 sqft / Room",
       desc: "Wake up to breathtaking ocean views and luxurious comfort.",
-      image: "/assets/taj.jpg",
+      image: "/assets/img2.jpg",
     },
     {
       id: "04",
@@ -167,7 +167,7 @@ export default function HotelDetails() {
       bed: "2 King Beds",
       size: "1500 sqft / Room",
       desc: "Perfect for families — two king beds and spacious interiors.",
-      image: "/assets/mussorie.jpg",
+      image: "/assets/img3.jpg",
     },
   ];
 
@@ -317,10 +317,10 @@ export default function HotelDetails() {
       <div className="everleaf-wrapper">
         {/* IMAGE GRID */}
         <div className="el-grid">
-          <img src="/assets/jim-cor.jpg" alt="Forest" />
-          <img src="/assets/mussorie.jpg" alt="Walk" />
-          <img src="/assets/rishikesh.jpg" alt="Cabin" />
-          <img src="/assets/taj.jpg" alt="Room" />
+          <img src="/assets/img1.jpg" alt="Forest" />
+          <img src="/assets/img2.jpg" alt="Walk" />
+          <img src="/assets/img3.jpg" alt="Cabin" />
+          <img src="/assets/g1.png" alt="Room" />
         </div>
 
         {/* TEXT SECTION */}

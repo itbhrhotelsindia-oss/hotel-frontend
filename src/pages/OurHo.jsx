@@ -4,25 +4,103 @@ import Footer from "../components/Footer.jsx";
 import { useLocation } from "react-router-dom";
 
 const HOTELS = [
-  { id: 1, city: "Srinagar", name: "BHR Srinagar", state: "J&K", region: "North", x: 23, y: 12 },
-  { id: 2, city: "Amritsar", name: "BHR Amritsar", state: "Punjab", region: "North", x: 34, y: 19 },
-  { id: 3, city: "Jaipur", name: "BHR Jaipur", state: "Rajasthan", region: "North", x: 42, y: 40 },
-  { id: 4, city: "Delhi", name: "BHR New Delhi", state: "Delhi", region: "North", x: 55, y: 35 },
-  { id: 5, city: "Ahmedabad", name: "BHR Ahmedabad", state: "Gujarat", region: "West", x: 32, y: 55 },
-  { id: 6, city: "Mumbai", name: "BHR Mumbai", state: "Maharashtra", region: "West", x: 40, y: 65 },
-  { id: 7, city: "Goa", name: "BHR Goa", state: "Goa", region: "West", x: 35, y: 72 },
-  { id: 8, city: "Kolkata", name: "BHR Kolkata", state: "West Bengal", region: "East", x: 73, y: 55 },
-  { id: 9, city: "Hyderabad", name: "BHR Hyderabad", state: "Telangana", region: "South", x: 50, y: 68 },
-  { id: 10, city: "Bengaluru", name: "BHR Bengaluru", state: "Karnataka", region: "South", x: 52, y: 78 },
+  {
+    id: 1,
+    city: "Srinagar",
+    name: "BHR Srinagar",
+    state: "J&K",
+    region: "North",
+    x: 23,
+    y: 12,
+  },
+  {
+    id: 2,
+    city: "Amritsar",
+    name: "BHR Amritsar",
+    state: "Punjab",
+    region: "North",
+    x: 34,
+    y: 19,
+  },
+  {
+    id: 3,
+    city: "Jaipur",
+    name: "BHR Jaipur",
+    state: "Rajasthan",
+    region: "North",
+    x: 42,
+    y: 40,
+  },
+  {
+    id: 4,
+    city: "Delhi",
+    name: "BHR New Delhi",
+    state: "Delhi",
+    region: "North",
+    x: 55,
+    y: 35,
+  },
+  {
+    id: 5,
+    city: "Ahmedabad",
+    name: "BHR Ahmedabad",
+    state: "Gujarat",
+    region: "West",
+    x: 32,
+    y: 55,
+  },
+  {
+    id: 6,
+    city: "Mumbai",
+    name: "BHR Mumbai",
+    state: "Maharashtra",
+    region: "West",
+    x: 40,
+    y: 65,
+  },
+  {
+    id: 7,
+    city: "Goa",
+    name: "BHR Goa",
+    state: "Goa",
+    region: "West",
+    x: 35,
+    y: 72,
+  },
+  {
+    id: 8,
+    city: "Kolkata",
+    name: "BHR Kolkata",
+    state: "West Bengal",
+    region: "East",
+    x: 73,
+    y: 55,
+  },
+  {
+    id: 9,
+    city: "Hyderabad",
+    name: "BHR Hyderabad",
+    state: "Telangana",
+    region: "South",
+    x: 50,
+    y: 68,
+  },
+  {
+    id: 10,
+    city: "Bengaluru",
+    name: "BHR Bengaluru",
+    state: "Karnataka",
+    region: "South",
+    x: 52,
+    y: 78,
+  },
 ];
 
 const REGIONS = ["All", "North", "West", "South", "East"];
 
 export default function OurHotels() {
-
-
-    const location = useLocation();
-    const contactInfo = location.state?.contactInfo || {};
+  const location = useLocation();
+  const contactInfo = location.state?.contactInfo || {};
   /* ------------------------------
      HEADER SCROLL EFFECT
   ------------------------------ */
@@ -68,9 +146,9 @@ export default function OurHotels() {
         setDropdownOpen={setDropdownOpen}
         bgColor="#e8e8e8"
         contactInfo={contactInfo}
-          />
+      />
 
-          {/* Spacer so content does not hide behind sticky header */}
+      {/* Spacer so content does not hide behind sticky header */}
       <div style={{ height: "140px" }}></div>
 
       {/* ------------------------------
@@ -79,8 +157,9 @@ export default function OurHotels() {
       <section className="our-hotels-hero">
         <h1 className="section-heading">Our Destinations</h1>
         <p className="our-hotels-sub">
-          Embark on a journey through the heart of India with BHR Hotels, where every destination
-          blends vibrant culture, rich heritage, and warm Indian hospitality.
+          Embark on a journey through the heart of India with BHR Hotels, where
+          every destination blends vibrant culture, rich heritage, and warm
+          Indian hospitality.
         </p>
 
         <div className="our-hotels-filters">
@@ -114,7 +193,7 @@ export default function OurHotels() {
         <div className="our-hotels-map">
           <div className="oh-map-inner">
             <img
-              src="/assets/india-map.jpg"
+              src="/assets/img1.jpg"
               alt="India map with BHR hotel locations"
               className="oh-map-img"
               draggable="false"
@@ -124,7 +203,8 @@ export default function OurHotels() {
               <button
                 key={hotel.id}
                 className={
-                  "oh-pin" + (hotel.id === activeHotelId ? " oh-pin-active" : "")
+                  "oh-pin" +
+                  (hotel.id === activeHotelId ? " oh-pin-active" : "")
                 }
                 style={{
                   left: `${hotel.x}%`,
@@ -154,8 +234,8 @@ export default function OurHotels() {
         <aside className="our-hotels-list">
           <h2 className="oh-list-title">All Destinations</h2>
           <p className="oh-list-count">
-            Showing <strong>{filteredHotels.length}</strong> of{" "}
-            {HOTELS.length} locations
+            Showing <strong>{filteredHotels.length}</strong> of {HOTELS.length}{" "}
+            locations
           </p>
 
           <div className="oh-list-scroll">

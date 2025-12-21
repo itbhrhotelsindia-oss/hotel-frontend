@@ -56,32 +56,32 @@ export default function BlogSection() {
       id: "1",
       title: "Cultural Heritage",
       subtitle: "10+ Locations",
-      image: "/assets/india-gate.jpeg",
+      image: "/assets/g1.png",
     },
     {
       id: "2",
       title: "Exotic Safari",
       subtitle: "07+ Safaris",
-      image: "/assets/jim-cor.jpg",
+      image: "/assets/g2.png",
     },
     {
       id: "3",
       title: "Adventure Tours",
       subtitle: "40% Discount",
       promo: false,
-      image: "/assets/mussorie.jpg",
+      image: "/assets/g3.png",
     },
     {
       id: "4",
       title: "Alpine Adventures",
       subtitle: "15+ Locations",
-      image: "/assets/mussorie.jpg",
+      image: "/assets/g4.png",
     },
     {
       id: "5",
       title: "Island Getaway",
       subtitle: "12+ Locations",
-      image: "/assets/taj.jpg",
+      image: "/assets/img3.jpg",
     },
   ];
 
@@ -139,7 +139,7 @@ export default function BlogSection() {
       <section className="locals-section">
         {/* LEFT ROUND IMAGE */}
         <div className="locals-img-left">
-          <img src="/assets/rishikesh.jpg" alt="Local Experts" />
+          <img src="/assets/slider-2.jpg" alt="Local Experts" />
         </div>
 
         {/* CENTER TEXT CONTENT */}
@@ -165,7 +165,7 @@ export default function BlogSection() {
 
         {/* RIGHT ROUND IMAGE */}
         <div className="locals-img-right">
-          <img src="/assets/taj.jpg" alt="Resort Area" />
+          <img src="/assets/img1.jpg" alt="Resort Area" />
         </div>
       </section>
 
@@ -315,7 +315,7 @@ export default function BlogSection() {
         <div className="adventure-grid">
           {/* CARD 1 */}
           <div className="adv-card">
-            <img src="/assets/jim-cor.jpg" alt="Cultural Heritage" />
+            <img src="/assets/img1.jpg" alt="Cultural Heritage" />
             <div className="adv-info">
               <h3>Cultural Heritage</h3>
               <span>10+ Locations</span>
@@ -324,7 +324,7 @@ export default function BlogSection() {
 
           {/* CARD 2 */}
           <div className="adv-card">
-            <img src="/assets/india-gate.jpeg" alt="Exotic Safari" />
+            <img src="/assets/img2.jpg" alt="Exotic Safari" />
             <div className="adv-info">
               <h3>Exotic Safari</h3>
               <span>07+ Safaris</span>
@@ -342,7 +342,7 @@ export default function BlogSection() {
 
           {/* CARD 4 */}
           <div className="adv-card horizontal">
-            <img src="/assets/mussorie.jpg" alt="Alpine Adventures" />
+            <img src="/assets/img3.jpg" alt="Alpine Adventures" />
             <div className="adv-info">
               <h3>Alpine Adventures</h3>
               <span>15+ Locations</span>
@@ -351,7 +351,7 @@ export default function BlogSection() {
 
           {/* CARD 5 */}
           <div className="adv-card">
-            <img src="/assets/rishikesh.jpg" alt="Island Getaway" />
+            <img src="/assets/g1.png" alt="Island Getaway" />
             <div className="adv-info">
               <h3>Island Getaway</h3>
               <span>12+ Locations</span>
