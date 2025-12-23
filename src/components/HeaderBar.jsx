@@ -193,7 +193,7 @@ export default function HeaderBar({
           {/* <button className="hamburger-btn" onClick={toggleMenu}>
             <FaBars />
           </button> */}
-          <div class="coming-soon-tag">COMING SOON</div>
+          {/* <div class="coming-soon-tag">COMING SOON</div> */}
           <button
             className="book-now"
             onClick={() => {
@@ -240,23 +240,30 @@ export default function HeaderBar({
   // TOP BAR FUNCTION
   function topBar() {
     return (
-      <div className="header-top">
-        <div className="topbar-premium">
-          <div className="topbar-inner container">
-            <div className="topbar-left">
-              <span className="topbar-item">
-                <FaEnvelope /> {contactInfo.email}
-              </span>
-              <span className="topbar-item">
-                <FaPhoneAlt /> For Reservation’s: {contactInfo.reservationPhone}
-              </span>
-            </div>
+      <div className="topbar-premium">
+        <div className="topbar-inner container">
+          <div className="topbar-left">
+            <span className="topbar-item">
+              <FaEnvelope />
+              <a href={`mailto:${contactInfo.email}`} className="topbar-link">
+                {contactInfo.email}
+              </a>
+            </span>
+            <span className="topbar-item">
+              <FaPhoneAlt /> For Reservation’s:
+              <a
+                href={`tel:${contactInfo.reservationPhone}`}
+                className="topbar-link"
+              >
+                {contactInfo.reservationPhone}
+              </a>
+            </span>
+          </div>
 
-            <div className="topbar-right">
-              <span className="topbar-tag">
-                Luxury Hospitality · Since {contactInfo.companySince}
-              </span>
-            </div>
+          <div className="topbar-right">
+            <span className="topbar-tag">
+              Luxury Hospitality · Since {contactInfo.companySince}
+            </span>
           </div>
         </div>
       </div>

@@ -33,9 +33,9 @@ export default function ModernSlider({
       style={{ backgroundImage: `url(${images[index]})` }}
     >
       {/* CENTER IMAGE */}
-      <div className="slider-card">
+      {/* <div className="slider-card">
         <img src={images[index]} alt="slide" />
-      </div>
+      </div> */}
 
       {/* LEFT ARROW */}
       {/* <button className="arrow left" onClick={prevSlide}>

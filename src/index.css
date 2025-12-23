@@ -9,10 +9,14 @@
   --brand-light: #2b374d;
   --brand-logo-dark-color: #1a2435;
   --brand-logo-light-color: #2b374d;
+  --brand-top-bar-gradient: linear-gradient(90deg, #6c80a5,#4a5b7b, #2b374d);
   --brand-dark-gradient: linear-gradient(90deg, #2b374d, #1a2435);
   --brand-logo-gradient: linear-gradient(270deg, #2b374d, #3f4b63);
   --brand-blue-gradient: linear-gradient(270deg, #2b374d, #46546f);
+  --brand-gold-gradient:linear-gradient(to right, #cca15f, #ab7836, #bd8d45);
   --brand-gold: #cfa349;
+  --brand-gold-footer: #f8ebdc; 
+  --brand-footer-text: #2b3a45;
   --brand-white: #ffffff;
   --brand-black: #111111;
   --brand-gold-dark: #a6781f;
@@ -77,7 +81,7 @@ button {
    =========================================================== */
 .topbar-premium {
   width: 100%;
-  background: linear-gradient(to right, #cca15f, #ab7836, #bd8d45);
+  background: var(--brand-top-bar-gradient);
   color: #f9f9f9;
   font-size: 14px;
   letter-spacing: 0.4px;
@@ -102,6 +106,15 @@ button {
   align-items: center;
 }
 
+.topbar-link {
+  color: inherit;     /* same color as text */
+  text-decoration: none;
+  margin-left: 5px;
+}
+
+.topbar-link:hover {
+  text-decoration: underline;
+}
 .topbar-item {
   opacity: 0.95;
   transition: 0.18s ease;
@@ -2001,7 +2014,7 @@ input:focus {
 }
 
 .events-conf-sub {
-  max-width: 420px;
+  max-width: 720px;
   font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 16px;
   line-height: 1.6;
@@ -2019,8 +2032,8 @@ input:focus {
 
 .events-conf-card {
   position: relative;
-  min-width: 420px;
-  max-width: 520px;
+  min-width: 300px;
+  max-width: 300px;
   background: #f6f6f6;
   overflow: hidden;
 }
@@ -2234,3 +2247,49 @@ input:focus {
 }
 
 
+/* Wrapper Grid */
+.brand-card-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 35px;
+  padding: 20px 0;
+}
+
+/* Card */
+.brand-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 25px;
+  text-align: center;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+
+/* Hover effect */
+.brand-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+}
+
+/* Image */
+.brand-image {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.brand-title {
+  font-size: 22px;
+  font-weight: 700;
+  font-family: "Playfair Display", serif;
+  margin-bottom: 12px;
+}
+
+.brand-description {
+  font-size: 15px;
+  color: #555;
+  line-height: 1.7;
+  padding: 0 10px;
+}

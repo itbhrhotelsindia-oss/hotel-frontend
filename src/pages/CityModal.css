@@ -162,3 +162,20 @@
   font-weight: 700;
   color: var(--brand-gold-dark);
 }
+
+.hotel-services {
+  display: flex;
+  gap: 8px;
+  margin: 10px 0 15px;
+  flex-wrap: wrap;
+}
+
+.service-badge {
+  background: #f7f7f7;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  border: 1px solid #ddd;
+  color: #333;
+  font-weight: 500;
+}

@@ -150,8 +150,6 @@
   width: 100%;
   text-align: center;
   padding: 60px;
-  margin: 40px 0;
-  background-color: var(--base-gold);
 }
 
 .destinations-title {
@@ -168,8 +166,8 @@
 }
 
 .destination-card {
-  width: 300px;
-  height: 200px;
+  width: 400px;
+  height: 300px;
   position: relative;
   overflow: hidden;
   border-radius: 10px;

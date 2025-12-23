@@ -2,66 +2,66 @@
    STATS BANNER (3 COLUMN BAR)
 ================================ */
 .stats-banner {
-    max-width: 1400px;
-    margin: 40px auto;
-    background: var(--brand-blue-gradient);
-    padding: 20px 0;
-    margin-top: 40px;
+  max-width: 1400px;
+  margin: 40px auto;
+  background: var(--brand-gold-gradient);
+  padding: 20px 0;
+  margin-top: 40px;
 }
 
 .stats-banner-inner {
-    max-width: 1400px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    text-align: center;
-    color: #fff;
-    gap: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  text-align: center;
+  color: #fff;
+  gap: 20px;
 }
 
 .stat-item h2 {
-    font-size: 48px;
-    font-weight: 700;
-    margin-bottom: 6px;
+  font-size: 48px;
+  font-weight: 700;
+  margin-bottom: 6px;
 }
 
 .stat-item p {
-    font-size: 22px;
-    font-weight: 500;
-    margin: 0;
+  font-size: 22px;
+  font-weight: 500;
+  margin: 0;
 }
 
 /* ================================
    DESCRIPTION SECTION
 ================================ */
 .wedding-description {
-    max-width: 1200px;
-    margin: 60px auto;
-    padding: 0 30px;
+  max-width: 1200px;
+  margin: 60px auto;
+  padding: 0 30px;
 }
 
 .wedding-description p {
-    font-size: 18px;
-    line-height: 1.9;
-    color: #333;
+  font-size: 18px;
+  line-height: 1.9;
+  color: #333;
 }
 
 /* Responsive */
 @media (max-width: 900px) {
-    .stats-banner-inner {
-        grid-template-columns: 1fr;
-        row-gap: 30px;
-    }
+  .stats-banner-inner {
+    grid-template-columns: 1fr;
+    row-gap: 30px;
+  }
 
-    .stat-item h2 {
-        font-size: 40px;
-    }
+  .stat-item h2 {
+    font-size: 40px;
+  }
 }
 
 .video-section {
-    margin: 60px auto;
-    max-width: 1400px;
-    text-align: center;
+  margin: 60px auto;
+  max-width: 1400px;
+  text-align: center;
 }
 
 /* ===============================
@@ -69,115 +69,115 @@
 ================================= */
 
 .enquiry-section {
-    max-width: 900px;
-    margin: 60px auto;
-    padding: 0 20px;
+  max-width: 900px;
+  margin: 60px auto;
+  padding: 0 20px;
 }
 
 .enquiry-title {
-    text-align: center;
-    font-size: 36px;
-    font-family: "Georgia", serif;
-    color: var(--brand-gold-dark);
-    margin-bottom: 40px;
-    font-weight: bold;
+  text-align: center;
+  font-size: 36px;
+  font-family: "Georgia", serif;
+  color: var(--brand-gold-dark);
+  margin-bottom: 40px;
+  font-weight: bold;
 }
 
 /* FORM */
 .enquiry-form {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
 
 .enquiry-form label {
-    font-size: 16px;
-    color: #333;
-    font-weight: 600;
-    margin-top: 10px;
+  font-size: 16px;
+  color: #333;
+  font-weight: 600;
+  margin-top: 10px;
 }
 
 /* INPUT FIELD */
 .enquiry-form input,
 .enquiry-form select,
 .enquiry-form textarea {
-    width: 100%;
-    padding: 14px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    font-size: 16px;
-    outline: none;
-    background: #fafafa;
+  width: 100%;
+  padding: 14px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  outline: none;
+  background: #fafafa;
 }
 
 .enquiry-form input:focus,
 .enquiry-form select:focus,
 .enquiry-form textarea:focus {
-    border-color: #6A2C2C;
+  border-color: #6a2c2c;
 }
 
 /* PHONE INPUT (FLAG + NUMBER) */
 .phone-wrapper {
-    display: flex;
-    gap: 10px;
+  display: flex;
+  gap: 10px;
 }
 
 .phone-code {
-    width: 120px;
-    padding: 14px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    background: #ffffff;
-    font-size: 16px;
+  width: 120px;
+  padding: 14px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background: #ffffff;
+  font-size: 16px;
 }
 
 /* SUBMIT BUTTON */
 .submit-btn {
-    background: var(--brand-blue-gradient);  
-    color: #fff;
-    padding: 16px;
-    border: none;
-    width: 100%;
-    margin-top: 20px;
-    font-size: 18px;
-    font-weight: 600;
-    border-radius: 6px;
-    cursor: pointer;
+  background: var(--brand-blue-gradient);
+  color: #fff;
+  padding: 16px;
+  border: none;
+  width: 100%;
+  margin-top: 20px;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
 }
 
 .submit-btn:hover {
-    opacity: 0.9;
+  opacity: 0.9;
 }
 
 /* BOOK A SHOWAROUND */
 .showaround-container {
-    text-align: center;
-    margin-top: 30px;
+  text-align: center;
+  margin-top: 30px;
 }
 
 .showaround-btn {
-    background: var(--brand-blue-gradient);  
-    color: white;
-    padding: 14px 30px;
-    border-radius: 6px;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
+  background: var(--brand-blue-gradient);
+  color: white;
+  padding: 14px 30px;
+  border-radius: 6px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
 }
 
 .showaround-btn:hover {
-    opacity: 0.9;
+  opacity: 0.9;
 }
 
 /* RESPONSIVE */
 @media (max-width: 600px) {
-    .phone-wrapper {
-        flex-direction: column;
-    }
+  .phone-wrapper {
+    flex-direction: column;
+  }
 
-    .phone-code {
-        width: 100%;
-    }
+  .phone-code {
+    width: 100%;
+  }
 }
 
 /* ================================
@@ -185,112 +185,275 @@
 ================================ */
 
 .wedding-section {
-    max-width: 1500px;
-    margin: 80px auto;
-    padding: 0 20px;
-    text-align: center;
+  max-width: 1200px;
+  margin: 80px auto;
+  padding: 0 20px;
+  text-align: center;
 }
 
 .wedding-title {
-    font-size: 36px;
-    font-family: "Georgia", serif;
-    color: var(--brand-gold-dark);
-    margin-bottom: 20px;
+  font-size: 36px;
+  font-family: "Georgia", serif;
+  color: var(--brand-gold-dark);
+  margin-bottom: 20px;
 }
 
 .wedding-subtitle {
-    max-width: 1500px;
-    margin: 0 auto 60px;
-    line-height: 1.8;
-    font-size: 17px;
-    color: #333;
+  max-width: 1500px;
+  margin: 0 auto 60px;
+  line-height: 1.8;
+  font-size: 17px;
+  color: #333;
 }
 
 /* ROW LAYOUT */
 .wedding-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 40px;
-    margin-bottom: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  margin-bottom: 100px;
 }
 
 .wedding-row.reverse {
-    flex-direction: row-reverse;
+  flex-direction: row-reverse;
 }
 
 /* TEXT */
 .wedding-text {
-    flex: 1;
-    text-align: left;
-    padding: 0 20px;
+  flex: 1;
+  text-align: left;
+  padding: 0 20px;
 }
 
 .wedding-text h3 {
-    font-size: 28px;
-    font-family: "Georgia", serif;
-    color: var(--brand-gold-dark);
-    margin-bottom: 20px;
+  font-size: 28px;
+  font-family: "Georgia", serif;
+  color: var(--brand-gold-dark);
+  margin-bottom: 20px;
 }
 
 .wedding-text p {
-    line-height: 1.8;
-    font-size: 16px;
-    color: #333;
+  line-height: 1.8;
+  font-size: 16px;
+  color: #333;
 }
 
 /* IMAGE */
 .wedding-image {
-    flex: 1.2;
+  flex: 1.2;
 }
 
 .wedding-image img {
-    width: 100%;
-    border-radius: 6px;
-    object-fit: cover;
+  width: 100%;
+  border-radius: 6px;
+  object-fit: cover;
 }
 
 /* RESPONSIVE */
 @media (max-width: 900px) {
-    .wedding-row {
-        flex-direction: column;
-        text-align: center;
-    }
+  .wedding-row {
+    flex-direction: column;
+    text-align: center;
+  }
 
-    .wedding-text {
-        text-align: center;
-    }
+  .wedding-text {
+    text-align: center;
+  }
 }
 
 .wedding-strip-container {
-    width: 80%;
-    margin: 40px auto;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    border: 1px solid #d6d6d6;
-    border-radius: 4px;
-    overflow: hidden;
+  width: 80%;
+  margin: 40px auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border: 1px solid #d6d6d6;
+  border-radius: 4px;
+  overflow: hidden;
 }
 
 .wedding-strip-box {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    padding: 20px 0;
-    font-size: 20px;
-    font-weight: 600;
-    color: var(--brand-logo-dark-color);
-    /* Brown text */
-    background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 20px 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--brand-logo-dark-color);
+  /* Brown text */
+  background: #ffffff;
 }
 
 .wedding-strip-box:not(:last-child) {
-    border-right: 1px solid #d6d6d6;
+  border-right: 1px solid #d6d6d6;
 }
 
 .wedding-icon {
-    font-size: 22px;
-    color: var(--brand-logo-light-color);
-    /* Brown icon */
+  font-size: 22px;
+  color: var(--brand-logo-light-color);
+  /* Brown icon */
+}
+
+.wedding-slider-wrapper {
+  width: 100%;
+  max-width: 1300px;
+  margin: 0 auto; /* centers */
+  padding: 40px 0;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* centers inner content */
+}
+
+.ws-title {
+  font-size: 34px;
+  font-weight: 700;
+  font-family: "Playfair Display", serif;
+  color: #7b2e1f;
+}
+
+.ws-title span {
+  color: #cba04e;
+}
+
+.ws-subtext {
+  max-width: 850px;
+  margin: 15px auto 40px;
+  font-size: 16px;
+  color: #444;
+}
+
+.ws-container {
+  position: relative;
+  width: 120%; /* Increased width */
+  max-width: 1500px; /* Show 3 big images properly */
+  background: var(--brand-logo-dark-color);
+  border-radius: 12px;
+  padding: 40px 30px;
+}
+
+.ws-cards {
+  display: flex;
+  gap: 30px;
+  overflow-x: hidden; /* hide scroll */
+  padding: 10px 0;
+}
+
+.ws-card {
+  min-width: 32%; /* 👈 makes 3 cards fit perfectly */
+  max-width: 32%;
+  text-align: center;
+}
+
+.ws-img {
+  width: 100%;
+  height: 350px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.ws-cards::-webkit-scrollbar {
+  height: 8px;
+}
+
+.ws-cards::-webkit-scrollbar-thumb {
+  background: #d8b36a;
+  border-radius: 5px;
+}
+
+.ws-card-title {
+  margin-top: 10px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #d8b36a;
+}
+
+.ws-desc {
+  margin-top: 8px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: #fff;
+}
+
+/* ARROWS */
+.ws-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.8);
+  border: none;
+  padding: 10px;
+  border-radius: 50%;
+  font-size: 22px;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.ws-arrow.left {
+  left: -15px;
+}
+.ws-arrow.right {
+  right: -15px;
+}
+
+.ws-arrow:hover {
+  background: white;
+}
+
+.slider-wrapper {
+  width: 100%;
+  text-align: center;
+}
+
+.slider-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  margin-top: 30px;
+}
+
+.slider-track {
+  display: flex;
+  width: 100%;
+}
+
+.slide {
+  min-width: 100%;
+  padding: 40px;
+  text-align: center;
+}
+
+.slide-img {
+  width: 85%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.slide-title {
+  margin: 20px 0 10px;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 28px;
+  border: none;
+  background: rgba(0, 0, 0, 0.3);
+  color: white;
+  padding: 12px 18px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.arrow.left {
+  left: 10px;
+}
+.arrow.right {
+  right: 10px;
 }

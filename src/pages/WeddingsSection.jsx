@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import HeaderBar from "../components/HeaderBar.jsx";
 import "./WeddingSection.css";
 import Footer from "../components/Footer.jsx";
@@ -51,8 +51,107 @@ export default function WeddingsSection() {
     },
   ];
 
+  const scrollRef = useRef(null);
+  const autoScrollRef = useRef(null);
+
+  const scroll = (direction) => {
+    const scrollAmount = 500;
+    if (direction === "left") {
+      scrollRef.current.scrollLeft -= scrollAmount;
+    } else {
+      scrollRef.current.scrollLeft += scrollAmount;
+    }
+  };
+  const data = [
+    {
+      title: "CITY WEDDING",
+      image: "/assets/g1.png",
+      description:
+        "In the heart of the city, at the height of celebration. From glamorous rooftops in Delhi to chic ballrooms in Ahmedabad, Pune, and Bangalore... the modern couple who dreams big.",
+    },
+    {
+      title: "BEACH",
+      image: "/assets/g2.png",
+      description:
+        "Celebrate love where the sea kisses the sky. Beachside ceremonies, barefoot mandaps, and starlit receptions right on the sand. Say 'I do' with the waves as your witness.",
+    },
+    {
+      title: "HILL",
+      image: "/assets/g4.png",
+      description:
+        "In the scenic heights of Mussoorie, Dehradun, Rishikesh. Misty mornings, pine air, and panoramic views set the stage for your elevated affair.",
+    },
+    {
+      title: "HILL",
+      image: "/assets/g3.png",
+      description:
+        "In the scenic heights of Mussoorie, Dehradun, Rishikesh. Misty mornings, pine air, and panoramic views set the stage for your elevated affair.",
+    },
+    {
+      title: "HILLasdasdasd",
+      image: "/assets/g4.png",
+      description:
+        "In the scenic heights of Mussoorie, Dehradun, Rishikesh. Misty mornings, pine air, and panoramic views set the stage for your elevated affair.",
+    },
+  ];
+  const extendedData = [...data, ...data, ...data];
+  const middleIndex = data.length;
+
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollLeft = middleIndex * cardWidth;
+    }
+  }, []);
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+
   const [scrolled, setScrolled] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  useEffect(() => {
+    startAutoScroll();
+
+    return () => stopAutoScroll();
+  }, []);
+
+  const cardWidth = 450; // adjust to your card width + gap
+
+  const startAutoScroll = () => {
+    stopAutoScroll();
+
+    autoScrollRef.current = setInterval(() => {
+      if (!scrollRef.current) return;
+
+      scrollRef.current.scrollBy({
+        left: cardWidth,
+        behavior: "smooth",
+      });
+    }, 2500);
+  };
+
+  const stopAutoScroll = () => {
+    if (autoScrollRef.current) {
+      clearInterval(autoScrollRef.current);
+    }
+  };
+
+  const handleScroll = () => {
+    const container = scrollRef.current;
+
+    if (!container) return;
+
+    const maxScroll = (extendedData.length - data.length) * cardWidth;
+
+    // If scroll moved too far right → reset to middle
+    if (container.scrollLeft >= maxScroll) {
+      container.scrollLeft = middleIndex * cardWidth;
+    }
+
+    // If scroll moved too far left → reset to middle
+    if (container.scrollLeft <= 0) {
+      container.scrollLeft = middleIndex * cardWidth;
+    }
+  };
 
   useEffect(() => {
     function handleScroll() {
@@ -101,7 +200,6 @@ export default function WeddingsSection() {
         setShowBooking={setShowBooking}
       />
 
-      {/* Spacer so content does not hide behind sticky header */}
       <div style={{ height: "140px" }}></div>
       <h1 className="section-heading">
         <span
@@ -129,6 +227,51 @@ export default function WeddingsSection() {
         />
       </h1>
 
+      {videoSection()}
+      {detailSection()}
+      {scrolledImage()}
+      {weddingFestivities()}
+      <EnquiryForm />
+
+      {/* {bottomSection()} */}
+
+      <Footer contactInfo={contactInfo} />
+    </main>
+  );
+
+  function scrolledImage() {
+    return (
+      <div className="wedding-slider-wrapper">
+        <h2 className="ws-title">
+          A PRIDE DESTINATION <span>FOR EVERY LOVE STORY</span>
+        </h2>
+
+        <p className="ws-subtext">{description}</p>
+
+        <div className="ws-container">
+          {/* Cards wrapper with auto-scroll + pause on hover */}
+          <div
+            className="ws-cards"
+            style={{ transform: `translateX(-${currentIndex * 33.33}%)` }}
+            ref={scrollRef}
+            onMouseEnter={stopAutoScroll}
+            onMouseLeave={startAutoScroll}
+          >
+            {extendedData.map((item, i) => (
+              <div className="ws-card" key={i}>
+                <img src={item.image} alt={item.title} className="ws-img" />
+                <h3 className="ws-card-title">{item.title}</h3>
+                <p className="ws-desc">{item.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  function videoSection() {
+    return (
       <section className="video-section">
         <video
           width="100%"
@@ -143,6 +286,11 @@ export default function WeddingsSection() {
           Your browser does not support the video tag.
         </video>
       </section>
+    );
+  }
+
+  function detailSection() {
+    return (
       <section className="stats-banner">
         <div className="stats-banner-inner">
           <div className="stat-item">
@@ -161,13 +309,11 @@ export default function WeddingsSection() {
           </div>
         </div>
       </section>
-      {/* ===== DESCRIPTION PARAGRAPH ===== */}
-      <section className="wedding-description">
-        <p>{description}</p>
-      </section>
+    );
+  }
 
-      <EnquiryForm />
-
+  function weddingFestivities() {
+    return (
       <section className="wedding-section">
         <h2 className="wedding-title">{festivities.title}</h2>
 
@@ -195,7 +341,11 @@ export default function WeddingsSection() {
           ))}
         </div>
       </section>
+    );
+  }
 
+  function bottomSection() {
+    return (
       <div className="wedding-strip-container">
         <div className="wedding-strip-box">
           <FaRing className="wedding-icon" />
@@ -215,8 +365,6 @@ export default function WeddingsSection() {
           <span>Lavish Lawns</span>
         </div>
       </div>
-
-      <Footer contactInfo={contactInfo} />
-    </main>
-  );
+    );
+  }
 }

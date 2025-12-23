@@ -2,6 +2,7 @@
   width: 90%;
   height: 75vh;
   display: flex;
+  border-radius: 20px;
   justify-content: center;
   align-items: center;
   background-size: cover;
@@ -16,7 +17,6 @@
   content: "";
   position: absolute;
   inset: 0;
-  backdrop-filter: blur(10px);
   background: rgba(0, 0, 0, 0.25);
 }
 

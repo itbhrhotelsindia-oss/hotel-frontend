@@ -335,23 +335,27 @@ export default function Home() {
           <p className="events-conf-sub">
             From a luxury urban sanctum to the halls of royalty, an idyllic
             resort to a jungle clearing, our 5-star hotels and luxury resorts
-            bring your imagination to life.
+            bring your imagination to life.From a luxury urban sanctum to the
+            halls of royalty, an idyllic resort to a jungle clearing, our 5-star
+            hotels and luxury resorts bring your imagination to life.From a
+            luxury urban sanctum to the halls of royalty, an idyllic resort to a
+            jungle clearing, our 5-star hotels and luxury resorts bring your
+            imagination to life.
           </p>
         </div>
 
-        {/* CARDS */}
-        <div className="events-conf-cards">
-          {brands.map((brand) => (
-            // <div key={brand.id} className="events-conf-card">
-            <div className="events-conf-card">
+        <div className="brand-card-wrapper">
+          {brands.map((brand, index) => (
+            <div className="brand-card" key={index}>
               <img
-                src={`${brand.imageUrl}`}
+                src={brand.imageUrl}
                 alt={brand.title}
-                className="events-conf-image"
+                className="brand-image"
               />
-              <div className="events-conf-caption">
-                <span>{brand.text}</span>
-              </div>
+
+              <h3 className="brand-title">BHR {brand.title}</h3>
+
+              <p className="brand-description">{brand.text}</p>
             </div>
           ))}
         </div>

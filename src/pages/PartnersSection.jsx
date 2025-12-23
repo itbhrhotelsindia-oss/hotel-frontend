@@ -114,6 +114,23 @@ export default function PartnersSection() {
                 <option>Investment Partnership</option>
                 <option>Corporate Collaboration</option>
                 <option>Vendor / Supplier Partnership</option>
+                <option>Register Your Hotel</option>
+              </select>
+            </div>
+          </div>
+
+          <h2 className="section-title">Location</h2>
+
+          <div className="form-row">
+            <div className="form-group full-width">
+              <label>Select Partnership Category *</label>
+              <select required>
+                <option>Noida</option>
+                <option>Delhi</option>
+                <option>Goa</option>
+                <option>Haridwar</option>
+                <option>Rishikesh</option>
+                <option>Jim Corrbet</option>
               </select>
             </div>
           </div>

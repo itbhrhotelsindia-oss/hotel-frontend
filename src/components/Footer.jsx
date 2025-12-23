@@ -10,14 +10,44 @@ import {
   FaEnvelope,
   FaPhoneAlt,
 } from "react-icons/fa";
-  
+
 export default function Footer({ contactInfo = {} }) {
   const cities = [
-    "Ahmedabad","Alkapuri (Vadodara)","Bangalore","Becharaji","Bharuch","Bhopal",
-    "Chennai","Chhatrapati Sambhajinagar","Daman","Dehradun","Deoghar","Digha",
-    "Dwarka","Goa","Haldwani","Haridwar","Indore","Jaipur","Jodhpur","Becharaji","Bharuch","Bhopal",
-    "Chennai","Chhatrapati Sambhajinagar","Daman","Dehradun","Deoghar","Digha",
-    "Dwarka","Goa","Haldwani","Haridwar","Indore","Jaipur","Jodhpur"
+    "Ahmedabad",
+    "Alkapuri (Vadodara)",
+    "Bangalore",
+    "Becharaji",
+    "Bharuch",
+    "Bhopal",
+    "Chennai",
+    "Chhatrapati Sambhajinagar",
+    "Daman",
+    "Dehradun",
+    "Deoghar",
+    "Digha",
+    "Dwarka",
+    "Goa",
+    "Haldwani",
+    "Haridwar",
+    "Indore",
+    "Jaipur",
+    "Jodhpur",
+    "Becharaji",
+    "Bharuch",
+    "Bhopal",
+    "Chennai",
+    "Chhatrapati Sambhajinagar",
+    "Daman",
+    "Dehradun",
+    "Deoghar",
+    "Digha",
+    "Dwarka",
+    "Goa",
+    "Haldwani",
+    "Haridwar",
+    "Indore",
+    "Jaipur",
+    "Jodhpur",
   ];
 
   const handleSocialClick = (platform) => {
@@ -26,7 +56,7 @@ export default function Footer({ contactInfo = {} }) {
       instagram: contactInfo.socialLinks.instagram,
       youtube: contactInfo.socialLinks.youtube,
       twitterX: contactInfo.socialLinks.twitterX,
-      linkedIn: contactInfo.socialLinks.linkedIn
+      linkedIn: contactInfo.socialLinks.linkedIn,
     };
     if (socialLinks[platform]) {
       window.open(socialLinks[platform], "_blank");
@@ -36,88 +66,107 @@ export default function Footer({ contactInfo = {} }) {
   return (
     <footer className="footer-wrapper">
       <div className="footer-top" style={{ borderBottom: "0px" }}>
-
         <div className="footer-left">
-          <img src="/assets/hotel-logo.jpeg" alt="Brand Logo" className="footer-logo" />
-        
+          <img
+            src="/assets/hotel-logo.jpeg"
+            alt="Brand Logo"
+            className="footer-logo"
+          />
+
           <div className="footer-address">
             <h4>{contactInfo.companyName}</h4>
-            <p>
-              {contactInfo.corporateAddress}
-            </p>
+            <p>{contactInfo.corporateAddress}</p>
             <p>EMAIL: {contactInfo.email}</p>
           </div>
         </div>
 
         <div className="footer-center">
           <h4 className="footer-heading">Our Social Presence</h4>
-        <div className="footer-social-large">
-            <a onClick={() => handleSocialClick("facebook")} style={{cursor: "pointer"}}><FaFacebookF /></a>
-            <a onClick={() => handleSocialClick("instagram")} style={{cursor: "pointer"}}><FaInstagram /></a>
-            <a onClick={() => handleSocialClick("youtube")} style={{cursor: "pointer"}}><FaYoutube /></a>
-            <a onClick={() => handleSocialClick("twitterX")} style={{cursor: "pointer"}}><FaTwitter /></a>
-            <a onClick={() => handleSocialClick("linkedIn")} style={{cursor: "pointer"}}><FaLinkedinIn /></a>
+          <div className="footer-social-large">
+            <a
+              onClick={() => handleSocialClick("facebook")}
+              style={{ cursor: "pointer" }}
+            >
+              <FaFacebookF />
+            </a>
+            <a
+              onClick={() => handleSocialClick("instagram")}
+              style={{ cursor: "pointer" }}
+            >
+              <FaInstagram />
+            </a>
+            <a
+              onClick={() => handleSocialClick("youtube")}
+              style={{ cursor: "pointer" }}
+            >
+              <FaYoutube />
+            </a>
+            <a
+              onClick={() => handleSocialClick("twitterX")}
+              style={{ cursor: "pointer" }}
+            >
+              <FaTwitter />
+            </a>
+            <a
+              onClick={() => handleSocialClick("linkedIn")}
+              style={{ cursor: "pointer" }}
+            >
+              <FaLinkedinIn />
+            </a>
+          </div>
         </div>
- </div>
-         
 
         <div className="footer-right">
+          <h4 className="footer-heading" style={{ marginTop: "20px" }}>
+            Subscribe Us
+          </h4>
 
-        <h4 className="footer-heading" style={{ marginTop: "20px" }}>
-          Subscribe Us
-        </h4>
-
-        <form className="footer-subscribe">
-          <input type="email" placeholder="Please enter your email" />
-          <button type="submit">Subscribe</button>
-        </form>
-        
+          <form className="footer-subscribe">
+            <input type="email" placeholder="Please enter your email" />
+            <button type="submit">Subscribe</button>
+          </form>
         </div>
-        
-    
- 
       </div>
-      
 
-      <div className="footer-inner" style={{
-        borderBottom: "2px solid #ccc",
-      }}>
-        
+      <div
+        className="footer-inner"
+        style={{
+          borderBottom: "2px solid #ccc",
+        }}
+      >
         {/* --- CITY LIST --- */}
         <div className="footer-cities container">
           {cities.map((city, index) => (
             <span key={index} className="footer-city">
-            {city} {index < cities.length - 1 && " | "}
-          </span>
-        ))}
+              {city} {index < cities.length - 1 && " | "}
+            </span>
+          ))}
         </div>
-         {/* --- MENU LINKS --- */}
-       
+        {/* --- MENU LINKS --- */}
       </div>
 
-       <div className="footer-links container" style={{paddingBottom: "3rem", paddingTop: "3rem ", borderBottom: "0px" }}>
-          <a href="/">Home</a>
-          <a href="/hotels">Our Hotels</a>
-          <a href="/about">About Us</a>
-          <a href="/dining">Dining</a>
-          <a href="/events">Plan Your Events</a>
-          <a href="/weddings">Weddings</a>
-          <a href="/why-book">Why Book Direct</a>
-          <a href="/partners">Partner With Us</a>
-          <a href="/careers">Careers</a>
-          <a href="/news">Media & News</a>
-          <a href="/contact">Contact Us</a>
-          <a href="/terms">Terms & Conditions</a>
-          <a href="/investors">Investor Relations</a>
-          <a href="/booking">Manage Booking</a>
-        </div>
+      <div
+        className="footer-links container"
+        style={{
+          paddingBottom: "1rem",
+          paddingTop: "2rem ",
+          borderBottom: "0px",
+        }}
+      >
+        <a href="/">Home</a>
+        <a href="/about">About Us</a>
+        <a href="/careers">Careers</a>
+        <a href="/why-book">Why Book Direct</a>
+        <a href="/terms">Terms & Conditions</a>
+        <a href="/booking">Manage Booking</a>
+        <a href="/contact">Contact Us</a>
+      </div>
 
       {/* --- COOKIE BAR --- */}
-      <div className="cookie-bar">
+      {/* <div className="cookie-bar">
         This website uses cookies to ensure you get the best experience on our website.
         <button>Accept</button>
-      </div>
-
+      </div> */}
     </footer>
   );
 }

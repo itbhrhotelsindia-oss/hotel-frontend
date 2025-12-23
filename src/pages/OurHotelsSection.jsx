@@ -3,9 +3,9 @@ import HeaderBar from "../components/HeaderBar.jsx";
 import "./OurHotelsSection.css";
 import Footer from "../components/Footer.jsx";
 import { useLocation } from "react-router-dom";
-import { FaFacebookF } from "react-icons/fa";
 import { bookingDialog } from "../components/bookingDialog.jsx";
 import { useNavigate } from "react-router-dom";
+import CityHotelsModal from "../pages/CityHotelsModal";
 
 export default function OurHotelsSection() {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
@@ -23,7 +23,14 @@ export default function OurHotelsSection() {
   const [ourHotelsData, setOurHotelsData] = useState(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-
+  const [selectedCity, setSelectedCity] = useState("");
+  const [cityHotels, setCityHotels] = useState([]);
+  const [cityModalOpen, setCityModalOpen] = useState(false);
+  const openCityDialog = (cityObj) => {
+    setSelectedCity(cityObj.name);
+    setCityHotels(cityObj.hotels);
+    setCityModalOpen(true);
+  };
   useEffect(() => {
     async function loadHotels() {
       try {
@@ -138,53 +145,27 @@ export default function OurHotelsSection() {
 
       {/* Spacer so content does not hide behind sticky header */}
       <div style={{ height: "140px" }}></div>
-      <h1 className="section-heading">
-        <span
-          className="line"
-          style={{
-            display: "inline-block",
-            width: "100px",
-            height: "3px",
-            backgroundColor: "#cfa349",
-            marginRight: "10px",
-            marginBottom: "10px",
-          }}
-        />
-        {title}
-        <span
-          className="line"
-          style={{
-            display: "inline-block",
-            width: "100px",
-            height: "3px",
-            backgroundColor: "#cfa349",
-            marginLeft: "10px",
-            marginBottom: "10px",
-          }}
-        />
-      </h1>
-
+      <h1 className="section-heading">{title}</h1>
       <div className="destinations-wrapper">
         <div className="our-hotels-descriptions">
           <p>{text}</p>
         </div>
         <div className="destinations-grid">
-          {destinations.map((item, index) => (
+          {cities.map((cityObj, index) => (
             <div key={index} className="destination-card">
-              {/* Badge Icon */}
-              {/* <span className="badge-icon">🏨</span> */}
-
-              {/* Image */}
               <img
                 className="destination-image"
-                src={item.image}
-                alt={item.city}
+                onClick={() => openCityDialog(cityObj)}
+                src={cityObj.image}
+                alt={cityObj.name}
               />
-
-              {/* Text Container */}
+              {/* onClick={() => navigate(`/hotel-details/${item.i}`)} */}
               <div className="destination-text">
-                <h3>{item.city}</h3>
-                <p>{item.subtitle}</p>
+                <h3>{cityObj.name}</h3>
+                <p>
+                  beajas kaslk dfuoasd fasoik lakjs kdjfn aks
+                  dfiukhasndfkyasidfaskdfi. uishdf asuyd {cityObj.name}
+                </p>
               </div>
             </div>
           ))}
@@ -195,6 +176,30 @@ export default function OurHotelsSection() {
         <img src={BASE_URL + image} className="offer-image" />
       </div> */}
 
+      {/* {eventsCategoriesSection()} */}
+
+      {bookingOpen &&
+        bookingDialog(
+          setBookingOpen,
+          setShowBooking,
+          cities,
+          setSelectedHotels,
+          selectedHotels
+        )}
+
+      <CityHotelsModal
+        open={cityModalOpen}
+        onClose={() => setCityModalOpen(false)}
+        city={selectedCity}
+        hotels={cityHotels}
+      />
+
+      <Footer contactInfo={contactInfo} />
+    </main>
+  );
+
+  function eventsCategoriesSection() {
+    return (
       <section className="destination-list-section">
         {/* Row 1 - MICE */}
         <div className="destination-row">
@@ -255,17 +260,6 @@ export default function OurHotelsSection() {
           </div>
         </div>
       </section>
-
-      {bookingOpen &&
-        bookingDialog(
-          setBookingOpen,
-          setShowBooking,
-          cities,
-          setSelectedHotels,
-          selectedHotels
-        )}
-
-      <Footer contactInfo={contactInfo} />
-    </main>
-  );
+    );
+  }
 }

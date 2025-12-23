@@ -68,7 +68,6 @@ export default function EventsSection() {
       </h1>
 
       <div className="offers-section">
-        {/* <BanquetSlider /> */}
         <ModernSlider images={slides} autoPlay={true} interval={4000} />;
       </div>
 
@@ -83,7 +82,6 @@ export default function EventsSection() {
       <div className="events-page-container">
         {/* -------- IMAGE SELECTION ROW -------- */}
         <div className="events-row">
-          {/* FAMILY EVENTS */}
           <div
             className={`event-card ${selected === "family" ? "active" : ""}`}
             onClick={() => setSelected("family")}
@@ -95,8 +93,6 @@ export default function EventsSection() {
             />
             <h3 className="event-title">FAMILY EVENTS</h3>
           </div>
-
-          {/* BUSINESS MEETINGS */}
           <div
             className={`event-card ${selected === "business" ? "active" : ""}`}
             onClick={() => setSelected("business")}
@@ -109,30 +105,71 @@ export default function EventsSection() {
             <h3 className="event-title">BUSINESS MEETINGS</h3>
           </div>
         </div>
-
-        {/* -------- SELECTED LABEL -------- */}
         <h2 className="selected-heading">
           {selected === "family"
             ? "Family Event Enquiry"
             : "Business Meeting Enquiry"}
         </h2>
 
-        {/* -------- FORM SECTION -------- */}
+        {formSection()}
+      </div>
+    );
+
+    function formSection() {
+      return (
         <form className="event-form">
-          <label>Name</label>
-          <input type="text" placeholder="Enter your name" />
+          <div className="form-row">
+            <div className="form-group">
+              <label>Name *</label>
+              <input type="text" placeholder="Enter your name" required />
+            </div>
+          </div>
 
-          <label>Email id</label>
-          <input type="email" placeholder="Enter your email" />
+          <div className="form-row">
+            <div className="form-group">
+              <label>Email id </label>
+              <input type="email" placeholder="Enter your email" />
+            </div>
+          </div>
 
-          <label>Phone Number</label>
-          <div className="phone-row">
-            <select>
-              <option>🇮🇳 +91</option>
-              <option>🇺🇸 +1</option>
-              <option>🇬🇧 +44</option>
-            </select>
-            <input type="text" placeholder="081234 56789" />
+          <div className="form-row">
+            <div className="form-group">
+              <label>Phone Number *</label>
+              <div className="phone-row">
+                <select>
+                  <option>🇮🇳 +91</option>
+                </select>
+                <input type="text" placeholder="" required />
+              </div>
+            </div>
+          </div>
+
+          <div className="form-row">
+            <div className="form-group full-width">
+              <label>Type of Event *</label>
+              <select required>
+                <option>Wedding</option>
+                <option>Birthday Party</option>
+                <option>Corporate Event</option>
+                <option>Haridwar</option>
+                <option>Rishikesh</option>
+                <option>Jim Corrbet</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="form-row">
+            <div className="form-group full-width">
+              <label>Location *</label>
+              <select required>
+                <option>Noida</option>
+                <option>Delhi</option>
+                <option>Goa</option>
+                <option>Haridwar</option>
+                <option>Rishikesh</option>
+                <option>Jim Corrbet</option>
+              </select>
+            </div>
           </div>
 
           <label>Query</label>
@@ -140,7 +177,7 @@ export default function EventsSection() {
 
           <button className="submit-btn">Submit</button>
         </form>
-      </div>
-    );
+      );
+    }
   }
 }
