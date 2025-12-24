@@ -27,27 +27,6 @@ export default function Footer({ contactInfo = {} }) {
     "Digha",
     "Dwarka",
     "Goa",
-    "Haldwani",
-    "Haridwar",
-    "Indore",
-    "Jaipur",
-    "Jodhpur",
-    "Becharaji",
-    "Bharuch",
-    "Bhopal",
-    "Chennai",
-    "Chhatrapati Sambhajinagar",
-    "Daman",
-    "Dehradun",
-    "Deoghar",
-    "Digha",
-    "Dwarka",
-    "Goa",
-    "Haldwani",
-    "Haridwar",
-    "Indore",
-    "Jaipur",
-    "Jodhpur",
   ];
 
   const handleSocialClick = (platform) => {
@@ -81,7 +60,7 @@ export default function Footer({ contactInfo = {} }) {
         </div>
 
         <div className="footer-center">
-          <h4 className="footer-heading">Our Social Presence</h4>
+          <h4 className="footer-heading">Get In Touch</h4>
           <div className="footer-social-large">
             <a
               onClick={() => handleSocialClick("facebook")}
