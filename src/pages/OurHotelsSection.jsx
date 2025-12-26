@@ -152,10 +152,14 @@ export default function OurHotelsSection() {
         </div>
         <div className="destinations-grid">
           {cities.map((cityObj, index) => (
-            <div key={index} className="destination-card">
+            <div
+              key={index}
+              className="destination-card"
+              onClick={() => openCityDialog(cityObj)}
+              style={{ cursor: "pointer" }}
+            >
               <img
                 className="destination-image"
-                onClick={() => openCityDialog(cityObj)}
                 src={cityObj.image}
                 alt={cityObj.name}
               />

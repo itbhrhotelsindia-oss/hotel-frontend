@@ -347,14 +347,15 @@ export default function Home() {
         <div className="brand-card-wrapper">
           {brands.map((brand, index) => (
             <div className="brand-card" key={index}>
-              <img
-                src={brand.imageUrl}
-                alt={brand.title}
-                className="brand-image"
-              />
+              <div className="brand-image-wrapper">
+                <img
+                  src={brand.imageUrl}
+                  alt={brand.title}
+                  className="brand-image"
+                />
+              </div>
 
               <h3 className="brand-title">BHR {brand.title}</h3>
-
               <p className="brand-description">{brand.text}</p>
             </div>
           ))}
