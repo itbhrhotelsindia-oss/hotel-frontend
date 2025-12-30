@@ -160,7 +160,7 @@ export default function OurHotelsSection() {
             >
               <img
                 className="destination-image"
-                src={cityObj.image}
+                src={cityObj.cityImageUrl}
                 alt={cityObj.name}
               />
               {/* onClick={() => navigate(`/hotel-details/${item.i}`)} */}

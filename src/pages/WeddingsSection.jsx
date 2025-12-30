@@ -28,29 +28,6 @@ export default function WeddingsSection() {
     loadHWeddings();
   }, []);
 
-  const items = [
-    {
-      title: "Cocktail Soirée",
-      text: `Set the tone for your wedding with an elegant cocktail night at Pride Hotels & Resorts. 
-      An evening of sophistication and celebration, where guests can mingle, toast, 
-      and revel in the excitement leading up to your big day. With crafted cocktails, 
-      gourmet delights, and a lively ambiance, this stylish gathering creates the perfect 
-      prelude to the grand festivities ahead.`,
-      image: "/assets/g1.png",
-      layout: "text-left",
-    },
-    {
-      title: "Bridal Shower",
-      text: `Cherish special moments with your closest friends and family at Pride Hotels & Resorts, 
-      where we create the perfect setting for an unforgettable bridal shower. 
-      From elegant décor to curated menus and personalised touches, 
-      our thoughtfully designed venues ensure a joyous and intimate celebration 
-      as you embark on your journey to "I do".`,
-      image: "/assets/g2.png",
-      layout: "image-left",
-    },
-  ];
-
   const scrollRef = useRef(null);
   const autoScrollRef = useRef(null);
 
@@ -62,40 +39,37 @@ export default function WeddingsSection() {
       scrollRef.current.scrollLeft += scrollAmount;
     }
   };
-  const data = [
-    {
-      title: "CITY WEDDING",
-      image: "/assets/g1.png",
-      description:
-        "In the heart of the city, at the height of celebration. From glamorous rooftops in Delhi to chic ballrooms in Ahmedabad, Pune, and Bangalore... the modern couple who dreams big.",
-    },
-    {
-      title: "BEACH",
-      image: "/assets/g2.png",
-      description:
-        "Celebrate love where the sea kisses the sky. Beachside ceremonies, barefoot mandaps, and starlit receptions right on the sand. Say 'I do' with the waves as your witness.",
-    },
-    {
-      title: "HILL",
-      image: "/assets/g4.png",
-      description:
-        "In the scenic heights of Mussoorie, Dehradun, Rishikesh. Misty mornings, pine air, and panoramic views set the stage for your elevated affair.",
-    },
-    {
-      title: "HILL",
-      image: "/assets/g3.png",
-      description:
-        "In the scenic heights of Mussoorie, Dehradun, Rishikesh. Misty mornings, pine air, and panoramic views set the stage for your elevated affair.",
-    },
-    {
-      title: "HILLasdasdasd",
-      image: "/assets/g4.png",
-      description:
-        "In the scenic heights of Mussoorie, Dehradun, Rishikesh. Misty mornings, pine air, and panoramic views set the stage for your elevated affair.",
-    },
-  ];
-  const extendedData = [...data, ...data, ...data];
-  const middleIndex = data.length;
+  //   {
+  //     title: "CITY WEDDING",
+  //     image: "/assets/g1.png",
+  //     description:
+  //       "In the heart of the city, at the height of celebration. From glamorous rooftops in Delhi to chic ballrooms in Ahmedabad, Pune, and Bangalore... the modern couple who dreams big.",
+  //   },
+  //   {
+  //     title: "BEACH",
+  //     image: "/assets/g1.png",
+  //     description:
+  //       "Celebrate love where the sea kisses the sky. Beachside ceremonies, barefoot mandaps, and starlit receptions right on the sand. Say 'I do' with the waves as your witness.",
+  //   },
+  //   {
+  //     title: "HILL",
+  //     image: "/assets/g1.png",
+  //     description:
+  //       "In the scenic heights of Mussoorie, Dehradun, Rishikesh. Misty mornings, pine air, and panoramic views set the stage for your elevated affair.",
+  //   },
+  //   {
+  //     title: "HILL",
+  //     image: "/assets/g3.png",
+  //     description:
+  //       "In the scenic heights of Mussoorie, Dehradun, Rishikesh. Misty mornings, pine air, and panoramic views set the stage for your elevated affair.",
+  //   },
+  //   {
+  //     title: "HILLasdasdasd",
+  //     image: "/assets/g4.png",
+  //     description:
+  //       "In the scenic heights of Mussoorie, Dehradun, Rishikesh. Misty mornings, pine air, and panoramic views set the stage for your elevated affair.",
+  //   },
+  // ];
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -186,8 +160,16 @@ export default function WeddingsSection() {
     bannerLines,
     stats,
     festivities,
+    typeOfWeddings,
     highlights,
   } = ourWeddingsData;
+
+  const extendedData = [
+    ...typeOfWeddings.weddingList,
+    ...typeOfWeddings.weddingList,
+    ...typeOfWeddings.weddingList,
+  ];
+  const middleIndex = typeOfWeddings.weddingList.length;
 
   return (
     <main className="offers-page">
@@ -243,10 +225,11 @@ export default function WeddingsSection() {
     return (
       <div className="wedding-slider-wrapper">
         <h2 className="ws-title">
-          A PRIDE DESTINATION <span>FOR EVERY LOVE STORY</span>
+          {/* A PRIDE DESTINATION <span>FOR EVERY LOVE STORY</span> */}
+          {typeOfWeddings.title}
         </h2>
 
-        <p className="ws-subtext">{description}</p>
+        <p className="ws-subtext">{typeOfWeddings.description}</p>
 
         <div className="ws-container">
           {/* Cards wrapper with auto-scroll + pause on hover */}
@@ -259,9 +242,9 @@ export default function WeddingsSection() {
           >
             {extendedData.map((item, i) => (
               <div className="ws-card" key={i}>
-                <img src={item.image} alt={item.title} className="ws-img" />
+                <img src={item.imageUrl} alt={item.title} className="ws-img" />
                 <h3 className="ws-card-title">{item.title}</h3>
-                <p className="ws-desc">{item.description}</p>
+                <p className="ws-desc">{item.text}</p>
               </div>
             ))}
           </div>

@@ -3,8 +3,9 @@
 ================================ */
 .our-hotels-descriptions {
   max-width: 1200px;
-  margin-bottom: 60px;
+  margin: 0 auto 60px; /* ✅ centers the container */
   padding: 0 30px;
+  text-align: center; /* ✅ centers the text */
 }
 
 .our-hotels-descriptions p {

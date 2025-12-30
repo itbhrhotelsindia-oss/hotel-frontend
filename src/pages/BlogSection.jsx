@@ -11,87 +11,46 @@ export default function BlogSection() {
   const location = useLocation();
   const [showBooking, setShowBooking] = useState(true);
   const contactInfo = location.state?.contactInfo || {};
+  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const navigate = useNavigate();
-
-  const blog = {
-    title:
-      "What are 5 amazing castor oil benefits for health, beauty, and wellness?",
-    intro:
-      "Castor oil, treasured for centuries, is a natural powerhouse for health, beauty, and wellness...",
-    sections: [
-      {
-        heading: "Deeply Moisturizes Dry Skin",
-        text: "Castor oil penetrates deeply into the skin, locking in moisture...",
-      },
-      {
-        heading: "Promotes Healthy Hair Growth",
-        text: "Its fatty acids nourish the scalp and stimulate hair follicles...",
-      },
-      {
-        heading: "Strengthens Nails and Cuticles",
-        text: "Castor oil strengthens brittle nails and softens cuticles...",
-      },
-    ],
-  };
-
-  const popularPosts = [
-    {
-      title: "How to Create a Weekly Castor Oil Spa Night",
-      image: "/assets/g1.png",
-      date: "25 August, 2025",
-      author: "JOHN WRIGHT",
-      link: "#",
-    },
-    {
-      title: "Top 10 Wellness Rituals You Must Try",
-      image: "/assets/g2.png",
-      date: "15 August, 2025",
-      author: "SARAH JONES",
-      link: "#",
-    },
-  ];
-
-  const destinations = [
-    {
-      id: "1",
-      title: "Cultural Heritage",
-      subtitle: "10+ Locations",
-      image: "/assets/g1.png",
-    },
-    {
-      id: "2",
-      title: "Exotic Safari",
-      subtitle: "07+ Safaris",
-      image: "/assets/g2.png",
-    },
-    {
-      id: "3",
-      title: "Adventure Tours",
-      subtitle: "40% Discount",
-      promo: false,
-      image: "/assets/g3.png",
-    },
-    {
-      id: "4",
-      title: "Alpine Adventures",
-      subtitle: "15+ Locations",
-      image: "/assets/g4.png",
-    },
-    {
-      id: "5",
-      title: "Island Getaway",
-      subtitle: "12+ Locations",
-      image: "/assets/img3.jpg",
-    },
-  ];
+  const [blogData, setBlogData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    function handleScroll() {
-      setScrolled(window.scrollY > 40);
+    async function loadBlog() {
+      try {
+        // const res = await fetch(`${BASE_URL}/api/blog`);
+
+        const res = await fetch(
+          `https://hotel-backend-nq72.onrender.com/api/blog`
+        );
+
+        if (!res.ok) {
+          throw new Error("Blog API failed");
+        }
+
+        const data = await res.json();
+        setBlogData(data);
+      } catch (err) {
+        console.error("Blog API error:", err);
+      } finally {
+        setLoading(false);
+      }
     }
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+
+    loadBlog();
   }, []);
+
+  if (loading) return <div>Loading...</div>;
+  if (!blogData) return <div>No blog data</div>;
+
+  const {
+    title,
+    description,
+    blogImages,
+    blogListSection,
+    popularPostListSection,
+  } = blogData;
 
   return (
     <main className="offers-page">
@@ -120,7 +79,7 @@ export default function BlogSection() {
             marginBottom: "10px",
           }}
         />
-        From Our Blog
+        {title}
         <span
           className="line"
           style={{
@@ -134,22 +93,15 @@ export default function BlogSection() {
         />
       </h1>
 
-      {/* {blog1()} */}
-
       <section className="locals-section">
         {/* LEFT ROUND IMAGE */}
         <div className="locals-img-left">
-          <img src="/assets/slider-2.jpg" alt="Local Experts" />
+          <img src={blogImages[0]} alt="Local Experts" />
         </div>
 
         {/* CENTER TEXT CONTENT */}
         <div className="locals-content">
-          <h2>
-            We’re locals you can trust! We live here year-round and know each
-            property owner and local business personally. We offer concierge
-            services and local recommendations that make vacation planning a
-            dream.
-          </h2>
+          <h2>{description}</h2>
 
           <div className="locals-badge">
             <img src="/assets/atom.svg" alt="Badge" className="badge-ico" />
@@ -165,22 +117,18 @@ export default function BlogSection() {
 
         {/* RIGHT ROUND IMAGE */}
         <div className="locals-img-right">
-          <img src="/assets/img1.jpg" alt="Resort Area" />
+          <img src={blogImages[0]} alt="Resort Area" />
         </div>
       </section>
-
-      {/* {multiImageSection()} */}
-
-      {/* {blog2()} */}
 
       <div className="blog-layout-container">
         {/* LEFT SIDE — MAIN BLOG CONTENT */}
         <div className="blog-main">
-          <h1>{blog.title}</h1>
-          <p className="blog-intro">{blog.intro}</p>
+          <h1>{blogListSection.title}</h1>
+          <p className="blog-intro">{blogListSection.description}</p>
 
           <div className="adventure-grid">
-            {destinations.map((item, index) => {
+            {blogListSection.blogsList.map((item, index) => {
               // HIGHLIGHT CARD
               if (item.promo) {
                 return (
@@ -217,9 +165,9 @@ export default function BlogSection() {
 
         {/* RIGHT SIDE — POPULAR POSTS */}
         <div className="blog-sidebar">
-          <h2 className="sidebar-title">Popular Post</h2>
-          <p className="blog-intro">Popular Post</p>
-          {popularPosts.map((post, i) => (
+          <h2 className="sidebar-title">{popularPostListSection.title}</h2>
+          <p className="blog-intro">{popularPostListSection.description}</p>
+          {popularPostListSection.postsList.map((post, i) => (
             <div className="sidebar-card" key={i}>
               <img src={post.image} alt={post.title} className="sidebar-img" />
 

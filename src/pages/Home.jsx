@@ -320,6 +320,7 @@ export default function Home() {
     const section = home.brandSection;
     const title = section.title || "OUR BRANDS";
     const brands = section.blocks || [];
+    const description = section.description || "OUR BRANDS";
     return (
       <section
         className="events-conf-section"
@@ -332,16 +333,7 @@ export default function Home() {
             <h2 className="events-conf-title">{title}</h2>
           </div>
 
-          <p className="events-conf-sub">
-            From a luxury urban sanctum to the halls of royalty, an idyllic
-            resort to a jungle clearing, our 5-star hotels and luxury resorts
-            bring your imagination to life.From a luxury urban sanctum to the
-            halls of royalty, an idyllic resort to a jungle clearing, our 5-star
-            hotels and luxury resorts bring your imagination to life.From a
-            luxury urban sanctum to the halls of royalty, an idyllic resort to a
-            jungle clearing, our 5-star hotels and luxury resorts bring your
-            imagination to life.
-          </p>
+          <p className="events-conf-sub">{description}</p>
         </div>
 
         <div className="brand-card-wrapper">
@@ -355,7 +347,7 @@ export default function Home() {
                 />
               </div>
 
-              <h3 className="brand-title">BHR {brand.title}</h3>
+              <h3 className="brand-title">{brand.name}</h3>
               <p className="brand-description">{brand.text}</p>
             </div>
           ))}
@@ -421,7 +413,7 @@ export default function Home() {
   }
 
   function eventsSection() {
-    const { title, events } = home.eventsSection;
+    const { title, description, events } = home.eventsSection;
     const [idx, setIdx] = useState(0);
 
     const left = events[(idx - 1 + events.length) % events.length];
@@ -436,11 +428,7 @@ export default function Home() {
             <h2 className="events-conf-title">{title}</h2>
           </div>
 
-          <p className="events-conf-sub">
-            From a luxury urban sanctum to the halls of royalty, an idyllic
-            resort to a jungle clearing, our 5-star hotels and luxury resorts
-            bring your imagination to life.
-          </p>
+          <p className="events-conf-sub">{description}</p>
         </div>
 
         <div className="left-card">

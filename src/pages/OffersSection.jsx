@@ -109,9 +109,9 @@ export default function OffersSection() {
                   <div className="offer-actions">
                     <button className="offer-btn">{offer.loginBtn}</button>
 
-                    <button className="offer-more">
+                    {/* <button className="offer-more">
                       KNOW MORE <span>›</span>
-                    </button>
+                    </button> */}
                   </div>
                 </div>
               </div>
