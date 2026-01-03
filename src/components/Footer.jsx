@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./Footer.css";
 import {
   FaFacebookF,
@@ -6,29 +6,12 @@ import {
   FaTwitter,
   FaYoutube,
   FaLinkedinIn,
-  FaUser,
-  FaEnvelope,
-  FaPhoneAlt,
 } from "react-icons/fa";
 
 export default function Footer({ contactInfo = {} }) {
-  const cities = [
-    "Ahmedabad",
-    "Alkapuri (Vadodara)",
-    "Bangalore",
-    "Becharaji",
-    "Bharuch",
-    "Bhopal",
-    "Chennai",
-    "Chhatrapati Sambhajinagar",
-    "Daman",
-    "Dehradun",
-    "Deoghar",
-    "Digha",
-    "Dwarka",
-    "Goa",
-  ];
-
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
+  const [cities, setCities] = useState([]);
+  const [citiesLoading, setCitiesLoading] = useState(true);
   const handleSocialClick = (platform) => {
     const socialLinks = {
       facebook: contactInfo.socialLinks.facebook,
@@ -41,6 +24,24 @@ export default function Footer({ contactInfo = {} }) {
       window.open(socialLinks[platform], "_blank");
     }
   };
+
+  useEffect(() => {
+    async function loadCities() {
+      try {
+        const res = await fetch(`${BASE_URL}/api/cities/`);
+        if (!res.ok) throw new Error("Failed to fetch cities");
+
+        const data = await res.json();
+        setCities(data);
+      } catch (err) {
+        console.error("Cities API error:", err);
+      } finally {
+        setCitiesLoading(false);
+      }
+    }
+
+    loadCities();
+  }, []);
 
   return (
     <footer className="footer-wrapper">
@@ -117,7 +118,7 @@ export default function Footer({ contactInfo = {} }) {
         <div className="footer-cities container">
           {cities.map((city, index) => (
             <span key={index} className="footer-city">
-              {city} {index < cities.length - 1 && " | "}
+              {city.name} {index < cities.length - 1 && " | "}
             </span>
           ))}
         </div>
