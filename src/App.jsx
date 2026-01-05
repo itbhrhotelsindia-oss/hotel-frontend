@@ -15,6 +15,11 @@ import BlogDetail from "./pages/BlogDetail";
 import HotelDetails from "./pages/HotelDetails.jsx";
 // ... other pages
 
+// ✅ Owner pages (NEW)
+import OwnerLogin from "./owner/auth/OwnerLogin";
+import OwnerDashboard from "./owner/pages/OwnerDashboard";
+import HotelDashboard from "./owner/pages/HotelDashboard";
+
 export default function App() {
   return (
     <>
@@ -32,6 +37,12 @@ export default function App() {
         <Route path="/dining/:restaurantId" element={<DiningDetails />} />
         <Route path="/blog/:slug" element={<BlogDetail />} />
         <Route path="/hotel-details/:city" element={<HotelDetails />} />
+        {/* ================= OWNER ROUTES ================= */}
+        <Route path="/owner/login" element={<OwnerLogin />} />
+        <Route path="/owner/dashboard" element={<OwnerDashboard />} />
+        <Route path="/owner/hotel/:hotelId" element={<HotelDashboard />} />
+        {/* ================= FALLBACK ================= */}
+        <Route path="*" element={<h2>Page Not Found</h2>} />
         {/* ... */}
       </Routes>
     </>
