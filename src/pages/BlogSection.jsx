@@ -11,7 +11,7 @@ export default function BlogSection() {
   const location = useLocation();
   const [showBooking, setShowBooking] = useState(true);
   const contactInfo = location.state?.contactInfo || {};
-  const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
   const navigate = useNavigate();
   const [blogData, setBlogData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -21,9 +21,7 @@ export default function BlogSection() {
       try {
         // const res = await fetch(`${BASE_URL}/api/blog`);
 
-        const res = await fetch(
-          `https://hotel-backend-nq72.onrender.com/api/blog`
-        );
+        const res = await fetch(`${BASE_URL}/api/blog`);
 
         if (!res.ok) {
           throw new Error("Blog API failed");
@@ -66,32 +64,7 @@ export default function BlogSection() {
       {/* Spacer so content does not hide behind sticky header */}
       <div style={{ height: "140px" }}></div>
 
-      <h1 className="section-heading">
-        {" "}
-        <span
-          className="line"
-          style={{
-            display: "inline-block",
-            width: "100px",
-            height: "3px",
-            backgroundColor: "#cfa349",
-            marginRight: "10px",
-            marginBottom: "10px",
-          }}
-        />
-        {title}
-        <span
-          className="line"
-          style={{
-            display: "inline-block",
-            width: "100px",
-            height: "3px",
-            backgroundColor: "#cfa349",
-            marginRight: "10px",
-            marginBottom: "10px",
-          }}
-        />
-      </h1>
+      <h1 className="section-heading"> {title}</h1>
 
       <section className="locals-section">
         {/* LEFT ROUND IMAGE */}
@@ -117,7 +90,7 @@ export default function BlogSection() {
 
         {/* RIGHT ROUND IMAGE */}
         <div className="locals-img-right">
-          <img src={blogImages[0]} alt="Resort Area" />
+          <img src={blogImages[1]} alt="Resort Area" />
         </div>
       </section>
 
@@ -147,11 +120,14 @@ export default function BlogSection() {
                 <div
                   key={item.id}
                   className={`adv-card ${index === 4 || 8 ? "horizontal" : ""}`}
-                  onClick={() => navigate(`/blog/${item.slug}`)}
+                  onClick={() =>
+                    navigate(`/blog/${item.slug}`, {
+                      state: { blog: item },
+                    })
+                  }
                   style={{ cursor: "pointer" }}
                 >
-                  {/* <img src={BASE_URL + item.image} alt={item.title} /> */}
-                  <img src={item.image} alt={item.title} />
+                  <img src={item.imageUrl} alt={item.title} />
 
                   <div className="adv-info">
                     <h3>{item.title}</h3>
@@ -167,9 +143,23 @@ export default function BlogSection() {
         <div className="blog-sidebar">
           <h2 className="sidebar-title">{popularPostListSection.title}</h2>
           <p className="blog-intro">{popularPostListSection.description}</p>
+
           {popularPostListSection.postsList.map((post, i) => (
-            <div className="sidebar-card" key={i}>
-              <img src={post.image} alt={post.title} className="sidebar-img" />
+            <div
+              className="sidebar-card"
+              key={i}
+              style={{ cursor: "pointer" }}
+              // onClick={() =>
+              //   navigate(`/blog/${post.id}`, {
+              //     state: { blog: post },
+              //   })
+              // }
+            >
+              <img
+                src={post.imageUrl}
+                alt={post.title}
+                className="sidebar-img"
+              />
 
               <p className="sidebar-date">
                 {post.date} · BY {post.author}
@@ -177,8 +167,15 @@ export default function BlogSection() {
 
               <h3 className="sidebar-post-title">{post.title}</h3>
 
-              {/* <a href={post.link} className="sidebar-link"> */}
-              <a href={`/blog/${post.slug}`} className="sidebar-link">
+              <a
+                className="sidebar-link"
+                onClick={(e) => {
+                  e.preventDefault(); // prevent default anchor behavior
+                  navigate(`/blog/${post.slug}`, {
+                    state: { blog: post },
+                  });
+                }}
+              >
                 Learn More →
               </a>
             </div>
@@ -189,143 +186,4 @@ export default function BlogSection() {
       <Footer contactInfo={contactInfo} />
     </main>
   );
-
-  function blog2() {
-    return (
-      <section className="adventure-section">
-        {/* HEADER */}
-        <div className="adventure-header">
-          <div>
-            <h2>Unlock Your Next Adventure</h2>
-            <p>
-              We bring exceptional experiences curated from destinations across
-              India. Explore your perfect getaway now.
-            </p>
-          </div>
-
-          <button className="view-more-btn">View More →</button>
-        </div>
-
-        {/* GRID */}
-        <div className="adventure-grid">
-          {destinations.map((item, index) => {
-            // HIGHLIGHT CARD
-            if (item.promo) {
-              return (
-                <div key={item.id} className="adv-card promo-card">
-                  <div className="promo-content">
-                    <span className="promo-discount">{item.subtitle}</span>
-                    <h3>{item.title}</h3>
-                    <button className="promo-btn">Find Tours</button>
-                  </div>
-                </div>
-              );
-            }
-
-            // NORMAL IMAGE CARD
-            return (
-              <div
-                key={item.id}
-                className={`adv-card ${index === 4 || 8 ? "horizontal" : ""}`}
-              >
-                {/* <img src={BASE_URL + item.image} alt={item.title} /> */}
-                <img src={item.image} alt={item.title} />
-
-                <div className="adv-info">
-                  <h3>{item.title}</h3>
-                  <span>{item.subtitle}</span>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </section>
-    );
-  }
-
-  function multiImageSection() {
-    return (
-      <section className="adventure-section">
-        {/* HEADER */}
-        <div className="adventure-header">
-          <div>
-            <h2>Unlock Your Next Adventure</h2>
-            <p>
-              We have been operating for over a decade, providing top-notch
-              services to our clients and building a strong track record.
-            </p>
-          </div>
-
-          <button className="view-more-btn">View More →</button>
-        </div>
-
-        {/* GRID */}
-        <div className="adventure-grid">
-          {/* CARD 1 */}
-          <div className="adv-card">
-            <img src="/assets/img1.jpg" alt="Cultural Heritage" />
-            <div className="adv-info">
-              <h3>Cultural Heritage</h3>
-              <span>10+ Locations</span>
-            </div>
-          </div>
-
-          {/* CARD 2 */}
-          <div className="adv-card">
-            <img src="/assets/img2.jpg" alt="Exotic Safari" />
-            <div className="adv-info">
-              <h3>Exotic Safari</h3>
-              <span>07+ Safaris</span>
-            </div>
-          </div>
-
-          {/* HIGHLIGHT PROMO CARD */}
-          <div className="adv-card promo-card">
-            <div className="promo-content">
-              <span className="promo-discount">40% Discount</span>
-              <h3>All Kinds Of Adventure Tours</h3>
-              <button className="promo-btn">Find Tours</button>
-            </div>
-          </div>
-
-          {/* CARD 4 */}
-          <div className="adv-card horizontal">
-            <img src="/assets/img3.jpg" alt="Alpine Adventures" />
-            <div className="adv-info">
-              <h3>Alpine Adventures</h3>
-              <span>15+ Locations</span>
-            </div>
-          </div>
-
-          {/* CARD 5 */}
-          <div className="adv-card">
-            <img src="/assets/g1.png" alt="Island Getaway" />
-            <div className="adv-info">
-              <h3>Island Getaway</h3>
-              <span>12+ Locations</span>
-            </div>
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  function blog1() {
-    return (
-      <div className="blog-section">
-        <h2 className="blog-heading">Latest Stories</h2>
-
-        {/* GRID POSTS */}
-        <div className="blog-grid">
-          {posts.map((post) => (
-            <div className="blog-card" key={post.id}>
-              <img src={post.image} />
-              <h4>{post.title}</h4>
-              <button className="blog-btn small">Read More →</button>
-            </div>
-          ))}
-        </div>
-      </div>
-    );
-  }
 }

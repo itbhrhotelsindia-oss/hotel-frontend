@@ -76,7 +76,7 @@
 .locals-section {
   width: 100%;
   background: #ffffff;
-  padding: 150px 40px;
+  padding: 200px 40px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -87,6 +87,7 @@
 .locals-img-left img {
   width: 450px;
   height: 450px;
+  margin-left: 50px;
   border-radius: 50% 50% 50% 0%;
   object-fit: cover;
   position: absolute;
@@ -98,6 +99,7 @@
 .locals-img-right img {
   width: 450px;
   height: 450px;
+  margin-right: 50px;
   border-radius: 50% 0 50% 50%;
   object-fit: cover;
   position: absolute;
@@ -107,7 +109,7 @@
 
 /* CENTER TEXT */
 .locals-content {
-  max-width: 700px;
+  max-width: 600px;
   text-align: left;
   margin: auto;
 }
