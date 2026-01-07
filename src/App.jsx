@@ -19,6 +19,8 @@ import HotelDetails from "./pages/HotelDetails.jsx";
 import OwnerLogin from "./owner/auth/OwnerLogin";
 import OwnerDashboard from "./owner/pages/OwnerDashboard";
 import HotelDashboard from "./owner/pages/HotelDashboard";
+import { RoomTypes } from "./owner/pages/RoomTypes";
+import { Inventory } from "./owner/pages/Inventory";
 
 export default function App() {
   return (
@@ -41,6 +43,12 @@ export default function App() {
         <Route path="/owner/login" element={<OwnerLogin />} />
         <Route path="/owner/dashboard" element={<OwnerDashboard />} />
         <Route path="/owner/hotel/:hotelId" element={<HotelDashboard />} />
+        <Route
+          path="/owner/hotel/:hotelId/room-types"
+          element={<RoomTypes />}
+        />
+        <Route path="/owner/hotel/:hotelId/inventory" element={<Inventory />} />
+
         {/* ================= FALLBACK ================= */}
         <Route path="*" element={<h2>Page Not Found</h2>} />
         {/* ... */}

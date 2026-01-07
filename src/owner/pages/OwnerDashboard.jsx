@@ -13,24 +13,58 @@ const OwnerDashboard = () => {
     async function loadOwnerHotels() {
       try {
         const token = localStorage.getItem("token");
+        if (!token) throw new Error("Not authenticated");
 
-        if (!token) {
-          throw new Error("Not authenticated");
-        }
-
-        const res = await fetch(`${BASE_URL}/api/owner/hotels`, {
-          method: "GET",
+        /* ============================
+           1️⃣ FETCH OWNER HOTELS (IDs)
+           ============================ */
+        const ownerRes = await fetch(`${BASE_URL}/api/owner/hotels`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
 
-        if (!res.ok) {
-          throw new Error("Failed to load hotels");
+        if (!ownerRes.ok) {
+          throw new Error("Failed to load owner hotels");
         }
 
-        const data = await res.json();
-        setHotels(Array.isArray(data) ? data : []);
+        const ownerHotels = await ownerRes.json();
+        // expected: [{ hotelId: "HOTEL-JIMCORBETT-001" }, ...]
+
+        /* ============================
+           2️⃣ FETCH CITIES (MASTER DATA)
+           ============================ */
+        const citiesRes = await fetch(`${BASE_URL}/api/cities/`);
+        if (!citiesRes.ok) {
+          throw new Error("Failed to load cities data");
+        }
+
+        const citiesData = await citiesRes.json();
+
+        /* ============================
+           3️⃣ FLATTEN HOTELS FROM CITIES
+           ============================ */
+        const allCityHotels = citiesData.flatMap((city) =>
+          city.hotels.map((hotel) => ({
+            hotelId: hotel.hotelId,
+            hotelName: hotel.name, // 👈 SOURCE OF TRUTH
+            cityName: city.name,
+            imageUrl: hotel.imageUrl,
+          }))
+        );
+
+        /* ============================
+           4️⃣ MATCH BY hotelId
+           ============================ */
+        const mergedHotels = ownerHotels
+          .map((ownerHotel) =>
+            allCityHotels.find(
+              (cityHotel) => cityHotel.hotelId === ownerHotel.hotelId
+            )
+          )
+          .filter(Boolean); // remove unmatched
+
+        setHotels(mergedHotels);
       } catch (err) {
         console.error("OwnerDashboard error:", err);
         setError(err.message || "Something went wrong");
@@ -42,7 +76,10 @@ const OwnerDashboard = () => {
     loadOwnerHotels();
   }, [BASE_URL]);
 
-  // 🔄 Loading state
+  /* ============================
+     UI STATES
+     ============================ */
+
   if (loading) {
     return (
       <div style={styles.center}>
@@ -51,7 +88,6 @@ const OwnerDashboard = () => {
     );
   }
 
-  // ❌ Error state
   if (error) {
     return (
       <div style={styles.center}>
@@ -69,15 +105,13 @@ const OwnerDashboard = () => {
       ) : (
         <div style={styles.grid}>
           {hotels.map((hotel) => (
-            <div key={hotel.id || hotel._id} style={styles.card}>
-              <h3>{hotel.name}</h3>
-              <p>{hotel.city}</p>
+            <div key={hotel.hotelId} style={styles.card}>
+              <h3 style={styles.hotelName}>{hotel.hotelName}</h3>
+              <p style={styles.cityName}>{hotel.cityName}</p>
 
               <button
                 style={styles.button}
-                onClick={() =>
-                  navigatenavigate(`/owner/hotel/${hotel.hotelId}`)
-                }
+                onClick={() => navigate(`/owner/hotel/${hotel.hotelId}`)}
               >
                 Manage Hotel
               </button>
@@ -91,7 +125,9 @@ const OwnerDashboard = () => {
 
 export default OwnerDashboard;
 
-/* ------------------ BASIC STYLES ------------------ */
+/* ============================
+   STYLES
+   ============================ */
 
 const styles = {
   container: {
@@ -111,15 +147,22 @@ const styles = {
     padding: "14px",
     boxShadow: "0 6px 14px rgba(0,0,0,0.08)",
   },
+  hotelName: {
+    marginBottom: "4px",
+  },
+  cityName: {
+    fontSize: "13px",
+    color: "#666",
+    marginBottom: "10px",
+  },
   button: {
-    marginTop: "8px",
     padding: "6px 10px",
     background: "#6A2C2C",
     color: "#fff",
     border: "none",
     borderRadius: "4px",
-    fontSize: "13px",
     cursor: "pointer",
+    fontSize: "13px",
   },
   center: {
     minHeight: "60vh",
