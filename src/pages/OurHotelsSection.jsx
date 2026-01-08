@@ -166,10 +166,10 @@ export default function OurHotelsSection() {
               {/* onClick={() => navigate(`/hotel-details/${item.i}`)} */}
               <div className="destination-text">
                 <h3>{cityObj.name}</h3>
-                <p>
+                {/* <p>
                   beajas kaslk dfuoasd fasoik lakjs kdjfn aks
                   dfiukhasndfkyasidfaskdfi. uishdf asuyd {cityObj.name}
-                </p>
+                </p> */}
               </div>
             </div>
           ))}

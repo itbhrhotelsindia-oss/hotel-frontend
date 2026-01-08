@@ -1,7 +1,9 @@
 import "./CityModal.css";
 import { FaTimes } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 export default function CityHotelsModal({ open, onClose, city, hotels }) {
+  const navigate = useNavigate();
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   if (!open) return null;
 
@@ -38,12 +40,22 @@ export default function CityHotelsModal({ open, onClose, city, hotels }) {
                     {service === "MICE" && "🏨"}
                     {service === "Wedding" && "💍"}
                     {service === "Vacation" && "🌴"}
+                    {service === "Safari" && "🦁"}
+                    {service === "Nature Retreat" && "🌅"}
                     {service}
                   </span>
                 ))}
               </div>
               <div className="hotel-card-btns">
-                <button className="visit-btn">Visit Hotel</button>
+                <button
+                  className="visit-btn"
+                  onClick={() => {
+                    onClose(); // close modal
+                    navigate(`/hotel-details/${hotel.id}`);
+                  }}
+                >
+                  Visit Hotel
+                </button>
                 <button className="book-btn">Book Now</button>
               </div>
             </div>

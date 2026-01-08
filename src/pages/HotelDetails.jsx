@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import HeaderBar from "../components/HeaderBar.jsx";
 import Footer from "../components/Footer.jsx";
 import "./HotelDetails.css";
+import { useParams } from "react-router-dom";
 import {
   FaSwimmingPool,
   FaChair,
@@ -110,7 +111,7 @@ export default function HotelDetails() {
   const [home, setHome] = useState(FALLBACK);
   const [loading, setLoading] = useState(true);
   const wrapperRef = useRef(null);
-
+  const { hotelId } = useParams();
   const slides = [
     home.heroImages[home.heroImages.length - 1],
     ...home.heroImages,

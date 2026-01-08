@@ -31,7 +31,8 @@ export default function App() {
         <Route path="/partners" element={<PartnersSection />} />
         <Route path="/dining/:restaurantId" element={<DiningDetails />} />
         <Route path="/blog/:slug" element={<BlogDetail />} />
-        <Route path="/hotel-details/:city" element={<HotelDetails />} />
+        <Route path="/hotel-details/:hotelId" element={<HotelDetails />} />
+
         {/* ... */}
       </Routes>
     </>
