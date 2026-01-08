@@ -189,6 +189,10 @@
     justify-content: center;
   }
 }
+.footer-city:hover {
+  text-decoration: underline;
+  color: #b7832f;
+}
 
 /* ================================
    RESPONSIVE — MOBILE

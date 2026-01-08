@@ -7,6 +7,7 @@ import {
   FaYoutube,
   FaLinkedinIn,
 } from "react-icons/fa";
+import CityHotelsModal from "../pages/CityHotelsModal";
 
 export default function Footer({ contactInfo = {} }) {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
@@ -23,6 +24,15 @@ export default function Footer({ contactInfo = {} }) {
     if (socialLinks[platform]) {
       window.open(socialLinks[platform], "_blank");
     }
+  };
+
+  const [selectedCity, setSelectedCity] = useState("");
+  const [cityHotels, setCityHotels] = useState([]);
+  const [cityModalOpen, setCityModalOpen] = useState(false);
+  const openCityDialog = (cityObj) => {
+    setSelectedCity(cityObj.name);
+    setCityHotels(cityObj.hotels);
+    setCityModalOpen(true);
   };
 
   useEffect(() => {
@@ -117,11 +127,18 @@ export default function Footer({ contactInfo = {} }) {
         {/* --- CITY LIST --- */}
         <div className="footer-cities container">
           {cities.map((city, index) => (
-            <span key={index} className="footer-city">
-              {city.name} {index < cities.length - 1 && " | "}
+            <span
+              key={city.id || index}
+              className="footer-city"
+              onClick={() => openCityDialog(city)}
+              style={{ cursor: "pointer" }}
+            >
+              {city.name}
+              {index < cities.length - 1 && " | "}
             </span>
           ))}
         </div>
+
         {/* --- MENU LINKS --- */}
       </div>
 
@@ -147,6 +164,13 @@ export default function Footer({ contactInfo = {} }) {
         This website uses cookies to ensure you get the best experience on our website.
         <button>Accept</button>
       </div> */}
+
+      <CityHotelsModal
+        open={cityModalOpen}
+        onClose={() => setCityModalOpen(false)}
+        city={selectedCity}
+        hotels={cityHotels}
+      />
     </footer>
   );
 }
