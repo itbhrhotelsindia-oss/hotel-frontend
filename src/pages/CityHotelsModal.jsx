@@ -26,14 +26,6 @@ export default function CityHotelsModal({ open, onClose, city, hotels }) {
               />
               <h3>{hotel.name}</h3>
               <p>From {hotel.price} INR/Night</p>
-              {/* <div className="hotel-services">
-                <span className="service-badge">🏨 MICE</span>
-                <span className="service-badge">💍 Wedding</span>
-                <span className="service-badge">🌴 Vacation</span>
-                <span className="service-badge">🏨 MICE</span>
-                <span className="service-badge">💍 Wedding</span>
-                <span className="service-badge">🌴 Vacation</span>
-              </div> */}
               <div className="hotel-services">
                 {hotel.services.map((service, i) => (
                   <span key={i} className="service-badge">
@@ -51,7 +43,7 @@ export default function CityHotelsModal({ open, onClose, city, hotels }) {
                   className="visit-btn"
                   onClick={() => {
                     onClose(); // close modal
-                    navigate(`/hotel-details/${hotel.id}`);
+                    navigate(`/hotel-details/${hotel.hotelId}`);
                   }}
                 >
                   Visit Hotel

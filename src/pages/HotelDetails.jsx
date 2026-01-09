@@ -107,11 +107,14 @@ const FALLBACK = {
 };
 
 export default function HotelDetails() {
-  const BASE_URL = import.meta.env.VITE_BASE_URL;
-  const [home, setHome] = useState(FALLBACK);
-  const [loading, setLoading] = useState(true);
-  const wrapperRef = useRef(null);
   const { hotelId } = useParams();
+
+  console.log("Hotel ID from URL:", hotelId);
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
+  const [hotel, setHotel] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [home, setHome] = useState(FALLBACK);
+  const wrapperRef = useRef(null);
   const slides = [
     home.heroImages[home.heroImages.length - 1],
     ...home.heroImages,
@@ -227,29 +230,26 @@ export default function HotelDetails() {
   }, [index]);
 
   useEffect(() => {
-    async function load() {
+    async function fetchHotelDetails() {
       try {
-        const res = await fetch(BASE_URL + "/api/home");
-        if (!res.ok) throw new Error("API failed");
+        // const res = await fetch(`${BASE_URL}/api/hotel-details/${hotelId}`);
+        const res = await fetch(`${BASE_URL}/api/hotel-details/${hotelId}`);
+
+        if (!res.ok) {
+          throw new Error("Failed to fetch hotel details");
+        }
+
         const data = await res.json();
-
-        data.heroImages = data.heroImages.map((imgUrl) => imgUrl);
-
-        setHome({
-          heroImages: data.heroImages || FALLBACK.heroImages,
-          brandSection: data.brandSection || FALLBACK.brandSection,
-          eventsSection: data.eventsSection || FALLBACK.eventsSection,
-          aboutSection: data.aboutSection || FALLBACK.aboutSection,
-          brandBanner: data.brandBanner || FALLBACK.brandBanner,
-          contactSection: data.contactSection || FALLBACK.contactSection,
-        });
-      } catch (e) {
-        console.warn("Using fallback (backend error):", e);
+        setHotel(data);
+      } catch (err) {
+        console.error("Hotel Details API Error:", err);
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
     }
-    load();
-  }, []);
+
+    fetchHotelDetails();
+  }, [hotelId]);
 
   // autoplay
   useEffect(() => {
@@ -291,6 +291,26 @@ export default function HotelDetails() {
     return () => window.removeEventListener("scroll", scroll);
   }, []);
 
+  if (loading || !hotel) {
+    return (
+      <div style={{ padding: "200px", textAlign: "center" }}>
+        Loading hotel details...
+      </div>
+    );
+  }
+  const {
+    basicInfo,
+    hotelSlider,
+    services,
+    aboutSection,
+    roomsSection,
+    amenitiesSection,
+    gallerySection,
+    policiesSection,
+    locationSection,
+    faqSection,
+  } = hotel;
+
   return (
     <div className="page-home">
       <HeaderBar
@@ -318,10 +338,10 @@ export default function HotelDetails() {
       <div className="everleaf-wrapper">
         {/* IMAGE GRID */}
         <div className="el-grid">
-          <img src="/assets/img1.jpg" alt="Forest" />
-          <img src="/assets/img2.jpg" alt="Walk" />
-          <img src="/assets/img3.jpg" alt="Cabin" />
-          <img src="/assets/g1.png" alt="Room" />
+          <img src={hotelSlider.images[0]} alt="Forest" />
+          <img src={hotelSlider.images[1]} alt="Walk" />
+          <img src={hotelSlider.images[2]} alt="Cabin" />
+          <img src={hotelSlider.images[3]} alt="Room" />
         </div>
 
         {/* TEXT SECTION */}
