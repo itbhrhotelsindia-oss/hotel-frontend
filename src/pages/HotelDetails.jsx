@@ -22,115 +22,12 @@ import {
 import BookingSearchBox from "./BookingSearchBox.jsx";
 import { FaShop } from "react-icons/fa6";
 
-const FALLBACK = {
-  heroImages: [
-    "/assets/img1.jpg",
-    "/assets/img2.jpg",
-    "/assets/slider-1.jpg",
-    "/assets/slider-2.jpg",
-    "/assets/img3.jpg",
-  ],
-  brandSection: {
-    title: "OUR BRANDS",
-    blocks: [
-      {
-        layout: "text-left-image-right",
-        text: "Experience the pinnacle of refined Indian luxury...",
-        imageUrl: "/assets/slider-1.jpg",
-      },
-      {
-        layout: "image-left-text-right",
-        text: "Dynamic, stylish, and connected to India’s urban lifestyle...",
-        imageUrl: "/assets/slider-2.jpg",
-      },
-      {
-        layout: "image-left-text-right",
-        text: "Dynamic, stylish, and connected to India’s evolving lifestyle...",
-        imageUrl: "/assets/slider-3.jpg",
-      },
-      {
-        layout: "text-left-image-right",
-        text: "Dynamic, stylish, and connected to India’s evolving lifestyle...",
-        imageUrl: "/assets/img2.jpg",
-      },
-    ],
-  },
-  eventsSection: {
-    title: "PLAN YOUR EVENTS",
-    events: [
-      {
-        title: "Woyage - Daycations",
-        imageUrl: "/assets/g1.png",
-        description: "Replenish your spirit...",
-      },
-      {
-        title: "Luxury Escapes",
-        imageUrl: "/assets/g2.png",
-        description: "Unwind in curated luxurious settings...",
-      },
-      {
-        title: "Offers & Promotions",
-        imageUrl: "/assets/g3.png",
-        description: "Exclusive seasonal offers...",
-      },
-    ],
-  },
-  aboutSection: {
-    title: "ABOUT US",
-    description:
-      "Since 2016, we've been helping travelers find stays they love...",
-    buttonText: "Know More →",
-    buttonLink: "/about",
-    stats: [
-      { value: "98%+", label: "Positive Feedback" },
-      { value: "15+", label: "Years of Expertise" },
-      { value: "25K+", label: "Happy Guests" },
-    ],
-  },
-  brandBanner: {
-    title: "Elegance Crafted With Indian Soul",
-    subtitle: "A seamless blend of heritage, culture, and world-class comfort.",
-    contacts: [
-      {
-        type: "phone",
-        value: "18002091400",
-        displayValue: "1800 209 1400",
-      },
-      {
-        type: "email",
-        value: "centralreservations@hrchotel.com",
-        displayValue: "centralreservations@hrchotel.com",
-      },
-    ],
-  },
-  contactSection: {
-    reservationPhone: "180400",
-    hotelPhone: "+91 9876543210",
-    email: "centralions@hrchotel.com",
-    corporateAddress: "Corporate Office, Mumbai",
-    supportHours: "24x7",
-    socialLinks: [
-      { name: "facebook", url: "https://facebook.com/hrchotel" },
-      { name: "twitter", url: "https://twitter.com/hrchotel" },
-      { name: "instagram", url: "https://instagram.com/hrchotel" },
-    ],
-  },
-};
-
 export default function HotelDetails() {
   const { hotelId } = useParams();
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   const [hotel, setHotel] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [home, setHome] = useState(FALLBACK);
   const wrapperRef = useRef(null);
-  const slides = [
-    home.heroImages[home.heroImages.length - 1],
-    ...home.heroImages,
-    home.heroImages[0],
-  ];
-
-  const total = slides.length;
 
   const next = () => setIndex((i) => i + 1);
   const prev = () => setIndex((i) => i - 1);
@@ -148,24 +45,6 @@ export default function HotelDetails() {
     const timer = setInterval(() => setIndex((prev) => prev), 4000);
     return () => clearInterval(timer);
   }, []);
-
-  useEffect(() => {
-    if (index === home.heroImages.length + 1) {
-      setTimeout(() => {
-        setTransitionMs(0);
-        setIndex(1);
-        setTimeout(() => setTransitionMs(100), 20); // 1000 is for smooth sliding
-      }, transitionMs);
-    }
-
-    if (index === 0) {
-      setTimeout(() => {
-        setTransitionMs(0);
-        setIndex(home.heroImages.length);
-        setTimeout(() => setTransitionMs(100), 20); // 1000 is for smooth sliding
-      }, transitionMs);
-    }
-  }, [index]);
 
   useEffect(() => {
     async function fetchHotelDetails() {
@@ -194,32 +73,6 @@ export default function HotelDetails() {
     const id = setInterval(() => setIndex((i) => i + 1), 5000);
     return () => clearInterval(id);
   }, []);
-
-  // infinity logic
-  useEffect(() => {
-    const wrapper = wrapperRef.current;
-    if (!wrapper) return;
-
-    function handleEnd() {
-      if (index === total - 1) {
-        setTransitionMs(0);
-        setIndex(1);
-        requestAnimationFrame(() =>
-          requestAnimationFrame(() => setTransitionMs(400))
-        );
-      }
-      if (index === 0) {
-        setTransitionMs(0);
-        setIndex(total - 2);
-        requestAnimationFrame(() =>
-          requestAnimationFrame(() => setTransitionMs(400))
-        );
-      }
-    }
-
-    wrapper.addEventListener("transitionend", handleEnd);
-    return () => wrapper.removeEventListener("transitionend", handleEnd);
-  }, [index, total]);
 
   useEffect(() => {
     function scroll() {

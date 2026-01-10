@@ -31,7 +31,7 @@ export default function CityHotelsModal({
                 className="modal-image"
               />
               <h3>{hotel.name}</h3>
-              <p>From {hotel.price} INR/Night</p>
+              {/* <p>From {hotel.price} INR/Night</p> */}
               <div className="hotel-services">
                 {hotel.services.map((service, i) => (
                   <span key={i} className="service-badge">
@@ -46,9 +46,14 @@ export default function CityHotelsModal({
               </div>
               <div className="hotel-card-btns">
                 <button
-                  className="visit-btn"
+                  className={`visit-btn ${
+                    !hotel.imageUrl ? "disabled-btn" : ""
+                  }`}
+                  disabled={!hotel.imageUrl}
                   onClick={() => {
-                    onClose(); // close modal
+                    if (!hotel.imageUrl) return; // extra safety
+
+                    onClose();
                     navigate(`/hotel-details/${hotel.hotelId}`, {
                       state: { contactInfo },
                     });
