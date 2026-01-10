@@ -1,13 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { FaTimes } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import "./BookingSearchBox.css";
 
 export default function BookingSearchBox() {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
+  const navigate = useNavigate();
 
   const [locations, setLocations] = useState([]); // API cities list
   const [selectedLocation, setSelectedLocation] = useState("");
   const [hotels, setHotels] = useState([]);
+
+  const handleBookNow = () => {
+    navigate("/booking");
+  };
 
   // Load locations from API
   useEffect(() => {
@@ -83,7 +89,10 @@ export default function BookingSearchBox() {
           {/* Booking Section */}
           <div className="booking-actions">
             <div className="why-book">Why Book Direct?</div>
-            <button className="booking-btn">BOOK NOW</button>
+            <button className="booking-btn" onClick={handleBookNow}>
+              BOOK NOW
+            </button>
+
             <div className="price-text">
               From <strong>6,435</strong> INR/Night
             </div>

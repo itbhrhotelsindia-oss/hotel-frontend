@@ -4,125 +4,109 @@ import { useParams } from "react-router-dom";
 const Inventory = () => {
   const { hotelId } = useParams();
   const BASE_URL = import.meta.env.VITE_BASE_URL;
-  const token = localStorage.getItem("token");
 
   const [roomTypes, setRoomTypes] = useState([]);
   const [roomTypeId, setRoomTypeId] = useState("");
-
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-
-  const [inventory, setInventory] = useState([]);
+  const [rows, setRows] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
 
-  /* ================= LOAD ROOM TYPES ================= */
   useEffect(() => {
-    async function loadRoomTypes() {
-      try {
-        const res = await fetch(
-          `${BASE_URL}/api/admin/room-types?hotelId=${hotelId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-
-        if (!res.ok) throw new Error("Failed to load room types");
-        setRoomTypes(await res.json());
-      } catch (err) {
-        setError(err.message);
-      }
-    }
-
-    loadRoomTypes();
+    fetch(`${BASE_URL}/api/admin/room-types?hotelId=${hotelId}`)
+      .then((res) => res.json())
+      .then(setRoomTypes);
   }, [hotelId]);
 
-  /* ================= LOAD INVENTORY ================= */
-  const loadInventory = async () => {
-    if (!roomTypeId || !startDate || !endDate) {
-      alert("Select room type and date range");
-      return;
-    }
+  const selectedRoomType = roomTypes.find((r) => r.id === roomTypeId);
 
-    try {
-      setLoading(true);
-      setError("");
+  async function loadInventory() {
+    if (!roomTypeId || !startDate || !endDate) return;
+    setLoading(true);
 
-      const res = await fetch(
-        `${BASE_URL}/api/admin/inventory?hotelId=${hotelId}&roomTypeId=${roomTypeId}&startDate=${startDate}&endDate=${endDate}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+    const res = await fetch(
+      `${BASE_URL}/api/admin/inventory?hotelId=${hotelId}&roomTypeId=${roomTypeId}&startDate=${startDate}&endDate=${endDate}`
+    );
 
-      if (!res.ok) throw new Error("Failed to load inventory");
+    const data = await res.json();
+    setRows(
+      data.map((d) => ({
+        ...d,
+        isDirty: false,
+        isSaving: false,
+      }))
+    );
+    setLoading(false);
+  }
 
-      setInventory(await res.json());
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
+  function updateRow(index, field, value) {
+    setRows((prev) => {
+      const copy = [...prev];
+      const row = { ...copy[index] };
 
-  /* ================= UPDATE SINGLE DATE ================= */
-  const updateDate = async (item, changes) => {
-    try {
-      const res = await fetch(`${BASE_URL}/api/admin/inventory/date`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          hotelId,
-          roomTypeId,
-          date: item.date,
-          ...changes,
-        }),
-      });
+      if (field === "totalRooms") {
+        row.totalRooms = Math.min(
+          Number(value),
+          selectedRoomType?.maxGuests || 0
+        );
+      }
 
-      if (!res.ok) throw new Error("Update failed");
-      loadInventory();
-    } catch (err) {
-      alert(err.message);
-    }
-  };
+      if (field === "pricePerNight") {
+        row.pricePerNight = Number(value);
+      }
 
-  /* ================= BLOCK / UNBLOCK ================= */
-  const toggleStatus = async (item) => {
-    try {
-      const res = await fetch(`${BASE_URL}/api/admin/inventory/status`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          hotelId,
-          roomTypeId,
-          date: item.date,
-          active: !item.active,
-        }),
-      });
+      row.isDirty = true;
+      copy[index] = row;
+      return copy;
+    });
+  }
 
-      if (!res.ok) throw new Error("Status update failed");
-      loadInventory();
-    } catch (err) {
-      alert(err.message);
-    }
-  };
+  async function saveRow(index) {
+    const row = rows[index];
+    row.isSaving = true;
+    setRows([...rows]);
 
-  /* ================= UI ================= */
+    await fetch(`${BASE_URL}/api/admin/inventory/date`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        hotelId,
+        roomTypeId,
+        date: row.date,
+        totalRooms: row.totalRooms,
+        pricePerNight: row.pricePerNight,
+      }),
+    });
+
+    row.isDirty = false;
+    row.isSaving = false;
+    setRows([...rows]);
+  }
+
+  async function toggleStatus(index) {
+    const row = rows[index];
+
+    await fetch(`${BASE_URL}/api/admin/inventory/status`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        hotelId,
+        roomTypeId,
+        date: row.date,
+        active: !row.active,
+      }),
+    });
+
+    row.active = !row.active;
+    setRows([...rows]);
+  }
+
   return (
-    <div style={{ padding: 24 }}>
+    <div style={styles.container}>
       <h2>Inventory</h2>
 
-      <div style={styles.controls}>
+      {/* FILTER BAR */}
+      <div style={styles.filterBar}>
         <select
           value={roomTypeId}
           onChange={(e) => setRoomTypeId(e.target.value)}
@@ -135,92 +119,130 @@ const Inventory = () => {
           ))}
         </select>
 
-        <input
-          type="date"
-          value={startDate}
-          onChange={(e) => setStartDate(e.target.value)}
-        />
+        <input type="date" onChange={(e) => setStartDate(e.target.value)} />
+        <input type="date" onChange={(e) => setEndDate(e.target.value)} />
 
-        <input
-          type="date"
-          value={endDate}
-          onChange={(e) => setEndDate(e.target.value)}
-        />
-
-        <button onClick={loadInventory}>Load</button>
+        <button
+          onClick={loadInventory}
+          disabled={!roomTypeId || !startDate || !endDate}
+          style={styles.loadBtn}
+        >
+          Load
+        </button>
       </div>
 
       {loading && <p>Loading inventory…</p>}
-      {error && <p style={{ color: "red" }}>{error}</p>}
 
-      {inventory.length > 0 && (
-        <table style={styles.table}>
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Rooms</th>
-              <th>Price</th>
-              <th>Status</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {inventory.map((item) => (
-              <tr key={item.date}>
-                <td>{item.date}</td>
+      {!loading && rows.length > 0 && (
+        <div style={styles.table}>
+          <div style={styles.headerRow}>
+            <span>Date</span>
+            <span>Rooms</span>
+            <span>Price</span>
+            <span>Status</span>
+            <span>Action</span>
+          </div>
 
-                <td>
-                  <input
-                    type="number"
-                    value={item.totalRooms}
-                    onChange={(e) =>
-                      updateDate(item, {
-                        totalRooms: Number(e.target.value),
-                      })
-                    }
-                  />
-                </td>
+          {rows.map((r, i) => (
+            <div
+              key={r.date}
+              style={{
+                ...styles.row,
+                background: r.isDirty ? "#fff8e1" : "#fff",
+              }}
+            >
+              <span>{r.date}</span>
 
-                <td>
-                  <input
-                    type="number"
-                    value={item.pricePerNight}
-                    onChange={(e) =>
-                      updateDate(item, {
-                        pricePerNight: Number(e.target.value),
-                      })
-                    }
-                  />
-                </td>
+              <span>
+                <input
+                  type="number"
+                  value={r.totalRooms}
+                  onChange={(e) => updateRow(i, "totalRooms", e.target.value)}
+                />
+                <small>max {selectedRoomType?.maxGuests}</small>
+              </span>
 
-                <td>{item.active ? "OPEN" : "BLOCKED"}</td>
+              <span>
+                <input
+                  type="number"
+                  value={r.pricePerNight}
+                  onChange={(e) =>
+                    updateRow(i, "pricePerNight", e.target.value)
+                  }
+                />
+              </span>
 
-                <td>
-                  <button onClick={() => toggleStatus(item)}>
-                    {item.active ? "Block" : "Unblock"}
+              <span>{r.active ? "OPEN" : "BLOCKED"}</span>
+
+              <span>
+                {r.isDirty && (
+                  <button onClick={() => saveRow(i)} style={styles.saveBtn}>
+                    {r.isSaving ? "Saving…" : "Save"}
                   </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                )}
+                <button onClick={() => toggleStatus(i)} style={styles.blockBtn}>
+                  {r.active ? "Block" : "Unblock"}
+                </button>
+              </span>
+            </div>
+          ))}
+        </div>
       )}
     </div>
   );
 };
 
-/* ✅ NAMED EXPORT (MATCHES RoomTypes) */
 export { Inventory };
 
-/* ================= STYLES ================= */
 const styles = {
-  controls: {
+  container: {
+    padding: 24,
+  },
+  filterBar: {
     display: "flex",
-    gap: 10,
-    marginBottom: 16,
+    gap: 12,
+    marginBottom: 20,
+  },
+  loadBtn: {
+    background: "#6A2C2C",
+    color: "#fff",
+    padding: "8px 18px",
+    borderRadius: 6,
+    border: "none",
+    cursor: "pointer",
   },
   table: {
-    width: "100%",
-    borderCollapse: "collapse",
+    borderRadius: 10,
+    overflow: "hidden",
+    boxShadow: "0 6px 18px rgba(0,0,0,0.08)",
+  },
+  headerRow: {
+    display: "grid",
+    gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr",
+    padding: 12,
+    fontWeight: 600,
+    background: "#f4f4f4",
+  },
+  row: {
+    display: "grid",
+    gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr",
+    padding: 12,
+    alignItems: "center",
+    borderBottom: "1px solid #eee",
+  },
+  saveBtn: {
+    marginRight: 6,
+    background: "#2e7d32",
+    color: "#fff",
+    border: "none",
+    padding: "4px 10px",
+    borderRadius: 4,
+  },
+  blockBtn: {
+    background: "#6A2C2C",
+    color: "#fff",
+    border: "none",
+    padding: "4px 10px",
+    borderRadius: 4,
   },
 };

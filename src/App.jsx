@@ -13,6 +13,11 @@ import OurHotelsSection from "./pages/OurHotelsSection";
 import DiningDetails from "./pages/DiningDetails";
 import BlogDetail from "./pages/BlogDetail";
 import HotelDetails from "./pages/HotelDetails.jsx";
+import BookingSearch from "./pages/booking/BookingSearch";
+import BookingAvailability from "./pages/booking/BookingAvailability";
+import GuestDetails from "./pages/booking/GuestDetails";
+import BookingConfirmation from "./pages/booking/BookingConfirmation";
+
 // ... other pages
 
 // ✅ Owner pages (NEW)
@@ -39,6 +44,10 @@ export default function App() {
         <Route path="/dining/:restaurantId" element={<DiningDetails />} />
         <Route path="/blog/:slug" element={<BlogDetail />} />
         <Route path="/hotel-details/:city" element={<HotelDetails />} />
+        <Route path="/booking" element={<BookingSearch />} />
+        <Route path="/booking/availability" element={<BookingAvailability />} />
+        <Route path="/booking/guest-details" element={<GuestDetails />} />
+        <Route path="/booking/confirmation" element={<BookingConfirmation />} />
         {/* ================= OWNER ROUTES ================= */}
         <Route path="/owner/login" element={<OwnerLogin />} />
         <Route path="/owner/dashboard" element={<OwnerDashboard />} />
