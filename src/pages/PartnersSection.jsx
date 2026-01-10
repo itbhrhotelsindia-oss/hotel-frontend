@@ -5,11 +5,74 @@ import Footer from "../components/Footer.jsx";
 import { useLocation } from "react-router-dom";
 
 export default function PartnersSection() {
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
   const [scrolled, setScrolled] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const location = useLocation();
   const contactInfo = location.state?.contactInfo || {};
   const [showBooking, setShowBooking] = useState(true);
+
+  const [cities, setCities] = useState([]);
+  const [citiesLoading, setCitiesLoading] = useState(true);
+  const [formData, setFormData] = useState({
+    companyName: "",
+    website: "",
+    fullName: "",
+    email: "",
+    contactNumber: "",
+    partnershipType: "",
+    location: "",
+    message: "",
+  });
+
+  const [submitting, setSubmitting] = useState(false);
+  const [responseMsg, setResponseMsg] = useState("");
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setSubmitting(true);
+    setResponseMsg("");
+
+    try {
+      const res = await fetch(`${BASE_URL}/api/partner-with-us`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!res.ok) {
+        throw new Error("Submission failed");
+      }
+
+      setResponseMsg("Thank you! Our team will contact you shortly.");
+
+      // Reset form after success
+      setFormData({
+        companyName: "",
+        website: "",
+        fullName: "",
+        email: "",
+        contactNumber: "",
+        partnershipType: "",
+        location: "",
+        message: "",
+      });
+    } catch (err) {
+      console.error(err);
+      setResponseMsg("Something went wrong. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   useEffect(() => {
     function handleScroll() {
@@ -17,6 +80,24 @@ export default function PartnersSection() {
     }
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    async function loadCities() {
+      try {
+        const res = await fetch(`${BASE_URL}/api/cities/`);
+        if (!res.ok) throw new Error("Failed to fetch cities");
+
+        const data = await res.json();
+        setCities(data);
+      } catch (err) {
+        console.error("Cities API error:", err);
+      } finally {
+        setCitiesLoading(false);
+      }
+    }
+
+    loadCities();
   }, []);
 
   return (
@@ -66,19 +147,32 @@ export default function PartnersSection() {
 
       <div className="partner-container">
         {/* FORM SECTION */}
-        <form className="partner-form">
+        <form onSubmit={handleSubmit} className="partner-form">
           {/* Company Details */}
           <h2 className="section-title">Company Information</h2>
 
           <div className="form-row">
             <div className="form-group">
               <label>Company Name *</label>
-              <input type="text" placeholder="Enter company name" required />
+              <input
+                type="text"
+                name="companyName"
+                placeholder="Company Name"
+                value={formData.companyName}
+                onChange={handleChange}
+                required
+              />
             </div>
 
             <div className="form-group">
               <label>Website</label>
-              <input type="text" placeholder="https://www.example.com" />
+              <input
+                type="url"
+                name="website"
+                placeholder="Website"
+                value={formData.website}
+                onChange={handleChange}
+              />
             </div>
           </div>
 
@@ -88,17 +182,56 @@ export default function PartnersSection() {
           <div className="form-row">
             <div className="form-group">
               <label>Full Name *</label>
-              <input type="text" placeholder="Enter your name" required />
+              <input
+                type="text"
+                name="fullName"
+                placeholder="Full Name"
+                value={formData.fullName}
+                onChange={handleChange}
+                required
+              />
             </div>
 
             <div className="form-group">
               <label>Email ID *</label>
-              <input type="email" placeholder="example@mail.com" required />
+              <input
+                type="email"
+                name="email"
+                placeholder="Email Address"
+                value={formData.email}
+                onChange={handleChange}
+                required
+              />
             </div>
 
             <div className="form-group">
               <label>Contact Number *</label>
-              <input type="text" placeholder="Enter mobile number" required />
+              <input
+                type="tel"
+                name="contactNumber"
+                placeholder="Enter 10-digit contact number"
+                value={formData.contactNumber}
+                onChange={(e) => {
+                  const value = e.target.value.replace(/\D/g, "");
+
+                  if (value.length <= 10) {
+                    setFormData({
+                      ...formData,
+                      contactNumber: value,
+                    });
+                  }
+
+                  // Clear error while typing
+                  e.target.setCustomValidity("");
+                }}
+                onInvalid={(e) =>
+                  e.target.setCustomValidity(
+                    "Please enter a valid 10-digit mobile number"
+                  )
+                }
+                maxLength="10"
+                required
+              />
             </div>
           </div>
 
@@ -108,7 +241,13 @@ export default function PartnersSection() {
           <div className="form-row">
             <div className="form-group full-width">
               <label>Select Partnership Category *</label>
-              <select required>
+              <select
+                name="partnershipType"
+                value={formData.partnershipType}
+                onChange={handleChange}
+                required
+              >
+                <option value="">Select Partnership Type</option>
                 <option>Hotel Franchise</option>
                 <option>Management Contract</option>
                 <option>Investment Partnership</option>
@@ -123,14 +262,22 @@ export default function PartnersSection() {
 
           <div className="form-row">
             <div className="form-group full-width">
-              <label>Select Partnership Category *</label>
-              <select required>
-                <option>Noida</option>
-                <option>Delhi</option>
-                <option>Goa</option>
-                <option>Haridwar</option>
-                <option>Rishikesh</option>
-                <option>Jim Corrbet</option>
+              <label>Select Hotel Location *</label>
+              <select
+                name="location"
+                value={formData.location}
+                onChange={handleChange}
+                required
+              >
+                <option value="">
+                  {citiesLoading ? "Loading locations..." : "Select Location"}
+                </option>
+
+                {cities.map((city) => (
+                  <option key={city.id} value={city.id}>
+                    {city.name}
+                  </option>
+                ))}
               </select>
             </div>
           </div>
@@ -142,15 +289,26 @@ export default function PartnersSection() {
             <div className="form-group full-width">
               <label>Message / Proposal *</label>
               <textarea
-                placeholder="Tell us more about your proposal..."
-                rows="5"
-                required
-              ></textarea>
+                name="message"
+                placeholder="Message"
+                rows={4}
+                value={formData.message}
+                onChange={handleChange}
+              />
             </div>
           </div>
 
           {/* Submit */}
-          <button className="partner-submit-btn">Submit Application</button>
+
+          <button
+            type="submit"
+            disabled={submitting}
+            className="partner-submit-btn"
+          >
+            {submitting ? "Submitting..." : "Submit Application"}
+          </button>
+
+          {responseMsg && <p className="form-message">{responseMsg}</p>}
         </form>
       </div>
 

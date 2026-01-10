@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./Footer.css";
 import {
   FaFacebookF,
@@ -6,29 +6,20 @@ import {
   FaTwitter,
   FaYoutube,
   FaLinkedinIn,
-  FaUser,
-  FaEnvelope,
-  FaPhoneAlt,
+  FaCross,
 } from "react-icons/fa";
+import CityHotelsModal from "../pages/CityHotelsModal";
+import ContactUs from "./ContactUs";
+import TermsAndConditions from "./TermsAndConditions";
+import WhyBookDirect from "./WhyBookDirect";
+import AboutUs from "./AboutUs";
+import Careers from "./Careers";
+import ManageBooking from "./ManageBooking";
 
 export default function Footer({ contactInfo = {} }) {
-  const cities = [
-    "Ahmedabad",
-    "Alkapuri (Vadodara)",
-    "Bangalore",
-    "Becharaji",
-    "Bharuch",
-    "Bhopal",
-    "Chennai",
-    "Chhatrapati Sambhajinagar",
-    "Daman",
-    "Dehradun",
-    "Deoghar",
-    "Digha",
-    "Dwarka",
-    "Goa",
-  ];
-
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
+  const [cities, setCities] = useState([]);
+  const [citiesLoading, setCitiesLoading] = useState(true);
   const handleSocialClick = (platform) => {
     const socialLinks = {
       facebook: contactInfo.socialLinks.facebook,
@@ -41,6 +32,42 @@ export default function Footer({ contactInfo = {} }) {
       window.open(socialLinks[platform], "_blank");
     }
   };
+
+  const [selectedCity, setSelectedCity] = useState("");
+  const [cityHotels, setCityHotels] = useState([]);
+  const [cityModalOpen, setCityModalOpen] = useState(false);
+  const openCityDialog = (cityObj) => {
+    setSelectedCity(cityObj.name);
+    setCityHotels(cityObj.hotels);
+    setCityModalOpen(true);
+  };
+  const [activeDialog, setActiveDialog] = useState(null);
+
+  function openDialog(type) {
+    setActiveDialog(type);
+  }
+
+  function closeDialog() {
+    setActiveDialog(null);
+  }
+
+  useEffect(() => {
+    async function loadCities() {
+      try {
+        const res = await fetch(`${BASE_URL}/api/cities/`);
+        if (!res.ok) throw new Error("Failed to fetch cities");
+
+        const data = await res.json();
+        setCities(data);
+      } catch (err) {
+        console.error("Cities API error:", err);
+      } finally {
+        setCitiesLoading(false);
+      }
+    }
+
+    loadCities();
+  }, []);
 
   return (
     <footer className="footer-wrapper">
@@ -116,11 +143,18 @@ export default function Footer({ contactInfo = {} }) {
         {/* --- CITY LIST --- */}
         <div className="footer-cities container">
           {cities.map((city, index) => (
-            <span key={index} className="footer-city">
-              {city} {index < cities.length - 1 && " | "}
+            <span
+              key={city.id || index}
+              className="footer-city"
+              onClick={() => openCityDialog(city)}
+              style={{ cursor: "pointer" }}
+            >
+              {city.name}
+              {index < cities.length - 1 && " | "}
             </span>
           ))}
         </div>
+
         {/* --- MENU LINKS --- */}
       </div>
 
@@ -133,12 +167,12 @@ export default function Footer({ contactInfo = {} }) {
         }}
       >
         <a href="/">Home</a>
-        <a href="/about">About Us</a>
-        <a href="/careers">Careers</a>
-        <a href="/why-book">Why Book Direct</a>
-        <a href="/terms">Terms & Conditions</a>
-        <a href="/booking">Manage Booking</a>
-        <a href="/contact">Contact Us</a>
+        <span onClick={() => openDialog("about")}>About Us</span>
+        <span onClick={() => openDialog("careers")}>Careers</span>
+        <span onClick={() => openDialog("whyBook")}>Why Book Direct</span>
+        <span onClick={() => openDialog("terms")}>Terms & Conditions</span>
+        <span onClick={() => openDialog("booking")}>Manage Booking</span>
+        <span onClick={() => openDialog("contact")}>Contact Us</span>
       </div>
 
       {/* --- COOKIE BAR --- */}
@@ -146,6 +180,35 @@ export default function Footer({ contactInfo = {} }) {
         This website uses cookies to ensure you get the best experience on our website.
         <button>Accept</button>
       </div> */}
+      <InfoDialog
+        type={activeDialog}
+        onClose={closeDialog}
+        contactInfo={contactInfo}
+      />
+      <CityHotelsModal
+        open={cityModalOpen}
+        onClose={() => setCityModalOpen(false)}
+        city={selectedCity}
+        hotels={cityHotels}
+        contactInfo={contactInfo}
+      />
     </footer>
+  );
+}
+
+function InfoDialog({ type, onClose, contactInfo }) {
+  if (!type) return null;
+
+  return (
+    <div className="dialog-overlay">
+      <div className="dialog-box">
+        {type === "about" && <AboutUs onClose={onClose} />}
+        {type === "careers" && <Careers onClose={onClose} />}
+        {type === "whyBook" && <WhyBookDirect onClose={onClose} />}
+        {type === "terms" && <TermsAndConditions onClose={onClose} />}
+        {type === "booking" && <ManageBooking onClose={onClose} />}
+        {type === "contact" && <ContactUs onClose={onClose} />}
+      </div>
+    </div>
   );
 }

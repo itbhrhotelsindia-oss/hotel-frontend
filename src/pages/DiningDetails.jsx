@@ -27,12 +27,12 @@ export default function DiningDetails() {
       dinner: "07:00 PM – 11:00 PM",
     },
 
-    "cafe-pride": {
-      title: "Culinary Finesse At Cafe Pride",
+    "cafe-bhr": {
+      title: "Culinary Finesse At Cafe BHR",
       images: ["/assets/dining2-1.jpg", "/assets/dining2-2.jpg"],
       description: `
-        Enjoy global cuisines with a modern ambience at Café Pride. 
-        With buffet and A-la-carte choices, Café Pride offers the perfect dining experience.
+        Enjoy global cuisines with a modern ambience at Café BHR. 
+        With buffet and A-la-carte choices, Café BHR offers the perfect dining experience.
       `,
       timings: "6:30 AM – 11:00 PM",
       alcohol: "Yes",

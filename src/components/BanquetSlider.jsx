@@ -2,11 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import "./BanquetSlider.css";
 
 export default function BanquetSlider() {
-  const images = [
-    "/assets/g1.png",
-    "/assets/g2.png",
-    "/assets/g3.png",
-  ];
+  const images = ["/assets/g1.png", "/assets/g2.png", "/assets/g3.png"];
 
   const [index, setIndex] = useState(0);
   const intervalRef = useRef(null);
@@ -26,7 +22,7 @@ export default function BanquetSlider() {
   }, []);
 
   const startAutoPlay = () => {
-    stopAutoPlay(); 
+    stopAutoPlay();
     intervalRef.current = setInterval(nextSlide, 4000);
   };
 
@@ -72,11 +68,11 @@ export default function BanquetSlider() {
       {/* DESCRIPTION */}
       <div className="banquet-description">
         <p>
-          Banquet halls at Pride Hotels Group - One of the top hotel chains in India,
-          are elegantly designed spacious venues for all your event requirements.
-          Guests get customized packages, suited for every budget coupled with
-          well-appointed rooms, varied dining options, numerous recreational
-          facilities, and seamless service.
+          Banquet halls at BHR Hotels Group - One of the top hotel chains in
+          India, are elegantly designed spacious venues for all your event
+          requirements. Guests get customized packages, suited for every budget
+          coupled with well-appointed rooms, varied dining options, numerous
+          recreational facilities, and seamless service.
         </p>
 
         <p>

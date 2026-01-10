@@ -18,16 +18,12 @@
   border-radius: 8px;
   transition: all 0.3s ease;
   padding-bottom: 12px;
-  background: #fff;
+  background: var(--brand-gold-footer);
 }
 
 .event-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-}
-
-.event-card.active {
-  border: 3px solid #c99a3a;
 }
 
 .event-img {
@@ -41,7 +37,7 @@
   margin-top: 12px;
   margin: 35px 0 50px;
   font-size: 25px;
-  color: #b57a1c;
+  color: var(--brand-light);
 }
 .eventsection-heading {
   text-align: center;

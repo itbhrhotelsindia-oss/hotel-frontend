@@ -1,7 +1,15 @@
 import "./CityModal.css";
 import { FaTimes } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
-export default function CityHotelsModal({ open, onClose, city, hotels }) {
+export default function CityHotelsModal({
+  open,
+  onClose,
+  city,
+  hotels,
+  contactInfo = {},
+}) {
+  const navigate = useNavigate();
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   if (!open) return null;
 
@@ -23,27 +31,36 @@ export default function CityHotelsModal({ open, onClose, city, hotels }) {
                 className="modal-image"
               />
               <h3>{hotel.name}</h3>
-              <p>From {hotel.price} INR/Night</p>
-              {/* <div className="hotel-services">
-                <span className="service-badge">🏨 MICE</span>
-                <span className="service-badge">💍 Wedding</span>
-                <span className="service-badge">🌴 Vacation</span>
-                <span className="service-badge">🏨 MICE</span>
-                <span className="service-badge">💍 Wedding</span>
-                <span className="service-badge">🌴 Vacation</span>
-              </div> */}
+              {/* <p>From {hotel.price} INR/Night</p> */}
               <div className="hotel-services">
                 {hotel.services.map((service, i) => (
                   <span key={i} className="service-badge">
                     {service === "MICE" && "🏨"}
                     {service === "Wedding" && "💍"}
                     {service === "Vacation" && "🌴"}
+                    {service === "Safari" && "🦁"}
+                    {service === "Nature Retreat" && "🌅"}
                     {service}
                   </span>
                 ))}
               </div>
               <div className="hotel-card-btns">
-                <button className="visit-btn">Visit Hotel</button>
+                <button
+                  className={`visit-btn ${
+                    !hotel.imageUrl ? "disabled-btn" : ""
+                  }`}
+                  disabled={!hotel.imageUrl}
+                  onClick={() => {
+                    if (!hotel.imageUrl) return; // extra safety
+
+                    onClose();
+                    navigate(`/hotel-details/${hotel.hotelId}`, {
+                      state: { contactInfo },
+                    });
+                  }}
+                >
+                  Visit Hotel
+                </button>
                 <button className="book-btn">Book Now</button>
               </div>
             </div>

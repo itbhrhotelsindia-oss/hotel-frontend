@@ -43,6 +43,7 @@ export default function App() {
         <Route path="/partners" element={<PartnersSection />} />
         <Route path="/dining/:restaurantId" element={<DiningDetails />} />
         <Route path="/blog/:slug" element={<BlogDetail />} />
+<<<<<<< HEAD
         <Route path="/hotel-details/:city" element={<HotelDetails />} />
         <Route path="/booking" element={<BookingSearch />} />
         <Route path="/booking/availability" element={<BookingAvailability />} />
@@ -60,6 +61,10 @@ export default function App() {
 
         {/* ================= FALLBACK ================= */}
         <Route path="*" element={<h2>Page Not Found</h2>} />
+=======
+        <Route path="/hotel-details/:hotelId" element={<HotelDetails />} />
+
+>>>>>>> main
         {/* ... */}
       </Routes>
     </>

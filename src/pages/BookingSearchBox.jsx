@@ -72,7 +72,7 @@ export default function BookingSearchBox() {
           <div className="field-group">
             <label>Hotel</label>
             <select className="input-select">
-              <option value="">Select Your Pride Hotel</option>
+              <option value="">Select Your BHR Hotel</option>
 
               {hotels.length > 0 ? (
                 hotels.map((hotel, index) => (

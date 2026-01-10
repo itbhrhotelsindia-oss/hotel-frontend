@@ -163,13 +163,12 @@ export default function OurHotelsSection() {
                 src={cityObj.cityImageUrl}
                 alt={cityObj.name}
               />
-              {/* onClick={() => navigate(`/hotel-details/${item.i}`)} */}
               <div className="destination-text">
                 <h3>{cityObj.name}</h3>
-                <p>
+                {/* <p>
                   beajas kaslk dfuoasd fasoik lakjs kdjfn aks
                   dfiukhasndfkyasidfaskdfi. uishdf asuyd {cityObj.name}
-                </p>
+                </p> */}
               </div>
             </div>
           ))}
@@ -196,6 +195,7 @@ export default function OurHotelsSection() {
         onClose={() => setCityModalOpen(false)}
         city={selectedCity}
         hotels={cityHotels}
+        contactInfo={contactInfo}
       />
 
       <Footer contactInfo={contactInfo} />

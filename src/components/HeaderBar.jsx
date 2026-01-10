@@ -213,7 +213,6 @@ export default function HeaderBar({
           <Link to="/careers">Careers</Link>
           <Link to="/blog">Blog</Link>
           <Link to="/investors">Investor Relations</Link>
-          <Link to="/pridemart">Pride Mart</Link>
           <Link to="/about">About Us</Link>
         </div>
       )}
@@ -233,6 +232,7 @@ export default function HeaderBar({
         onClose={() => setCityModalOpen(false)}
         city={selectedCity}
         hotels={cityHotels}
+        contactInfo={contactInfo}
       />
     </div>
   );

@@ -18,6 +18,8 @@ export default function EventsSection() {
 
   const location = useLocation();
   const contactInfo = location.state?.contactInfo || {};
+  const [cities, setCities] = useState([]);
+  const [citiesLoading, setCitiesLoading] = useState(true);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -30,6 +32,25 @@ export default function EventsSection() {
 
   const [submitting, setSubmitting] = useState(false);
   const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    async function loadCities() {
+      try {
+        const res = await fetch(`${BASE_URL}/api/cities/`);
+        if (!res.ok) throw new Error("Failed to fetch cities");
+
+        const data = await res.json();
+        setCities(data);
+      } catch (err) {
+        console.error("Cities API error:", err);
+      } finally {
+        setCitiesLoading(false);
+      }
+    }
+
+    loadCities();
+  }, []);
+
   useEffect(() => {
     async function loadEvents() {
       try {
@@ -155,7 +176,7 @@ export default function EventsSection() {
             <div
               key={event.key}
               className={`event-card ${selected === event.key ? "active" : ""}`}
-              onClick={() => setSelected(event.key)}
+              // onClick={() => setSelected(event.key)}
             >
               <img src={event.image} alt={event.title} className="event-img" />
               <h3 className="event-heading">{event.title}</h3>
@@ -164,7 +185,8 @@ export default function EventsSection() {
         </div>
 
         <h2 className="selected-heading">
-          {categories.find((c) => c.key === selected)?.heading}
+          Submit your details for Event
+          {/* {categories.find((c) => c.key === selected)?.heading} */}
         </h2>
 
         <p className="selected-description">
@@ -213,27 +235,49 @@ export default function EventsSection() {
                   <option>🇮🇳 +91</option>
                 </select>
                 <input
-                  type="text"
+                  type="tel"
                   name="phone"
+                  placeholder="Enter 10-digit phone number"
                   value={formData.phone}
-                  onChange={handleChange}
+                  onChange={(e) => {
+                    const value = e.target.value.replace(/\D/g, ""); // only numbers
+                    if (value.length <= 10) {
+                      setFormData({ ...formData, phone: value });
+                    }
+
+                    e.target.setCustomValidity("");
+                  }}
+                  onInvalid={(e) =>
+                    e.target.setCustomValidity(
+                      "Please enter a valid 10-digit mobile number"
+                    )
+                  }
+                  pattern="[0-9]{10}"
+                  maxLength="10"
                   required
                 />
               </div>
             </div>
           </div>
 
-          <select
-            name="eventType"
-            value={formData.eventType}
-            onChange={handleChange}
-            required
-          >
-            <option value="">Select Event</option>
-            <option>Wedding</option>
-            <option>Birthday Party</option>
-            <option>Corporate Event</option>
-          </select>
+          <div className="form-row">
+            <div className="form-group full-width">
+              <label>Type of Event *</label>
+              <select
+                name="eventType"
+                value={formData.eventType}
+                onChange={handleChange}
+                required
+              >
+                <option value="">Select Event</option>
+                {categories.map((cat) => (
+                  <option key={cat.key} value={cat.title}>
+                    {cat.title}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
 
           <div className="form-row">
             <div className="form-group full-width">
@@ -245,24 +289,25 @@ export default function EventsSection() {
                 required
               >
                 <option value="">Select Location</option>
-                <option>Noida</option>
-                <option>Delhi</option>
-                <option>Goa</option>
-                <option>Haridwar</option>
-                <option>Rishikesh</option>
-                <option>Jim Corbett</option>
+                {cities.map((city) => (
+                  <option key={city.id} value={city.name}>
+                    {city.name}
+                  </option>
+                ))}
               </select>
             </div>
           </div>
-
-          <label>Query</label>
-          <textarea
-            rows="4"
-            name="query"
-            value={formData.query}
-            onChange={handleChange}
-            placeholder="Enter your query here…"
-          />
+          <div className="form-row">
+            <div className="form-group full-width"></div>
+            <label>Query</label>
+            <textarea
+              rows="4"
+              name="query"
+              value={formData.query}
+              onChange={handleChange}
+              placeholder="Enter your query here…"
+            />
+          </div>
 
           <button className="submit-btn" disabled={submitting}>
             {submitting ? "Submitting..." : "Submit"}
