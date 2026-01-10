@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaEnvelope, FaPhoneAlt, FaBars } from "react-icons/fa";
 import CityHotelsModal from "../pages/CityHotelsModal";
-import { bookingDialog } from "./bookingDialog";
+import BookingDialog from "../components/BookingDialog";
 
 export default function HeaderBar({
   scrolled,
@@ -217,14 +217,15 @@ export default function HeaderBar({
         </div>
       )}
 
-      {bookingOpen &&
-        bookingDialog(
-          setBookingOpen,
-          setShowBooking,
-          cities,
-          setSelectedHotels,
-          selectedHotels
-        )}
+      {bookingOpen && (
+        <BookingDialog
+          setBookingOpen={setBookingOpen}
+          setShowHeroBooking={setShowBooking}
+          cities={cities}
+          selectedHotels={selectedHotels}
+          setSelectedHotels={setSelectedHotels}
+        />
+      )}
 
       {/* CITY HOTELS POPUP */}
       <CityHotelsModal
