@@ -3,11 +3,15 @@ import HeaderBar from "../components/HeaderBar.jsx";
 import Footer from "../components/Footer.jsx";
 import "./HotelDetails.css";
 import { useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import {
   FaSwimmingPool,
   FaChair,
   FaHome,
   FaUmbrellaBeach,
+  FaMeetup,
+  FaCoffee,
+  FaCocktail,
 } from "react-icons/fa";
 import BookingSearchBox from "./BookingSearchBox.jsx";
 
@@ -108,8 +112,6 @@ const FALLBACK = {
 
 export default function HotelDetails() {
   const { hotelId } = useParams();
-
-  console.log("Hotel ID from URL:", hotelId);
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   const [hotel, setHotel] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -132,79 +134,8 @@ export default function HotelDetails() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [showBooking, setShowBooking] = useState(true);
 
-  const rooms = [
-    {
-      id: "01",
-      title: "Exclusive Deluxe",
-      price: "$690 / NIGHT",
-      stars: 5,
-      bed: "King Bed",
-      size: "1500 sqft / Room",
-      desc: "We have sixteen Executive Deluxe rooms for only BDT. 5555+ with King size bed.",
-      image: "/assets/g1.png",
-    },
-    {
-      id: "02",
-      title: "Premier Suite",
-      price: "$890 / NIGHT",
-      stars: 5,
-      bed: "King Bed",
-      size: "1500 sqft / Room",
-      desc: "Experience premier luxury with spacious interiors & premium amenities.",
-      image: "/assets/img1.jpg",
-    },
-    {
-      id: "03",
-      title: "Oceanview Suite",
-      price: "$690 / NIGHT",
-      stars: 5,
-      bed: "King Bed",
-      size: "1500 sqft / Room",
-      desc: "Wake up to breathtaking ocean views and luxurious comfort.",
-      image: "/assets/img2.jpg",
-    },
-    {
-      id: "04",
-      title: "Deluxe Twine",
-      price: "$690 / NIGHT",
-      stars: 5,
-      bed: "2 King Beds",
-      size: "1500 sqft / Room",
-      desc: "Perfect for families — two king beds and spacious interiors.",
-      image: "/assets/img3.jpg",
-    },
-  ];
-
-  const features = [
-    {
-      id: 1,
-      title: "Infinity Pool",
-      desc: "Lorem ipsum dolor sit amet consectetur. Eget nibh nibh ut.",
-      icon: <FaSwimmingPool />,
-      highlight: true,
-    },
-    {
-      id: 2,
-      title: "Coworking Space",
-      desc: "Lorem ipsum dolor sit amet consectetur. Intege.",
-      icon: <FaChair />,
-      highlight: false,
-    },
-    {
-      id: 3,
-      title: "Homy & Cozy Place",
-      desc: "Lorem ipsum dolor sit amet consectetur. Diam mattis.",
-      icon: <FaHome />,
-      highlight: false,
-    },
-    {
-      id: 4,
-      title: "Many Food Menus",
-      desc: "Lorem ipsum dolor sit amet consectetur. Et augue.",
-      icon: <FaUmbrellaBeach />,
-      highlight: false,
-    },
-  ];
+  const location = useLocation();
+  const contactInfo = location.state?.contactInfo || {};
   // Auto slide
   useEffect(() => {
     const timer = setInterval(() => setIndex((prev) => prev), 4000);
@@ -317,7 +248,7 @@ export default function HotelDetails() {
         scrolled={true}
         dropdownOpen={dropdownOpen}
         setDropdownOpen={setDropdownOpen}
-        contactInfo={home.contactSection}
+        contactInfo={contactInfo}
         setShowBooking={setShowBooking}
       />
 
@@ -329,7 +260,7 @@ export default function HotelDetails() {
 
       {servicesSection()}
 
-      <Footer contactInfo={home.contactSection} />
+      <Footer contactInfo={contactInfo} />
     </div>
   );
 
@@ -346,45 +277,13 @@ export default function HotelDetails() {
 
         {/* TEXT SECTION */}
         <section className="el-text-section">
-          <h2>Where the Forest Inspires Every Step</h2>
+          <h2>{hotelSlider.title}</h2>
 
-          <p>
-            We believe that nature holds the key to balance, clarity, and
-            inspiration. That's why everything we create is rooted in the calm
-            strength of the forest — a place where stillness and beauty grow
-            side by side. Our mission is to bring a sense of natural harmony
-            into your everyday life through thoughtful design and intentional
-            simplicity.
-          </p>
+          <p>{hotelSlider.subtitle}</p>
         </section>
 
         {showBooking && <BookingSearchBox />}
       </div>
-    );
-  }
-
-  function servicesSection() {
-    return (
-      <section className="rc-container">
-        <h4 className="rc-subtitle">ROYAL CULTURE</h4>
-        <h2 className="rc-title">
-          We take pride in our attention to detail, personalized service, and
-          commitment to exceeding your expectations.
-        </h2>
-
-        <div className="rc-grid">
-          {features.map((item) => (
-            <div
-              key={item.id}
-              className={`rc-card ${item.highlight ? "rc-card-dark" : ""}`}
-            >
-              <div className="rc-icon">{item.icon}</div>
-              <h3 className="rc-card-title">{item.title}</h3>
-              <p className="rc-card-desc">{item.desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
     );
   }
 
@@ -393,40 +292,96 @@ export default function HotelDetails() {
       <section className="rooms-section">
         <div className="rooms-header">
           <h4 className="rooms-subtitle">ROOMS & SUITES</h4>
-          <h2 className="rooms-title">
-            Experience Top-Notch Best <br /> On Hospitality At Our Hotels
-          </h2>
+          <h2 className="rooms-title">{roomsSection.title}</h2>
         </div>
 
         <div className="rooms-grid">
-          {rooms.map((room) => (
-            <div key={room.id} className="room-card">
+          {roomsSection.rooms.map((room) => (
+            <div key={room.roomTypeId} className="room-card">
               <div className="room-image-wrapper">
-                <img src={room.image} alt={room.title} className="room-image" />
-                <div className="room-price">{room.price}</div>
+                <img
+                  src={room.images[0]}
+                  alt={room.name}
+                  className="room-image"
+                />
+                {/* <div className="room-price">{room.price}</div> */}
               </div>
 
               <div className="room-content">
                 <div className="room-id">{room.id}</div>
-                <h3 className="room-name">{room.title}</h3>
+                <h3 className="room-name">{room.name}</h3>
 
-                <div className="room-stars">{"⭐".repeat(room.stars)}</div>
+                {/* <div className="room-stars">{"⭐".repeat(room.stars)}</div> */}
 
-                <p className="room-desc">{room.desc}</p>
+                <p className="room-desc">{room.description}</p>
 
-                <div className="room-features">
+                {/* <div className="room-features">
                   <span>🛏 {room.bed}</span>
                   <span>📐 {room.size}</span>
-                </div>
+                </div> */}
 
-                <button className="room-btn">VIEW DETAILS</button>
+                {/* <button className="room-btn">VIEW DETAILS</button> */}
               </div>
             </div>
           ))}
         </div>
 
-        <div className="rooms-explore-wrapper">
+        {/* <div className="rooms-explore-wrapper">
           <button className="explore-btn">EXPLORE ALL →</button>
+        </div> */}
+      </section>
+    );
+  }
+
+  function servicesSection() {
+    return (
+      <section className="rc-container">
+        <h4 className="rc-subtitle">Hospitality That Goes Beyond Comfort</h4>
+        <h2 className="rc-title">{amenitiesSection.title}</h2>
+
+        <div className="rc-grid">
+          {amenitiesSection.amenities.map((item) => (
+            <div
+              key={item.id}
+              className={`rc-card ${item.highlight ? "rc-card-dark" : ""}`}
+            >
+              <div className="rc-icon">
+                {item === "Swimming Pool" ? (
+                  <FaSwimmingPool />
+                ) : item === "Restaurant" ? (
+                  <FaUmbrellaBeach />
+                ) : item === "Coworking Space" ? (
+                  <FaChair />
+                ) : item === "Homy & Cozy Place" ? (
+                  <FaHome />
+                ) : item === "Conference Hall" ? (
+                  <FaMeetup />
+                ) : item === "Brewery" ? (
+                  <FaCocktail />
+                ) : item === "Coffee" ? (
+                  <FaCoffee />
+                ) : null}
+              </div>
+              <h3 className="rc-card-title">{item}</h3>
+              <p className="rc-card-desc">
+                {item === "Swimming Pool"
+                  ? "Refresh and unwind in our beautifully maintained swimming pool, perfect for relaxation and leisure."
+                  : item === "Restaurant"
+                  ? "Enjoy delightful culinary experiences with a range of thoughtfully prepared local and international dishes."
+                  : item === "Coworking Space"
+                  ? "Stay productive in a comfortable and well-equipped coworking environment designed for focus and flexibility."
+                  : item === "Homy & Cozy Place"
+                  ? "Experience the warmth of a homelike ambiance that makes every stay relaxing and comfortable."
+                  : item === "Conference Hall"
+                  ? "Host seamless meetings and events in our spacious conference hall with modern facilities."
+                  : item === "Brewery"
+                  ? "Savor freshly brewed beverages crafted to complement your moments of relaxation."
+                  : item === "Coffee"
+                  ? "Enjoy freshly brewed coffee served just the way you like, perfect for energizing your day."
+                  : null}
+              </p>
+            </div>
+          ))}
         </div>
       </section>
     );

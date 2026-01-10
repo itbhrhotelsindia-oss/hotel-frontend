@@ -170,6 +170,7 @@ export default function Footer({ contactInfo = {} }) {
         onClose={() => setCityModalOpen(false)}
         city={selectedCity}
         hotels={cityHotels}
+        contactInfo={contactInfo}
       />
     </footer>
   );

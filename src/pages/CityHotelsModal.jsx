@@ -2,7 +2,13 @@ import "./CityModal.css";
 import { FaTimes } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
-export default function CityHotelsModal({ open, onClose, city, hotels }) {
+export default function CityHotelsModal({
+  open,
+  onClose,
+  city,
+  hotels,
+  contactInfo = {},
+}) {
   const navigate = useNavigate();
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   if (!open) return null;
@@ -43,7 +49,9 @@ export default function CityHotelsModal({ open, onClose, city, hotels }) {
                   className="visit-btn"
                   onClick={() => {
                     onClose(); // close modal
-                    navigate(`/hotel-details/${hotel.hotelId}`);
+                    navigate(`/hotel-details/${hotel.hotelId}`, {
+                      state: { contactInfo },
+                    });
                   }}
                 >
                   Visit Hotel

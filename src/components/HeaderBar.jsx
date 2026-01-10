@@ -233,6 +233,7 @@ export default function HeaderBar({
         onClose={() => setCityModalOpen(false)}
         city={selectedCity}
         hotels={cityHotels}
+        contactInfo={contactInfo}
       />
     </div>
   );
