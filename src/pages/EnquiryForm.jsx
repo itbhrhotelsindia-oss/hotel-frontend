@@ -8,6 +8,7 @@ export default function EnquiryForm() {
   const [citiesLoading, setCitiesLoading] = useState(true);
   const [hotels, setHotels] = useState([]);
 
+  const [responseMsg, setResponseMsg] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -70,7 +71,7 @@ export default function EnquiryForm() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-
+    setResponseMsg("");
     try {
       const payload = {
         name: formData.name,
@@ -94,7 +95,8 @@ export default function EnquiryForm() {
         throw new Error("Failed to submit wedding enquiry");
       }
 
-      alert("Thank you! Our wedding team will contact you shortly.");
+      setResponseMsg("Thank you! Our wedding team will contact you shortly");
+      // alert("Thank you! Our wedding team will contact you shortly.");
 
       // Reset form after success
       setFormData({
@@ -109,7 +111,7 @@ export default function EnquiryForm() {
       setHotels([]); // reset hotels list
     } catch (error) {
       console.error(error);
-      alert("Something went wrong. Please try again.");
+      setResponseMsg("Something went wrong. Please try again.");
     }
   }
 
@@ -152,12 +154,34 @@ export default function EnquiryForm() {
             <option value="+91">🇮🇳 +91</option>
           </select>
 
-          <input
+          {/* <input
             type="text"
             name="phone"
             placeholder="Enter your phone number"
             value={formData.phone}
             onChange={handleChange}
+            required
+          /> */}
+
+          <input
+            type="tel"
+            name="phone"
+            placeholder="Enter 10-digit phone number"
+            value={formData.phone}
+            onChange={(e) => {
+              const value = e.target.value.replace(/\D/g, ""); // only numbers
+              if (value.length <= 10) {
+                setFormData({ ...formData, phone: value });
+              }
+              e.target.setCustomValidity("");
+            }}
+            onInvalid={(e) =>
+              e.target.setCustomValidity(
+                "Please enter a valid 10-digit mobile number"
+              )
+            }
+            pattern="[0-9]{10}"
+            maxLength="10"
             required
           />
         </div>
@@ -214,6 +238,8 @@ export default function EnquiryForm() {
         <button type="submit" className="submit-btn">
           SUBMIT
         </button>
+
+        {responseMsg && <p className="form-message">{responseMsg}</p>}
       </form>
 
       {/* BOOK A SHOWAROUND BUTTON */}

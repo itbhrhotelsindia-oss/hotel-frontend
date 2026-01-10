@@ -8,7 +8,7 @@ export default function HotelDetail() {
 
   const hotel = {
     id,
-    name: "Pride Plaza Aerocity",
+    name: "BHR",
     city: "New Delhi",
     price: 8600,
     image: HERO_IMG,

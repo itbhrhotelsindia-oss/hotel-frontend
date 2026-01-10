@@ -209,9 +209,27 @@ export default function PartnersSection() {
               <input
                 type="tel"
                 name="contactNumber"
-                placeholder="Contact Number"
+                placeholder="Enter 10-digit contact number"
                 value={formData.contactNumber}
-                onChange={handleChange}
+                onChange={(e) => {
+                  const value = e.target.value.replace(/\D/g, "");
+
+                  if (value.length <= 10) {
+                    setFormData({
+                      ...formData,
+                      contactNumber: value,
+                    });
+                  }
+
+                  // Clear error while typing
+                  e.target.setCustomValidity("");
+                }}
+                onInvalid={(e) =>
+                  e.target.setCustomValidity(
+                    "Please enter a valid 10-digit mobile number"
+                  )
+                }
+                maxLength="10"
                 required
               />
             </div>

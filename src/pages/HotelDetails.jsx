@@ -12,8 +12,15 @@ import {
   FaMeetup,
   FaCoffee,
   FaCocktail,
+  FaWifi,
+  FaParking,
+  FaSpa,
+  FaCloudRain,
+  FaChild,
+  FaTasks,
 } from "react-icons/fa";
 import BookingSearchBox from "./BookingSearchBox.jsx";
+import { FaShop } from "react-icons/fa6";
 
 const FALLBACK = {
   heroImages: [
@@ -348,7 +355,7 @@ export default function HotelDetails() {
               <div className="rc-icon">
                 {item === "Swimming Pool" ? (
                   <FaSwimmingPool />
-                ) : item === "Restaurant" ? (
+                ) : item === "Multi-Cuisine Restaurant" ? (
                   <FaUmbrellaBeach />
                 ) : item === "Coworking Space" ? (
                   <FaChair />
@@ -360,13 +367,27 @@ export default function HotelDetails() {
                   <FaCocktail />
                 ) : item === "Coffee" ? (
                   <FaCoffee />
+                ) : item === "Kid-Zone" ? (
+                  <FaChild />
+                ) : item === "Souvenir shop" ? (
+                  <FaShop />
+                ) : item === "Rain Dance" ? (
+                  <FaCloudRain />
+                ) : item === "Serenity Spa & Yoga" ? (
+                  <FaSpa />
+                ) : item === "Activities" ? (
+                  <FaTasks />
+                ) : item === "Parking" ? (
+                  <FaParking />
+                ) : item === "Free Wifi" ? (
+                  <FaWifi />
                 ) : null}
               </div>
               <h3 className="rc-card-title">{item}</h3>
               <p className="rc-card-desc">
                 {item === "Swimming Pool"
                   ? "Refresh and unwind in our beautifully maintained swimming pool, perfect for relaxation and leisure."
-                  : item === "Restaurant"
+                  : item === "Multi-Cuisine Restaurant"
                   ? "Enjoy delightful culinary experiences with a range of thoughtfully prepared local and international dishes."
                   : item === "Coworking Space"
                   ? "Stay productive in a comfortable and well-equipped coworking environment designed for focus and flexibility."
@@ -378,6 +399,20 @@ export default function HotelDetails() {
                   ? "Savor freshly brewed beverages crafted to complement your moments of relaxation."
                   : item === "Coffee"
                   ? "Enjoy freshly brewed coffee served just the way you like, perfect for energizing your day."
+                  : item === "Kid-Zone"
+                  ? "A safe and fun-filled play area designed to keep children entertained and happy"
+                  : item === "Souvenir shop"
+                  ? "Take home memorable keepsakes and locally inspired souvenirs from your stay"
+                  : item === "Rain Dance"
+                  ? "Enjoy lively rain dance experiences with music and refreshing moments of pure fun"
+                  : item === "Serenity Spa & Yoga"
+                  ? "Rejuvenate your body and mind with calming spa therapies and guided yoga sessions."
+                  : item === "Activities"
+                  ? "Engage in a variety of curated indoor and outdoor activities for all age groups."
+                  : item === "Parking"
+                  ? "Convenient and secure parking facilities for a hassle-free stay."
+                  : item === "Free Wifi"
+                  ? "Stay connected with complimentary high-speed WiFi throughout the property."
                   : null}
               </p>
             </div>

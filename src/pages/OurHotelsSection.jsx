@@ -195,6 +195,7 @@ export default function OurHotelsSection() {
         onClose={() => setCityModalOpen(false)}
         city={selectedCity}
         hotels={cityHotels}
+        contactInfo={contactInfo}
       />
 
       <Footer contactInfo={contactInfo} />

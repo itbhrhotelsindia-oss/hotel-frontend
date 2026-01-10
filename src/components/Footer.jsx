@@ -6,8 +6,15 @@ import {
   FaTwitter,
   FaYoutube,
   FaLinkedinIn,
+  FaCross,
 } from "react-icons/fa";
 import CityHotelsModal from "../pages/CityHotelsModal";
+import ContactUs from "./ContactUs";
+import TermsAndConditions from "./TermsAndConditions";
+import WhyBookDirect from "./WhyBookDirect";
+import AboutUs from "./AboutUs";
+import Careers from "./Careers";
+import ManageBooking from "./ManageBooking";
 
 export default function Footer({ contactInfo = {} }) {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
@@ -34,6 +41,15 @@ export default function Footer({ contactInfo = {} }) {
     setCityHotels(cityObj.hotels);
     setCityModalOpen(true);
   };
+  const [activeDialog, setActiveDialog] = useState(null);
+
+  function openDialog(type) {
+    setActiveDialog(type);
+  }
+
+  function closeDialog() {
+    setActiveDialog(null);
+  }
 
   useEffect(() => {
     async function loadCities() {
@@ -151,12 +167,12 @@ export default function Footer({ contactInfo = {} }) {
         }}
       >
         <a href="/">Home</a>
-        <a href="/about">About Us</a>
-        <a href="/careers">Careers</a>
-        <a href="/why-book">Why Book Direct</a>
-        <a href="/terms">Terms & Conditions</a>
-        <a href="/booking">Manage Booking</a>
-        <a href="/contact">Contact Us</a>
+        <span onClick={() => openDialog("about")}>About Us</span>
+        <span onClick={() => openDialog("careers")}>Careers</span>
+        <span onClick={() => openDialog("whyBook")}>Why Book Direct</span>
+        <span onClick={() => openDialog("terms")}>Terms & Conditions</span>
+        <span onClick={() => openDialog("booking")}>Manage Booking</span>
+        <span onClick={() => openDialog("contact")}>Contact Us</span>
       </div>
 
       {/* --- COOKIE BAR --- */}
@@ -164,7 +180,11 @@ export default function Footer({ contactInfo = {} }) {
         This website uses cookies to ensure you get the best experience on our website.
         <button>Accept</button>
       </div> */}
-
+      <InfoDialog
+        type={activeDialog}
+        onClose={closeDialog}
+        contactInfo={contactInfo}
+      />
       <CityHotelsModal
         open={cityModalOpen}
         onClose={() => setCityModalOpen(false)}
@@ -173,5 +193,22 @@ export default function Footer({ contactInfo = {} }) {
         contactInfo={contactInfo}
       />
     </footer>
+  );
+}
+
+function InfoDialog({ type, onClose, contactInfo }) {
+  if (!type) return null;
+
+  return (
+    <div className="dialog-overlay">
+      <div className="dialog-box">
+        {type === "about" && <AboutUs onClose={onClose} />}
+        {type === "careers" && <Careers onClose={onClose} />}
+        {type === "whyBook" && <WhyBookDirect onClose={onClose} />}
+        {type === "terms" && <TermsAndConditions onClose={onClose} />}
+        {type === "booking" && <ManageBooking onClose={onClose} />}
+        {type === "contact" && <ContactUs onClose={onClose} />}
+      </div>
+    </div>
   );
 }

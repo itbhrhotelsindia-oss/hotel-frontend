@@ -39,37 +39,6 @@ export default function WeddingsSection() {
       scrollRef.current.scrollLeft += scrollAmount;
     }
   };
-  //   {
-  //     title: "CITY WEDDING",
-  //     image: "/assets/g1.png",
-  //     description:
-  //       "In the heart of the city, at the height of celebration. From glamorous rooftops in Delhi to chic ballrooms in Ahmedabad, Pune, and Bangalore... the modern couple who dreams big.",
-  //   },
-  //   {
-  //     title: "BEACH",
-  //     image: "/assets/g1.png",
-  //     description:
-  //       "Celebrate love where the sea kisses the sky. Beachside ceremonies, barefoot mandaps, and starlit receptions right on the sand. Say 'I do' with the waves as your witness.",
-  //   },
-  //   {
-  //     title: "HILL",
-  //     image: "/assets/g1.png",
-  //     description:
-  //       "In the scenic heights of Mussoorie, Dehradun, Rishikesh. Misty mornings, pine air, and panoramic views set the stage for your elevated affair.",
-  //   },
-  //   {
-  //     title: "HILL",
-  //     image: "/assets/g3.png",
-  //     description:
-  //       "In the scenic heights of Mussoorie, Dehradun, Rishikesh. Misty mornings, pine air, and panoramic views set the stage for your elevated affair.",
-  //   },
-  //   {
-  //     title: "HILLasdasdasd",
-  //     image: "/assets/g4.png",
-  //     description:
-  //       "In the scenic heights of Mussoorie, Dehradun, Rishikesh. Misty mornings, pine air, and panoramic views set the stage for your elevated affair.",
-  //   },
-  // ];
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -224,15 +193,11 @@ export default function WeddingsSection() {
   function scrolledImage() {
     return (
       <div className="wedding-slider-wrapper">
-        <h2 className="ws-title">
-          {/* A PRIDE DESTINATION <span>FOR EVERY LOVE STORY</span> */}
-          {typeOfWeddings.title}
-        </h2>
+        <h2 className="ws-title">{typeOfWeddings.title}</h2>
 
         <p className="ws-subtext">{typeOfWeddings.description}</p>
 
         <div className="ws-container">
-          {/* Cards wrapper with auto-scroll + pause on hover */}
           <div
             className="ws-cards"
             style={{ transform: `translateX(-${currentIndex * 33.33}%)` }}

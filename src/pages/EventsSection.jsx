@@ -235,10 +235,25 @@ export default function EventsSection() {
                   <option>🇮🇳 +91</option>
                 </select>
                 <input
-                  type="text"
+                  type="tel"
                   name="phone"
+                  placeholder="Enter 10-digit phone number"
                   value={formData.phone}
-                  onChange={handleChange}
+                  onChange={(e) => {
+                    const value = e.target.value.replace(/\D/g, ""); // only numbers
+                    if (value.length <= 10) {
+                      setFormData({ ...formData, phone: value });
+                    }
+
+                    e.target.setCustomValidity("");
+                  }}
+                  onInvalid={(e) =>
+                    e.target.setCustomValidity(
+                      "Please enter a valid 10-digit mobile number"
+                    )
+                  }
+                  pattern="[0-9]{10}"
+                  maxLength="10"
                   required
                 />
               </div>
