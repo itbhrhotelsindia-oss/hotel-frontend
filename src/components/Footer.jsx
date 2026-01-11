@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Footer.css";
+import { useNavigate } from "react-router-dom";
 import {
   FaFacebookF,
   FaInstagram,
@@ -32,7 +33,7 @@ export default function Footer({ contactInfo = {} }) {
       window.open(socialLinks[platform], "_blank");
     }
   };
-
+  const navigate = useNavigate();
   const [selectedCity, setSelectedCity] = useState("");
   const [cityHotels, setCityHotels] = useState([]);
   const [cityModalOpen, setCityModalOpen] = useState(false);
@@ -173,6 +174,10 @@ export default function Footer({ contactInfo = {} }) {
         <span onClick={() => openDialog("terms")}>Terms & Conditions</span>
         <span onClick={() => openDialog("booking")}>Manage Booking</span>
         <span onClick={() => openDialog("contact")}>Contact Us</span>
+
+        <button className="admin-btn" onClick={() => navigate("/owner/login")}>
+          ADMIN
+        </button>
       </div>
 
       {/* --- COOKIE BAR --- */}
