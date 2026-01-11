@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function BookingDialog({
@@ -10,8 +10,22 @@ export default function BookingDialog({
 }) {
   const navigate = useNavigate();
 
+  const [selectedCity, setSelectedCity] = useState(null);
+  const [selectedHotel, setSelectedHotel] = useState(null);
+
   const handleBookNow = () => {
-    navigate("/booking");
+    if (!selectedCity || !selectedHotel) {
+      alert("Please select destination and hotel");
+      return;
+    }
+
+    navigate("/booking", {
+      state: {
+        citySelect: selectedCity.name,
+        hotelSelect: selectedHotel.name,
+        hotelIdSelect: selectedHotel.hotelId,
+      },
+    });
   };
 
   return (
@@ -37,8 +51,11 @@ export default function BookingDialog({
                 className="booking-input"
                 onChange={(e) => {
                   const cityName = e.target.value;
-                  const selectedCity = cities.find((c) => c.name === cityName);
-                  setSelectedHotels(selectedCity ? selectedCity.hotels : []);
+                  const city = cities.find((c) => c.name === cityName);
+
+                  setSelectedCity(city || null);
+                  setSelectedHotel(null);
+                  setSelectedHotels(city ? city.hotels : []);
                 }}
               >
                 <option value="">Select Your Destination</option>
@@ -53,7 +70,17 @@ export default function BookingDialog({
             {/* HOTEL */}
             <div className="booking-field">
               <label>Hotel</label>
-              <select className="booking-input">
+              <select
+                className="booking-input"
+                disabled={!selectedHotels.length}
+                onChange={(e) => {
+                  const hotelName = e.target.value;
+                  const hotel = selectedHotels.find(
+                    (h) => h.name === hotelName
+                  );
+                  setSelectedHotel(hotel || null);
+                }}
+              >
                 <option value="">Select Your Hotel</option>
                 {selectedHotels.map((hotel) => (
                   <option key={hotel.hotelId} value={hotel.name}>
@@ -66,9 +93,15 @@ export default function BookingDialog({
             {/* ACTIONS */}
             <div className="booking-actions">
               <div className="why-book">Why Book Direct?</div>
-              <button className="booking-btn" onClick={handleBookNow}>
+
+              <button
+                className="booking-btn"
+                onClick={handleBookNow}
+                disabled={!selectedCity || !selectedHotel}
+              >
                 BOOK NOW
               </button>
+
               <div className="price-text">
                 From <strong>6,435</strong> INR/Night
               </div>

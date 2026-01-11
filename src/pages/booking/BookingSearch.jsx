@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./BookingSearch.css";
 
 function BookingSearch() {
@@ -7,8 +7,6 @@ function BookingSearch() {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
 
   // ================= STATE =================
-  const [place, setPlace] = useState("");
-  const [hotel, setHotel] = useState("");
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
   const [adults, setAdults] = useState(1);
@@ -18,6 +16,25 @@ function BookingSearch() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  const location = useLocation();
+
+  const { citySelect, hotelSelect, hotelIdSelect } = location.state || {};
+
+  const [place, setPlace] = useState(citySelect || "");
+  const [hotel, setHotel] = useState(hotelSelect || "");
+
+  console.log("citySelect::::::::::::::", citySelect);
+  console.log("hotelSelect::::::::::::::", hotelSelect);
+  console.log("hotelIdSelect::::::::::::::", hotelIdSelect);
+
+  const [selectedHotel, setSelectedHotel] = useState(hotelSelect || "");
+  const [selectedHotelId, setSelectedHotelId] = useState(hotelIdSelect || "");
+
+  useEffect(() => {
+    if (!hotelIdSelect) {
+      console.warn("Booking page opened without hotel selection");
+    }
+  }, [hotelIdSelect]);
   // ================= TEMP ID MAPPING =================
   // (Later this will come from API)
   const HOTEL_ID_MAP = {

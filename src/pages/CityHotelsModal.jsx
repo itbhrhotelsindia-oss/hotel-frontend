@@ -11,6 +11,16 @@ export default function CityHotelsModal({
 }) {
   const navigate = useNavigate();
   const BASE_URL = import.meta.env.VITE_BASE_URL;
+
+  const handleBookNow = () => {
+    navigate("/booking", {
+      state: {
+        citySelect: city,
+        hotelSelect: hotels[0].name,
+        hotelIdSelect: hotels[0].hotelId,
+      },
+    });
+  };
   if (!open) return null;
 
   return (
@@ -61,7 +71,9 @@ export default function CityHotelsModal({
                 >
                   Visit Hotel
                 </button>
-                <button className="book-btn">Book Now</button>
+                <button className="book-btn" onClick={handleBookNow}>
+                  Book Now
+                </button>
               </div>
             </div>
           ))}
