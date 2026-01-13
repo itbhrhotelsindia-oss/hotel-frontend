@@ -23,48 +23,120 @@ function BookingSearch() {
   const [place, setPlace] = useState(citySelect || "");
   const [hotel, setHotel] = useState(hotelSelect || "");
 
-  console.log("citySelect::::::::::::::", citySelect);
-  console.log("hotelSelect::::::::::::::", hotelSelect);
-  console.log("hotelIdSelect::::::::::::::", hotelIdSelect);
+  const [roomTypes, setRoomTypes] = useState([]);
+  const [selectedRoomTypeId, setSelectedRoomTypeId] = useState("");
+  const [selectedRoomType, setSelectedRoomType] = useState(null);
 
   const [selectedHotel, setSelectedHotel] = useState(hotelSelect || "");
   const [selectedHotelId, setSelectedHotelId] = useState(hotelIdSelect || "");
+  const today = new Date().toISOString().split("T")[0];
+
+  const [cities, setCities] = useState([]);
+  const [hotels, setHotels] = useState([]);
+  useEffect(() => {
+    async function loadCities() {
+      try {
+        const res = await fetch(`${BASE_URL}/api/cities/`);
+        if (!res.ok) throw new Error("Failed to load cities");
+
+        const data = await res.json();
+        setCities(data);
+      } catch (err) {
+        console.error("Cities API Error:", err);
+      }
+    }
+
+    loadCities();
+  }, []);
+
+  useEffect(() => {
+    if (!place) {
+      setHotels([]);
+      setHotel("");
+      setSelectedHotelId("");
+      return;
+    }
+
+    const cityObj = cities.find(
+      (c) => c.name.toLowerCase() === place.toLowerCase()
+    );
+
+    if (cityObj) {
+      setHotels(cityObj.hotels || []);
+    } else {
+      setHotels([]);
+    }
+  }, [place, cities]);
+
+  useEffect(() => {
+    async function loadRoomTypes() {
+      if (!selectedHotelId) {
+        setRoomTypes([]);
+        setSelectedRoomType(null);
+        return;
+      }
+
+      try {
+        const res = await fetch(
+          `${BASE_URL}/api/admin/room-types?hotelId=${selectedHotelId}`
+        );
+
+        if (!res.ok) throw new Error("Failed to load room types");
+
+        const data = await res.json();
+
+        console.error("Room Type Data:", data);
+        setRoomTypes(data);
+      } catch (err) {
+        console.error("Room Type API Error:", err);
+      }
+    }
+
+    loadRoomTypes();
+  }, [selectedHotelId]);
 
   useEffect(() => {
     if (!hotelIdSelect) {
       console.warn("Booking page opened without hotel selection");
     }
   }, [hotelIdSelect]);
-  // ================= TEMP ID MAPPING =================
-  // (Later this will come from API)
-  const HOTEL_ID_MAP = {
-    "Clarissa Resort": "HOTEL-JIMCORBETT-001",
-    "Pride Plaza Ahmedabad": "HOTEL-AHMEDABAD-001",
-  };
-
-  // TEMP: one room type (Deluxe)
-  const ROOM_TYPE_ID = "694e44c29768c17c2164bcb7";
 
   // ================= API CALL =================
   const handleCheckAvailability = async () => {
     setError("");
 
-    if (!place || !hotel || !checkIn || !checkOut) {
-      setError("Please select place, hotel and dates");
+    if (!place || !hotel) {
+      setError("Please select place and hotel");
       return;
     }
 
-    const hotelId = HOTEL_ID_MAP[hotel];
+    if (!checkIn || !checkOut) {
+      setError("Please select both check-in and check-out dates.");
+      return;
+    }
+
+    if (new Date(checkOut) <= new Date(checkIn)) {
+      setError("Check-out date must be after check-in date.");
+      return;
+    }
+
+    const hotelId = selectedHotelId;
+
     if (!hotelId) {
-      setError("Invalid hotel selected");
+      setError("Please select a valid hotel");
+      return;
+    }
+
+    if (!selectedRoomTypeId) {
+      setError("Please select a room type");
       return;
     }
 
     const payload = {
-      hotelId: hotelId,
-      roomTypeId: ROOM_TYPE_ID,
-      checkIn: checkIn,
-      checkOut: checkOut,
+      hotelId,
+      roomTypeId: selectedRoomTypeId,
+      checkIn,
+      checkOut,
       roomsRequested: adults,
     };
 
@@ -99,7 +171,9 @@ function BookingSearch() {
             adults,
             children,
             promo,
-            roomTypeId: ROOM_TYPE_ID,
+            roomTypeId: selectedRoomTypeId,
+            roomTypeName: selectedRoomType?.name,
+            pricePerNight: selectedRoomType?.pricePerNight,
           },
         },
       });
@@ -118,26 +192,45 @@ function BookingSearch() {
 
       <div className="reservation-card">
         <div className="left-section">
-          <h3>1. Search</h3>
+          {/* <h3>1. Search</h3> */}
 
           <div className="form-row">
             <div className="form-group">
               <label>Place</label>
               <select value={place} onChange={(e) => setPlace(e.target.value)}>
                 <option value="">Select Place</option>
-                <option value="Ahmedabad">Ahmedabad</option>
-                <option value="Jim Corbett">Jim Corbett</option>
+
+                {cities.map((city) => (
+                  <option key={city.id} value={city.name}>
+                    {city.name}
+                  </option>
+                ))}
               </select>
             </div>
 
             <div className="form-group">
               <label>Hotel</label>
-              <select value={hotel} onChange={(e) => setHotel(e.target.value)}>
+              <select
+                value={selectedHotelId}
+                onChange={(e) => {
+                  const hotelId = e.target.value;
+                  const hotelObj = hotels.find((h) => h.hotelId === hotelId);
+
+                  setHotel(hotelObj ? hotelObj.name : "");
+                  setSelectedHotelId(hotelId);
+
+                  // 🔥 RESET room types
+                  setSelectedRoomTypeId("");
+                  setSelectedRoomType(null);
+                }}
+              >
                 <option value="">Select Hotel</option>
-                <option value="Pride Plaza Ahmedabad">
-                  Pride Plaza Ahmedabad
-                </option>
-                <option value="Clarissa Resort">Clarissa Resort</option>
+
+                {hotels.map((hotel) => (
+                  <option key={hotel.hotelId} value={hotel.hotelId}>
+                    {hotel.name}
+                  </option>
+                ))}
               </select>
             </div>
           </div>
@@ -147,8 +240,11 @@ function BookingSearch() {
               <label>From</label>
               <input
                 type="date"
+                name="checkIn"
                 value={checkIn}
+                min={today} // 👈 prevents past dates
                 onChange={(e) => setCheckIn(e.target.value)}
+                required
               />
             </div>
 
@@ -156,8 +252,11 @@ function BookingSearch() {
               <label>To</label>
               <input
                 type="date"
+                name="checkOut"
                 value={checkOut}
+                min={checkIn || today}
                 onChange={(e) => setCheckOut(e.target.value)}
+                required
               />
             </div>
           </div>
@@ -183,6 +282,40 @@ function BookingSearch() {
               />
             </div>
           </div>
+          <div className="form-row">
+            <div className="form-group">
+              <label>Room Type</label>
+              <select
+                value={selectedRoomTypeId}
+                onChange={(e) => {
+                  const roomTypeId = e.target.value;
+                  const roomTypeObj = roomTypes.find(
+                    (rt) => rt.id === roomTypeId
+                  );
+
+                  setSelectedRoomTypeId(roomTypeId);
+                  setSelectedRoomType(roomTypeObj || null);
+                }}
+                disabled={!roomTypes.length}
+              >
+                <option value="">
+                  {roomTypes.length ? "Select Room Type" : "Select hotel first"}
+                </option>
+
+                {roomTypes.map((room) => (
+                  <option key={room.id} value={room.id}>
+                    {room.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          {selectedRoomType && (
+            <div className="price-preview">
+              <strong>Price:</strong> ₹{selectedRoomType.basePrice} / night
+            </div>
+          )}
 
           {error && <p className="error-text">{error}</p>}
 

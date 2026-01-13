@@ -114,9 +114,9 @@ export default function BookingSearchBox() {
               BOOK NOW
             </button>
 
-            <div className="price-text">
+            {/* <div className="price-text">
               From <strong>6,435</strong> INR/Night
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
