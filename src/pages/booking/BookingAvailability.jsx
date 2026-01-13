@@ -8,6 +8,12 @@ function BookingAvailability({ availability, search }) {
   const location = useLocation();
   const [showGuestDetails, setShowGuestDetails] = useState(false);
 
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
+  const [guestName, setGuestName] = useState("");
+  const [guestEmail, setGuestEmail] = useState("");
+  const [guestPhone, setGuestPhone] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   // 1️⃣ Read data from router state
   const stateData = location.state;
 
@@ -24,25 +30,76 @@ function BookingAvailability({ availability, search }) {
   }, [data, navigate]);
 
   if (!data) return null;
-  console.log("availability data in BookingAvailability:", search);
 
   // 4️⃣ Continue → Guest Details (NO NAVIGATION)
-  const handleContinue = () => {
-    const bookingContext = {
-      hotelId: availability.hotelId,
-      roomTypeId: availability.roomTypeId,
-      hotel: search.hotel,
-      roomTypeName: search.roomTypeName,
-      checkIn: search.checkIn,
-      checkOut: search.checkOut,
-      roomsRequested: availability.roomsRequested,
-      totalAmount: availability.totalAmount,
-    };
+  const handleContinue = async () => {
+    if (!guestName) {
+      setError("Please Enter Name");
+      return;
+    }
+    if (!guestEmail) {
+      setError("Please Enter Email");
+      return;
+    }
+    if (!guestPhone) {
+      setError("Please Enter Phone");
+      return;
+    }
+    // const bookingContext = {
+    //   hotel: search.hotel,
+    //   roomTypeName: search.roomTypeName,
+    //   roomsRequested: availability.roomsRequested,
+    //   totalAmount: availability.totalAmount,
+    // };
 
-    console.log("hotelName:", search.hotelName);
-    localStorage.setItem("bookingAvailability", JSON.stringify(bookingContext));
+    // console.log("hotelName:", search.hotelName);
+    // localStorage.setItem("bookingAvailability", JSON.stringify(bookingContext));
 
-    setShowGuestDetails(bookingContext); // 👈 JUST SHOW BELOW
+    const hotelId = availability.hotelId;
+    const roomTypeId = availability.roomTypeId;
+    const checkIn = search.checkIn;
+    const checkOut = search.checkOut;
+    const rooms = availability.roomsRequested;
+    const roomTypeName = search.roomTypeName;
+
+    try {
+      const res = await fetch(`${BASE_URL}/api/public/bookings`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          hotelId,
+          roomTypeId,
+          checkIn,
+          checkOut,
+          rooms,
+          guestName,
+          guestEmail,
+          guestPhone,
+        }),
+      });
+
+      if (!res.ok) {
+        throw new Error("Booking failed");
+      }
+
+      const booking = await res.json();
+
+      // Save bookingId for payment step
+      localStorage.setItem("confirmedBooking", JSON.stringify(booking));
+
+      console.log("bookingData::::::::::::::::");
+      navigate("/booking/confirmation", {
+        state: { booking, roomTypeName },
+      });
+
+      console.log("Newwwwww::::::::::::::::");
+    } catch (err) {
+      setError("Unable to create booking. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+
+    // setShowGuestDetails(bookingContext); // 👈 JUST SHOW BELOW
   };
 
   return (
@@ -66,6 +123,29 @@ function BookingAvailability({ availability, search }) {
                 <strong>Rooms:</strong> {availability.roomsRequested} •
                 <strong> Nights:</strong> {availability.nights}
               </p>
+              {error && <p className="error-text">{error}</p>}
+              <div className="details details-column">
+                <label>Guest Name</label>
+                <input
+                  placeholder="Enter guest name"
+                  value={guestName}
+                  onChange={(e) => setGuestName(e.target.value)}
+                />
+
+                <label>Email Address</label>
+                <input
+                  placeholder="Enter your email"
+                  value={guestEmail}
+                  onChange={(e) => setGuestEmail(e.target.value)}
+                />
+
+                <label>Phone Number</label>
+                <input
+                  placeholder="Enter your phone number"
+                  value={guestPhone}
+                  onChange={(e) => setGuestPhone(e.target.value)}
+                />
+              </div>
             </div>
 
             {/* PRICE BREAKDOWN */}

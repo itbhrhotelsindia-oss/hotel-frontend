@@ -10,6 +10,7 @@ function BookingSearch() {
   // ================= STATE =================
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
+  const [numberOfRooms, setNumberOfRooms] = useState(1);
   const [adults, setAdults] = useState(1);
   const [children, setChildren] = useState(0);
   const [promo, setPromo] = useState("");
@@ -142,7 +143,7 @@ function BookingSearch() {
       roomTypeId: selectedRoomTypeId,
       checkIn,
       checkOut,
-      roomsRequested: adults,
+      roomsRequested: numberOfRooms,
     };
 
     setLoading(true);
@@ -284,6 +285,16 @@ function BookingSearch() {
 
           <div className="form-row">
             <div className="form-group small">
+              <label>Number of Rooms</label>
+              <input
+                type="number"
+                min="1"
+                value={numberOfRooms}
+                onChange={(e) => setNumberOfRooms(+e.target.value)}
+              />
+            </div>
+
+            <div className="form-group small">
               <label>Adults</label>
               <input
                 type="number"
@@ -333,8 +344,15 @@ function BookingSearch() {
           </div>
 
           {selectedRoomType && (
-            <div className="price-preview">
-              <strong>Price:</strong> ₹{selectedRoomType.basePrice} / night
+            <div>
+              <div className="price-preview">
+                <strong>Price:</strong> ₹{selectedRoomType.basePrice} / night
+              </div>
+
+              <div className="price-preview">
+                <strong>Max Guests:</strong> {selectedRoomType.maxGuests} per
+                room
+              </div>
             </div>
           )}
 

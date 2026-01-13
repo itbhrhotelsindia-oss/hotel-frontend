@@ -123,3 +123,30 @@
     flex-direction: column;
   }
 }
+
+/* Vertical guest input list */
+.details-column {
+  padding: 20px 20px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Input styling */
+.details-column input {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 10px;
+  border: 1px solid #d6d6d6;
+  font-size: 15px;
+  background: #fafafa;
+  transition: all 0.25s ease;
+}
+
+/* Focus state */
+.details-column input:focus {
+  border-color: #b58b42;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(181, 139, 66, 0.15);
+  outline: none;
+}
