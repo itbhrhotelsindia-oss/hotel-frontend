@@ -12,6 +12,9 @@ const Inventory = () => {
   const [rows, setRows] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  /* ===============================
+     LOAD ROOM TYPES
+     =============================== */
   useEffect(() => {
     fetch(`${BASE_URL}/api/admin/room-types?hotelId=${hotelId}`)
       .then((res) => res.json())
@@ -20,6 +23,9 @@ const Inventory = () => {
 
   const selectedRoomType = roomTypes.find((r) => r.id === roomTypeId);
 
+  /* ===============================
+     LOAD INVENTORY (PREVIEW + REAL)
+     =============================== */
   async function loadInventory() {
     if (!roomTypeId || !startDate || !endDate) return;
     setLoading(true);
@@ -29,16 +35,22 @@ const Inventory = () => {
     );
 
     const data = await res.json();
+
     setRows(
       data.map((d) => ({
         ...d,
+        published: d.published ?? false, // 🔑 KEY FLAG
         isDirty: false,
         isSaving: false,
       }))
     );
+
     setLoading(false);
   }
 
+  /* ===============================
+     UPDATE ROW (DRAFT ONLY)
+     =============================== */
   function updateRow(index, field, value) {
     setRows((prev) => {
       const copy = [...prev];
@@ -61,6 +73,9 @@ const Inventory = () => {
     });
   }
 
+  /* ===============================
+     UPDATE EXISTING PUBLISHED ROW
+     =============================== */
   async function saveRow(index) {
     const row = rows[index];
     row.isSaving = true;
@@ -83,6 +98,38 @@ const Inventory = () => {
     setRows([...rows]);
   }
 
+  /* ===============================
+     PUBLISH INVENTORY (FIRST TIME SAVE)
+     =============================== */
+  async function publishRow(index) {
+    const row = rows[index];
+    row.isSaving = true;
+    setRows([...rows]);
+
+    await fetch(`${BASE_URL}/api/admin/inventory/publish`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        hotelId,
+        roomTypeId,
+        startDate: row.date,
+        endDate: row.date,
+        totalRooms: row.totalRooms,
+        pricePerNight: row.pricePerNight,
+      }),
+    });
+
+    row.published = true;
+    row.active = true;
+    row.isDirty = false;
+    row.isSaving = false;
+
+    setRows([...rows]);
+  }
+
+  /* ===============================
+     BLOCK / UNBLOCK (PUBLISHED ONLY)
+     =============================== */
   async function toggleStatus(index) {
     const row = rows[index];
 
@@ -139,7 +186,7 @@ const Inventory = () => {
             <span>Date</span>
             <span>Rooms</span>
             <span>Price</span>
-            <span>Status</span>
+            <span>Publish Status</span>
             <span>Action</span>
           </div>
 
@@ -148,7 +195,11 @@ const Inventory = () => {
               key={r.date}
               style={{
                 ...styles.row,
-                background: r.isDirty ? "#fff8e1" : "#fff",
+                background: !r.published
+                  ? "#fff8e1" // draft
+                  : r.isDirty
+                  ? "#e3f2fd" // edited
+                  : "#fff",
               }}
             >
               <span>{r.date}</span>
@@ -159,7 +210,11 @@ const Inventory = () => {
                   value={r.totalRooms}
                   onChange={(e) => updateRow(i, "totalRooms", e.target.value)}
                 />
-                <small>max {selectedRoomType?.maxGuests}</small>
+                <small
+                  style={{ display: "block", color: "#777", marginTop: 2 }}
+                >
+                  Max Guests: {selectedRoomType?.maxGuests}
+                </small>
               </span>
 
               <span>
@@ -172,17 +227,39 @@ const Inventory = () => {
                 />
               </span>
 
-              <span>{r.active ? "OPEN" : "BLOCKED"}</span>
+              <span
+                style={{
+                  fontWeight: 600,
+                  color: r.published ? "#2e7d32" : "#f57c00",
+                }}
+              >
+                {r.published ? "PUBLISHED" : "DRAFT"}
+              </span>
 
               <span>
-                {r.isDirty && (
-                  <button onClick={() => saveRow(i)} style={styles.saveBtn}>
-                    {r.isSaving ? "Saving…" : "Save"}
+                {!r.published && (
+                  <button
+                    onClick={() => publishRow(i)}
+                    style={{ ...styles.saveBtn, background: "#f57c00" }}
+                  >
+                    {r.isSaving ? "Publishing…" : "Publish"}
                   </button>
                 )}
-                <button onClick={() => toggleStatus(i)} style={styles.blockBtn}>
-                  {r.active ? "Block" : "Unblock"}
-                </button>
+
+                {r.published && r.isDirty && (
+                  <button onClick={() => saveRow(i)} style={styles.saveBtn}>
+                    {r.isSaving ? "Saving…" : "Update"}
+                  </button>
+                )}
+
+                {r.published && (
+                  <button
+                    onClick={() => toggleStatus(i)}
+                    style={styles.blockBtn}
+                  >
+                    {r.active ? "Block" : "Unblock"}
+                  </button>
+                )}
               </span>
             </div>
           ))}
@@ -194,6 +271,9 @@ const Inventory = () => {
 
 export { Inventory };
 
+/* ===============================
+   STYLES
+   =============================== */
 const styles = {
   container: {
     padding: 24,
@@ -237,6 +317,7 @@ const styles = {
     border: "none",
     padding: "4px 10px",
     borderRadius: 4,
+    cursor: "pointer",
   },
   blockBtn: {
     background: "#6A2C2C",
@@ -244,5 +325,6 @@ const styles = {
     border: "none",
     padding: "4px 10px",
     borderRadius: 4,
+    cursor: "pointer",
   },
 };

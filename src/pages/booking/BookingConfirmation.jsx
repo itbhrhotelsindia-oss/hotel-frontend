@@ -6,6 +6,8 @@ function BookingConfirmation() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
+
   // 1️⃣ Read booking from router OR localStorage (refresh-safe)
   const booking =
     location.state?.booking ||
@@ -23,6 +25,34 @@ function BookingConfirmation() {
   }, [booking, navigate]);
 
   if (!booking) return null;
+
+  const handleMockPaymentSuccess = async () => {
+    try {
+      await fetch(
+        `${BASE_URL}/api/dev/payments/mock/success?bookingId=${booking.bookingId}`,
+        { method: "POST" }
+      );
+
+      alert("✅ Payment Successful (Mock)");
+      navigate("/booking/success");
+    } catch (err) {
+      alert("❌ Mock payment failed");
+    }
+  };
+
+  const handleMockPaymentFailure = async () => {
+    try {
+      await fetch(
+        `${BASE_URL}/api/dev/payments/mock/failure?bookingId=${booking.bookingId}`,
+        { method: "POST" }
+      );
+
+      alert("❌ Payment Failed (Mock)");
+      navigate("/booking/failure");
+    } catch (err) {
+      alert("❌ Mock payment failed");
+    }
+  };
 
   return (
     <div className="confirmation-page">
@@ -81,8 +111,13 @@ function BookingConfirmation() {
 
         {/* CTA */}
         <div className="action-buttons">
-          <button className="pay-btn">Proceed to Payment</button>
-          <button className="home-btn">Go to Home</button>
+          <button className="pay-btn" onClick={handleMockPaymentSuccess}>
+            Mock Pay – Success
+          </button>
+
+          <button className="home-btn" onClick={handleMockPaymentFailure}>
+            Mock Pay – Failure
+          </button>
         </div>
       </div>
     </div>

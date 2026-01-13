@@ -17,6 +17,8 @@ import BookingSearch from "./pages/booking/BookingSearch";
 import BookingAvailability from "./pages/booking/BookingAvailability";
 import GuestDetails from "./pages/booking/GuestDetails";
 import BookingConfirmation from "./pages/booking/BookingConfirmation";
+import PaymentSuccess from "./pages/booking/PaymentSuccess";
+import PaymentFailure from "./pages/booking/PaymentFailure";
 
 // ... other pages
 
@@ -48,6 +50,9 @@ export default function App() {
         <Route path="/booking/availability" element={<BookingAvailability />} />
         <Route path="/booking/guest-details" element={<GuestDetails />} />
         <Route path="/booking/confirmation" element={<BookingConfirmation />} />
+        <Route path="/booking/success" element={<PaymentSuccess />} />
+        <Route path="/booking/failure" element={<PaymentFailure />} />
+
         {/* ================= OWNER ROUTES ================= */}
         <Route path="/owner/login" element={<OwnerLogin />} />
         <Route path="/owner/dashboard" element={<OwnerDashboard />} />
