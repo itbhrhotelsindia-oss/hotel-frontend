@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "./BookingSearch.css";
+import BookingAvailability from "./BookingAvailability.jsx";
 
 function BookingSearch() {
   const navigate = useNavigate();
@@ -33,6 +34,10 @@ function BookingSearch() {
 
   const [cities, setCities] = useState([]);
   const [hotels, setHotels] = useState([]);
+  const [showAvailability, setShowAvailability] = useState(false);
+  const [availabilityData, setAvailabilityData] = useState(null);
+  const [searchData, setSearchData] = useState(null);
+
   useEffect(() => {
     async function loadCities() {
       try {
@@ -158,25 +163,41 @@ function BookingSearch() {
         return;
       }
 
-      // ✅ SUCCESS → MOVE TO STEP 2
-      navigate("/booking/availability", {
-        state: {
-          availability: data,
-          search: {
-            place,
-            hotel,
-            hotelId,
-            checkIn,
-            checkOut,
-            adults,
-            children,
-            promo,
-            roomTypeId: selectedRoomTypeId,
-            roomTypeName: selectedRoomType?.name,
-            pricePerNight: selectedRoomType?.pricePerNight,
-          },
-        },
+      setAvailabilityData(data);
+      setSearchData({
+        place,
+        hotel,
+        hotelId,
+        checkIn,
+        checkOut,
+        adults,
+        children,
+        promo,
+        roomTypeId: selectedRoomTypeId,
+        roomTypeName: selectedRoomType?.name,
+        pricePerNight: selectedRoomType?.pricePerNight,
       });
+      setShowAvailability(true);
+
+      // ✅ SUCCESS → MOVE TO STEP 2
+      // navigate("/booking/availability", {
+      //   state: {
+      //     availability: data,
+      //     search: {
+      //       place,
+      //       hotel,
+      //       hotelId,
+      //       checkIn,
+      //       checkOut,
+      //       adults,
+      //       children,
+      //       promo,
+      //       roomTypeId: selectedRoomTypeId,
+      //       roomTypeName: selectedRoomType?.name,
+      //       pricePerNight: selectedRoomType?.pricePerNight,
+      //     },
+      //   },
+      // });
     } catch (err) {
       console.error("Availability API Error:", err);
       setError("Something went wrong while checking availability");
@@ -347,6 +368,12 @@ function BookingSearch() {
           </ul>
         </div>
       </div>
+      {showAvailability && (
+        <BookingAvailability
+          availability={availabilityData}
+          search={searchData}
+        />
+      )}
     </div>
   );
 }

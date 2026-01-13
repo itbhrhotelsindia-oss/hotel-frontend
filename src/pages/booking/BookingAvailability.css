@@ -1,64 +1,100 @@
+/* PAGE WRAPPER */
 .availability-page {
-  padding: 40px;
-  background: #f7f7f7;
+  padding-top: 30px;
+  background: #f5f5f5;
   min-height: 100vh;
+  display: flex;
 }
 
-.page-title {
-  font-size: 28px;
-  margin-bottom: 20px;
-}
-
+/* CARD */
 .availability-card {
-  max-width: 520px;
-  background: #fff;
-  padding: 24px;
+  width: 100%;
+  background: #ffffff;
+  padding: 26px 28px;
   border-radius: 10px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
+  border-top: 4px solid #b58b42; /* brand accent */
+}
+
+/* TITLE */
+.page-title {
+  font-size: 26px;
+  font-weight: 600;
+  color: #3b2f1e;
+  margin-bottom: 18px;
+}
+
+/* SUMMARY */
+.summary {
+  background: #faf6ef;
+  padding: 14px 16px;
+  border-radius: 6px;
+  margin-bottom: 18px;
 }
 
 .summary p {
   margin: 6px 0;
-  font-size: 15px;
+  font-size: 14.5px;
+  color: #4a3a24;
+}
+
+/* PRICE BREAKUP */
+.breakup {
+  margin-top: 10px;
 }
 
 .breakup h4 {
+  font-size: 16px;
   margin-bottom: 10px;
+  color: #5a3f12;
+  border-bottom: 1px dashed #d8c49a;
+  padding-bottom: 6px;
 }
 
 .breakup-row {
   display: flex;
   justify-content: space-between;
-  padding: 6px 0;
-  font-size: 15px;
+  padding: 7px 0;
+  font-size: 14.5px;
+  color: #3d2f1b;
 }
 
+/* TOTAL */
 .total-row {
   display: flex;
   justify-content: space-between;
   font-size: 18px;
-  font-weight: bold;
+  font-weight: 700;
   color: #8b5e1a;
-  margin-top: 10px;
+  margin-top: 14px;
+  padding-top: 10px;
+  border-top: 1px solid #e3d4b3;
 }
 
+/* CTA BUTTON */
 .continue-btn {
   width: 100%;
-  margin-top: 20px;
+  margin-top: 22px;
   padding: 14px;
-  background: #b08d44;
+  background: linear-gradient(135deg, #b58b42, #9a7838);
   color: #fff;
   border: none;
   border-radius: 6px;
   font-size: 16px;
+  font-weight: 600;
   cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 .continue-btn:hover {
-  background: #9a7838;
+  background: linear-gradient(135deg, #9a7838, #7d602c);
+  transform: translateY(-1px);
 }
 
+/* ERROR */
 .error-text {
-  padding: 40px;
-  color: red;
+  padding: 30px;
+  color: #b00020;
+  font-weight: 500;
+  text-align: center;
 }

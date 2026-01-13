@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./BookingAvailability.css";
 
-function BookingAvailability() {
+function BookingAvailability({ availability, search }) {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -22,8 +22,6 @@ function BookingAvailability() {
   }, [data, navigate]);
 
   if (!data) return null;
-
-  const { availability, search } = data;
 
   // 4️⃣ Continue → Guest Details
   const handleContinue = () => {
@@ -48,50 +46,48 @@ function BookingAvailability() {
 
   return (
     <div className="availability-page">
-      <h2 className="page-title">Available Rooms</h2>
+      <div className="availability-row">
+        <h2 className="page-title">Available Rooms</h2>
 
-      <div className="availability-card">
-        {/* SUMMARY */}
-        <div className="summary">
-          <p>
-            <strong>Hotel:</strong> {search.hotelName}
-          </p>
-          <p>
-            <strong>Dates:</strong> {search.checkIn} → {search.checkOut}
-          </p>
-          <p>
-            <strong>Rooms:</strong> {availability.roomsRequested}
-            {" • "}
-            <strong>Nights:</strong> {availability.nights}
-          </p>
+        <div className="availability-card">
+          {/* SUMMARY */}
+          <div className="summary">
+            <p>
+              <strong>Hotel:</strong> {search.hotelName}
+            </p>
+            <p>
+              <strong>Dates:</strong> {search.checkIn} → {search.checkOut}
+            </p>
+            <p>
+              <strong>Rooms:</strong> {availability.roomsRequested}
+              {" • "}
+              <strong>Nights:</strong> {availability.nights}
+            </p>
+          </div>
+
+          {/* PRICE BREAKDOWN */}
+          <div className="breakup">
+            <h4>Price Breakdown</h4>
+
+            {availability.breakup.map((item, idx) => (
+              <div className="breakup-row" key={idx}>
+                <span>{item.date}</span>
+                <span>₹{item.price}</span>
+              </div>
+            ))}
+          </div>
+
+          {/* TOTAL */}
+          <div className="total-row">
+            <span>Total Amount</span>
+            <span>₹{availability.totalAmount}</span>
+          </div>
+
+          {/* CTA */}
+          <button className="continue-btn" onClick={handleContinue}>
+            Continue Booking
+          </button>
         </div>
-
-        <hr />
-
-        {/* PRICE BREAKDOWN */}
-        <div className="breakup">
-          <h4>Price Breakdown</h4>
-
-          {availability.breakup.map((item, idx) => (
-            <div className="breakup-row" key={idx}>
-              <span>{item.date}</span>
-              <span>₹{item.price}</span>
-            </div>
-          ))}
-        </div>
-
-        <hr />
-
-        {/* TOTAL */}
-        <div className="total-row">
-          <span>Total Amount</span>
-          <span>₹{availability.totalAmount}</span>
-        </div>
-
-        {/* CTA */}
-        <button className="continue-btn" onClick={handleContinue}>
-          Continue Booking
-        </button>
       </div>
     </div>
   );
