@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./GuestDetails.css";
 
-function GuestDetails() {
+function GuestDetails({ bookingData }) {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   const navigate = useNavigate();
   const location = useLocation();
@@ -12,8 +12,6 @@ function GuestDetails() {
 
   // 2️⃣ Fallback to localStorage (IMPORTANT)
   const storedData = JSON.parse(localStorage.getItem("bookingAvailability"));
-
-  const bookingData = stateData || storedData;
 
   // 3️⃣ If still missing → redirect safely
   useEffect(() => {
@@ -28,7 +26,7 @@ function GuestDetails() {
 
   const {
     hotelId,
-    hotelName,
+    hotel,
     roomTypeId,
     roomTypeName,
     checkIn,
@@ -37,6 +35,17 @@ function GuestDetails() {
     totalAmount,
   } = bookingData;
 
+  console.log(
+    "bookingData in GuestDetails:",
+    hotelId,
+    hotel,
+    roomTypeId,
+    roomTypeName,
+    checkIn,
+    checkOut,
+    roomsRequested,
+    totalAmount
+  );
   // Guest form
   const [guestName, setGuestName] = useState("");
   const [guestEmail, setGuestEmail] = useState("");
@@ -96,7 +105,7 @@ function GuestDetails() {
       <div className="guest-card">
         <h4>Booking Summary</h4>
         <p>
-          <strong>Hotel:</strong> {hotelName}
+          <strong>Hotel:</strong> {hotel}
         </p>
         <p>
           <strong>Dates:</strong> {checkIn} → {checkOut}

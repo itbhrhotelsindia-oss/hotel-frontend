@@ -1,105 +1,120 @@
 .guest-page {
   min-height: 100vh;
-  background: #f5f7fa;
-  padding: 40px 20px;
+  background: linear-gradient(180deg, #f7f8fb, #f1f3f6);
+  padding: -40px 20px;
 }
 
 .guest-title {
-  text-align: center;
-  font-size: 26px;
+  text-align: left;
+  font-size: 28px;
   font-weight: 600;
-  margin-bottom: 30px;
-  color: #2c2c2c;
+  margin-top: -50px;
+  margin-bottom: 20px;
+  margin-left: 120px;
+  color: #2f2a24;
+  letter-spacing: 0.3px;
 }
-
 .guest-card {
-  max-width: 520px;
+  max-width: 540px;
   margin: 0 auto;
   background: #ffffff;
-  border-radius: 14px;
-  padding: 28px 30px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+  padding: 30px 32px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06), 0 2px 8px rgba(0, 0, 0, 0.04);
+  border-top: 4px solid #b58b42;
 }
 
 /* SUMMARY */
 .guest-card h4 {
-  margin-bottom: 12px;
+  margin-bottom: 14px;
   font-size: 18px;
-  color: #333;
+  font-weight: 600;
+  color: #4a3716;
 }
 
 .guest-card p {
-  margin: 4px 0;
-  font-size: 14px;
-  color: #444;
+  margin: 5px 0;
+  font-size: 14.5px;
+  color: #4a4a4a;
 }
 
 .guest-card strong {
-  color: #000;
+  color: #2d2d2d;
+  font-weight: 600;
 }
 
 .guest-card hr {
   border: none;
-  border-top: 1px solid #e6e6e6;
-  margin: 18px 0;
+  border-top: 1px solid #eee4d2;
+  margin: 22px 0;
 }
 
 /* ERROR */
 .error-text {
-  color: #dc3545;
+  color: #c62828;
   font-size: 14px;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
+  background: #fdecea;
+  padding: 8px 12px;
+  border-radius: 6px;
 }
 
 /* INPUTS */
 .guest-card input {
   width: 100%;
-  padding: 14px 14px;
-  margin-bottom: 14px;
+  padding: 15px 14px;
+  margin-bottom: 16px;
   font-size: 15px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
+  border-radius: 10px;
+  border: 1px solid #d8d8d8;
   outline: none;
-  transition: border 0.2s ease;
+  transition: all 0.25s ease;
+  background: #fafafa;
+}
+
+.guest-card input::placeholder {
+  color: #9b9b9b;
 }
 
 .guest-card input:focus {
-  border-color: #0b5ed7;
+  border-color: #b58b42;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(181, 139, 66, 0.15);
 }
 
 /* CTA */
 .confirm-btn {
   width: 100%;
   padding: 16px;
-  background: linear-gradient(135deg, #b08d49, #9a7b3c);
+  background: linear-gradient(135deg, #b58b42, #9a7838);
   color: #fff;
   border: none;
-  border-radius: 10px;
-  font-size: 18px;
+  border-radius: 12px;
+  font-size: 17px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.25s ease;
-  margin-top: 10px;
+  transition: all 0.3s ease;
+  margin-top: 12px;
+  letter-spacing: 0.3px;
 }
 
 .confirm-btn:hover {
-  background: linear-gradient(135deg, #9a7b3c, #7d612f);
-  transform: translateY(-1px);
+  background: linear-gradient(135deg, #9a7838, #7d612f);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
 }
 
 .confirm-btn:disabled {
-  background: #ccc;
+  background: #d6d6d6;
   cursor: not-allowed;
   transform: none;
+  box-shadow: none;
 }
 
 /* MOBILE */
 @media (max-width: 600px) {
   .guest-card {
-    padding: 22px 18px;
-  }
-
-  .guest-title {
-    font-size: 22px;
+    padding: 24px 20px;
+    border-radius: 14px;
   }
 }
