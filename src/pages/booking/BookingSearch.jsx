@@ -38,6 +38,10 @@ function BookingSearch() {
   const [showAvailability, setShowAvailability] = useState(false);
   const [availabilityData, setAvailabilityData] = useState(null);
   const [searchData, setSearchData] = useState(null);
+  const resetAvailability = () => {
+    setShowAvailability(false);
+    setAvailabilityData(null);
+  };
 
   useEffect(() => {
     async function loadCities() {
@@ -100,6 +104,20 @@ function BookingSearch() {
 
     loadRoomTypes();
   }, [selectedHotelId]);
+
+  useEffect(() => {
+    if (!selectedRoomType) return;
+
+    const maxGuests = selectedRoomType.maxGuests * numberOfRooms;
+
+    if (adults > maxGuests) {
+      setAdults(maxGuests);
+    }
+
+    if (adults + children > maxGuests) {
+      setChildren(Math.max(0, maxGuests - adults));
+    }
+  }, [numberOfRooms, selectedRoomType]);
 
   useEffect(() => {
     if (!hotelIdSelect) {
@@ -179,26 +197,6 @@ function BookingSearch() {
         pricePerNight: selectedRoomType?.pricePerNight,
       });
       setShowAvailability(true);
-
-      // ✅ SUCCESS → MOVE TO STEP 2
-      // navigate("/booking/availability", {
-      //   state: {
-      //     availability: data,
-      //     search: {
-      //       place,
-      //       hotel,
-      //       hotelId,
-      //       checkIn,
-      //       checkOut,
-      //       adults,
-      //       children,
-      //       promo,
-      //       roomTypeId: selectedRoomTypeId,
-      //       roomTypeName: selectedRoomType?.name,
-      //       pricePerNight: selectedRoomType?.pricePerNight,
-      //     },
-      //   },
-      // });
     } catch (err) {
       console.error("Availability API Error:", err);
       setError("Something went wrong while checking availability");
@@ -219,7 +217,13 @@ function BookingSearch() {
           <div className="form-row">
             <div className="form-group">
               <label>Place</label>
-              <select value={place} onChange={(e) => setPlace(e.target.value)}>
+              <select
+                value={place}
+                onChange={(e) => {
+                  setPlace(e.target.value);
+                  resetAvailability();
+                }}
+              >
                 <option value="">Select Place</option>
 
                 {cities.map((city) => (
@@ -244,6 +248,7 @@ function BookingSearch() {
                   // 🔥 RESET room types
                   setSelectedRoomTypeId("");
                   setSelectedRoomType(null);
+                  resetAvailability();
                 }}
               >
                 <option value="">Select Hotel</option>
@@ -262,11 +267,12 @@ function BookingSearch() {
               <label>From</label>
               <input
                 type="date"
-                name="checkIn"
                 value={checkIn}
-                min={today} // 👈 prevents past dates
-                onChange={(e) => setCheckIn(e.target.value)}
-                required
+                min={today}
+                onChange={(e) => {
+                  setCheckIn(e.target.value);
+                  resetAvailability();
+                }}
               />
             </div>
 
@@ -274,11 +280,12 @@ function BookingSearch() {
               <label>To</label>
               <input
                 type="date"
-                name="checkOut"
                 value={checkOut}
                 min={checkIn || today}
-                onChange={(e) => setCheckOut(e.target.value)}
-                required
+                onChange={(e) => {
+                  setCheckOut(e.target.value);
+                  resetAvailability();
+                }}
               />
             </div>
           </div>
@@ -288,9 +295,11 @@ function BookingSearch() {
               <label>Number of Rooms</label>
               <input
                 type="number"
-                min="1"
                 value={numberOfRooms}
-                onChange={(e) => setNumberOfRooms(+e.target.value)}
+                onChange={(e) => {
+                  setNumberOfRooms(+e.target.value);
+                  resetAvailability();
+                }}
               />
             </div>
 
@@ -299,8 +308,21 @@ function BookingSearch() {
               <input
                 type="number"
                 min="1"
+                max={
+                  selectedRoomType
+                    ? selectedRoomType.maxGuests * numberOfRooms
+                    : 1
+                }
                 value={adults}
-                onChange={(e) => setAdults(+e.target.value)}
+                onChange={(e) => {
+                  if (!selectedRoomType) return;
+
+                  const value = Number(e.target.value);
+                  const maxGuests = selectedRoomType.maxGuests * numberOfRooms;
+
+                  setAdults(Math.min(value, maxGuests));
+                  resetAvailability();
+                }}
               />
             </div>
 
@@ -309,8 +331,23 @@ function BookingSearch() {
               <input
                 type="number"
                 min="0"
+                max={
+                  selectedRoomType
+                    ? numberOfRooms * 2
+                    : // ? selectedRoomType.maxGuests * numberOfRooms - adults
+                      0
+                }
                 value={children}
-                onChange={(e) => setChildren(+e.target.value)}
+                onChange={(e) => {
+                  if (!selectedRoomType) return;
+
+                  const value = Number(e.target.value);
+                  // const maxGuests = selectedRoomType.maxGuests * numberOfRooms;
+                  const maxGuests = numberOfRooms * 2;
+
+                  setChildren(Math.min(value, maxGuests));
+                  resetAvailability();
+                }}
               />
             </div>
           </div>
@@ -327,6 +364,7 @@ function BookingSearch() {
 
                   setSelectedRoomTypeId(roomTypeId);
                   setSelectedRoomType(roomTypeObj || null);
+                  resetAvailability();
                 }}
                 disabled={!roomTypes.length}
               >
@@ -350,8 +388,8 @@ function BookingSearch() {
               </div>
 
               <div className="price-preview">
-                <strong>Max Guests:</strong> {selectedRoomType.maxGuests} per
-                room
+                <strong>Max Guests:</strong> {selectedRoomType.maxGuests} adults
+                and 2 children per room
               </div>
             </div>
           )}
@@ -363,7 +401,10 @@ function BookingSearch() {
               className="promo-input"
               placeholder="Promo Code"
               value={promo}
-              onChange={(e) => setPromo(e.target.value)}
+              onChange={(e) => {
+                setPromo(e.target.value);
+                resetAvailability();
+              }}
             />
             <button
               className="check-btn"
