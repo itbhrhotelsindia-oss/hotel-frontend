@@ -24,14 +24,9 @@ const RoomTypes = () => {
   const loadRoomTypes = async () => {
     try {
       setLoading(true);
-
       const res = await fetch(
         `${BASE_URL}/api/admin/room-types?hotelId=${hotelId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        { headers: { Authorization: `Bearer ${token}` } }
       );
 
       if (!res.ok) throw new Error("Failed to load room types");
@@ -49,7 +44,7 @@ const RoomTypes = () => {
     loadRoomTypes();
   }, [hotelId]);
 
-  /* ================= SAVE (ADD / EDIT) ================= */
+  /* ================= SAVE ================= */
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -57,8 +52,6 @@ const RoomTypes = () => {
     const url = isEdit
       ? `${BASE_URL}/api/admin/room-types/${editing.id}`
       : `${BASE_URL}/api/admin/room-types`;
-
-    const method = isEdit ? "PUT" : "POST";
 
     const payload = {
       hotelId,
@@ -69,7 +62,7 @@ const RoomTypes = () => {
     };
 
     const res = await fetch(url, {
-      method,
+      method: isEdit ? "PUT" : "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
@@ -84,13 +77,7 @@ const RoomTypes = () => {
 
     setShowForm(false);
     setEditing(null);
-    setForm({
-      name: "",
-      description: "",
-      maxGuests: "",
-      basePrice: "",
-    });
-
+    setForm({ name: "", description: "", maxGuests: "", basePrice: "" });
     loadRoomTypes();
   };
 
@@ -98,17 +85,10 @@ const RoomTypes = () => {
   const deleteRoomType = async (id) => {
     if (!confirm("Disable this room type?")) return;
 
-    const res = await fetch(`${BASE_URL}/api/admin/room-types/${id}`, {
+    await fetch(`${BASE_URL}/api/admin/room-types/${id}`, {
       method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      headers: { Authorization: `Bearer ${token}` },
     });
-
-    if (!res.ok) {
-      alert("Delete failed");
-      return;
-    }
 
     loadRoomTypes();
   };
@@ -118,9 +98,14 @@ const RoomTypes = () => {
   if (error) return <h3 style={{ color: "red" }}>{error}</h3>;
 
   return (
-    <div style={styles.container}>
+    <div style={styles.page}>
+      {/* HEADER */}
       <div style={styles.header}>
-        <h2>Room Types</h2>
+        <div>
+          <h2 style={styles.title}>Room Types</h2>
+          <p style={styles.subtitle}>Hotel ID: {hotelId}</p>
+        </div>
+
         <button
           style={styles.primaryBtn}
           onClick={() => {
@@ -138,17 +123,22 @@ const RoomTypes = () => {
         </button>
       </div>
 
+      {/* ROOM TYPE CARDS */}
       <div style={styles.grid}>
         {roomTypes.map((rt) => (
           <div key={rt.id} style={styles.card}>
-            <h3>{rt.name}</h3>
-            <p>Max Guests: {rt.maxGuests}</p>
-            <p>
-              <strong>Base Price:</strong> ₹{rt.basePrice}
-            </p>
+            <h3 style={styles.cardTitle}>{rt.name}</h3>
+
+            {rt.description && <p style={styles.cardDesc}>{rt.description}</p>}
+
+            <div style={styles.meta}>
+              <span>👥 Max Adults: {rt.maxGuests}</span>
+              <span>💰 ₹{rt.basePrice} / night</span>
+            </div>
 
             <div style={styles.actions}>
               <button
+                style={styles.secondaryBtn}
                 onClick={() => {
                   setEditing(rt);
                   setForm({
@@ -162,16 +152,25 @@ const RoomTypes = () => {
               >
                 Edit
               </button>
-              <button onClick={() => deleteRoomType(rt.id)}>Delete</button>
+
+              <button
+                style={styles.dangerBtn}
+                onClick={() => deleteRoomType(rt.id)}
+              >
+                Disable
+              </button>
             </div>
           </div>
         ))}
       </div>
 
+      {/* MODAL */}
       {showForm && (
         <div style={styles.overlay}>
           <form style={styles.modal} onSubmit={handleSubmit}>
-            <h3>{editing ? "Edit Room Type" : "Add Room Type"}</h3>
+            <h3 style={styles.modalTitle}>
+              {editing ? "Edit Room Type" : "Add Room Type"}
+            </h3>
 
             <input
               placeholder="Room Type Name"
@@ -180,9 +179,10 @@ const RoomTypes = () => {
               required
             />
 
-            <input
-              placeholder="Description"
+            <textarea
+              placeholder="Description (optional)"
               value={form.description}
+              rows={3}
               onChange={(e) =>
                 setForm({ ...form, description: e.target.value })
               }
@@ -208,7 +208,11 @@ const RoomTypes = () => {
               <button type="submit" style={styles.primaryBtn}>
                 Save
               </button>
-              <button type="button" onClick={() => setShowForm(false)}>
+              <button
+                type="button"
+                style={styles.secondaryBtn}
+                onClick={() => setShowForm(false)}
+              >
                 Cancel
               </button>
             </div>
@@ -219,61 +223,131 @@ const RoomTypes = () => {
   );
 };
 
-/* ✅ NAMED EXPORT */
 export { RoomTypes };
 
-/* ================= STYLES ================= */
-
 const styles = {
-  container: { padding: 24 },
+  page: {
+    padding: 32,
+    background: "#f4f6f8",
+    minHeight: "100vh",
+    fontFamily: "Inter, system-ui, sans-serif",
+  },
+
   header: {
     display: "flex",
     justifyContent: "space-between",
-    marginBottom: 16,
+    alignItems: "center",
+    marginBottom: 24,
   },
+
+  title: {
+    fontSize: 26,
+    fontWeight: 600,
+    color: "#1f2937",
+  },
+
+  subtitle: {
+    fontSize: 13,
+    color: "#6b7280",
+  },
+
   grid: {
     display: "grid",
-    gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
-    gap: 16,
+    gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))",
+    gap: 20,
   },
+
   card: {
-    background: "#fff",
-    padding: 16,
-    borderRadius: 8,
-    boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
+    background: "#ffffff",
+    padding: 20,
+    borderRadius: 12,
+    boxShadow: "0 8px 22px rgba(0,0,0,0.06)",
+    transition: "transform 0.2s ease",
   },
+
+  cardTitle: {
+    fontSize: 18,
+    fontWeight: 600,
+    marginBottom: 6,
+  },
+
+  cardDesc: {
+    fontSize: 14,
+    color: "#6b7280",
+    marginBottom: 10,
+  },
+
+  meta: {
+    display: "flex",
+    justifyContent: "space-between",
+    fontSize: 13,
+    color: "#374151",
+    marginBottom: 14,
+  },
+
   actions: {
     display: "flex",
-    gap: 8,
-    marginTop: 10,
+    gap: 10,
   },
+
   primaryBtn: {
-    background: "#6A2C2C",
+    background: "#c9a44d",
     color: "#fff",
     border: "none",
-    padding: "6px 12px",
-    borderRadius: 4,
+    padding: "10px 16px",
+    borderRadius: 6,
+    cursor: "pointer",
+    fontWeight: 500,
+  },
+
+  secondaryBtn: {
+    background: "#e5e7eb",
+    color: "#111827",
+    border: "none",
+    padding: "10px 16px",
+    borderRadius: 6,
     cursor: "pointer",
   },
+
+  dangerBtn: {
+    background: "#fee2e2",
+    color: "#b91c1c",
+    border: "none",
+    padding: "10px 16px",
+    borderRadius: 6,
+    cursor: "pointer",
+  },
+
   overlay: {
     position: "fixed",
     inset: 0,
-    background: "rgba(0,0,0,0.4)",
+    background: "rgba(0,0,0,0.45)",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    zIndex: 1000,
   },
+
   modal: {
     background: "#fff",
-    padding: 20,
-    borderRadius: 8,
-    minWidth: 320,
+    padding: 24,
+    borderRadius: 12,
+    width: 360,
     display: "flex",
     flexDirection: "column",
-    gap: 10,
+    gap: 12,
   },
+
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: 600,
+    marginBottom: 6,
+  },
+
   modalActions: {
     display: "flex",
-    justifyContent: "space-between",
+    justifyContent: "flex-end",
+    gap: 10,
+    marginTop: 10,
   },
 };

@@ -138,13 +138,13 @@ const styles = {
   },
   grid: {
     display: "grid",
-    gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
+    gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
     gap: "14px",
   },
   card: {
-    background: "#fff",
+    background: "#d6d6d6",
     borderRadius: "8px",
-    padding: "14px",
+    padding: "24px",
     boxShadow: "0 6px 14px rgba(0,0,0,0.08)",
   },
   hotelName: {
@@ -156,8 +156,9 @@ const styles = {
     marginBottom: "10px",
   },
   button: {
-    padding: "6px 10px",
-    background: "#6A2C2C",
+    padding: "10px 14px",
+    marginTop: "20px",
+    background: "#c9a44d",
     color: "#fff",
     border: "none",
     borderRadius: "4px",

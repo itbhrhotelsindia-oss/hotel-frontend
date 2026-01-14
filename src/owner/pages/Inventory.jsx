@@ -150,13 +150,17 @@ const Inventory = () => {
 
   return (
     <div style={styles.container}>
-      <h2>Inventory</h2>
+      <h2 style={styles.pageTitle}>Inventory Management</h2>
+      <p style={styles.pageSubTitle}>
+        Manage availability & pricing per room type
+      </p>
 
       {/* FILTER BAR */}
       <div style={styles.filterBar}>
         <select
           value={roomTypeId}
           onChange={(e) => setRoomTypeId(e.target.value)}
+          style={styles.select}
         >
           <option value="">Select Room Type</option>
           {roomTypes.map((rt) => (
@@ -166,15 +170,26 @@ const Inventory = () => {
           ))}
         </select>
 
-        <input type="date" onChange={(e) => setStartDate(e.target.value)} />
-        <input type="date" onChange={(e) => setEndDate(e.target.value)} />
+        <input
+          type="date"
+          value={startDate}
+          onChange={(e) => setStartDate(e.target.value)}
+          style={styles.input}
+        />
+
+        <input
+          type="date"
+          value={endDate}
+          onChange={(e) => setEndDate(e.target.value)}
+          style={styles.input}
+        />
 
         <button
           onClick={loadInventory}
           disabled={!roomTypeId || !startDate || !endDate}
           style={styles.loadBtn}
         >
-          Load
+          Load Inventory
         </button>
       </div>
 
@@ -229,8 +244,9 @@ const Inventory = () => {
 
               <span
                 style={{
-                  fontWeight: 600,
-                  color: r.published ? "#2e7d32" : "#f57c00",
+                  ...styles.statusBadge,
+                  background: r.published ? "#e8f5e9" : "#ffd693ff",
+                  color: r.published ? "#2e7d32" : "#ef6c00",
                 }}
               >
                 {r.published ? "PUBLISHED" : "DRAFT"}
@@ -240,14 +256,14 @@ const Inventory = () => {
                 {!r.published && (
                   <button
                     onClick={() => publishRow(i)}
-                    style={{ ...styles.saveBtn, background: "#f57c00" }}
+                    style={styles.publishBtn}
                   >
                     {r.isSaving ? "Publishing…" : "Publish"}
                   </button>
                 )}
 
                 {r.published && r.isDirty && (
-                  <button onClick={() => saveRow(i)} style={styles.saveBtn}>
+                  <button onClick={() => saveRow(i)} style={styles.updateBtn}>
                     {r.isSaving ? "Saving…" : "Update"}
                   </button>
                 )}
@@ -255,7 +271,10 @@ const Inventory = () => {
                 {r.published && (
                   <button
                     onClick={() => toggleStatus(i)}
-                    style={styles.blockBtn}
+                    style={{
+                      ...styles.blockBtn,
+                      background: r.active ? "#c9a44d" : "#2e7d32",
+                    }}
                   >
                     {r.active ? "Block" : "Unblock"}
                   </button>
@@ -276,55 +295,119 @@ export { Inventory };
    =============================== */
 const styles = {
   container: {
-    padding: 24,
+    padding: 28,
+    background: "#f4f6f8",
+    minHeight: "100vh",
+    fontFamily: "Inter, system-ui, sans-serif",
   },
+
+  pageTitle: {
+    fontSize: 26,
+    fontWeight: 600,
+    color: "#1f2937",
+    marginBottom: 4,
+  },
+
+  pageSubTitle: {
+    fontSize: 14,
+    color: "#6b7280",
+    marginBottom: 22,
+  },
+
   filterBar: {
     display: "flex",
     gap: 12,
-    marginBottom: 20,
+    flexWrap: "wrap",
+    marginBottom: 24,
+    alignItems: "center",
   },
+
+  select: {
+    padding: "10px 12px",
+    borderRadius: 6,
+    border: "1px solid #d1d5db",
+    minWidth: 200,
+  },
+
+  input: {
+    padding: "10px 12px",
+    borderRadius: 6,
+    border: "1px solid #d1d5db",
+  },
+
   loadBtn: {
-    background: "#6A2C2C",
+    background: "linear-gradient(135deg,#b58b42,#9a7838)",
     color: "#fff",
-    padding: "8px 18px",
+    padding: "10px 22px",
     borderRadius: 6,
     border: "none",
     cursor: "pointer",
+    fontWeight: 600,
   },
+
   table: {
-    borderRadius: 10,
+    borderRadius: 12,
     overflow: "hidden",
-    boxShadow: "0 6px 18px rgba(0,0,0,0.08)",
+    boxShadow: "0 10px 28px rgba(0,0,0,0.08)",
+    background: "#fff",
   },
+
   headerRow: {
     display: "grid",
-    gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr",
-    padding: 12,
+    gridTemplateColumns: "1.2fr 1fr 1fr 1fr 1.4fr",
+    padding: "14px 16px",
     fontWeight: 600,
-    background: "#f4f4f4",
+    background: "#f9fafb",
+    borderBottom: "1px solid #e5e7eb",
+    position: "sticky",
+    top: 0,
+    zIndex: 1,
   },
+
   row: {
     display: "grid",
-    gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr",
-    padding: 12,
+    gridTemplateColumns: "1.2fr 1fr 1fr 1fr 1.4fr",
+    padding: "14px 16px",
     alignItems: "center",
-    borderBottom: "1px solid #eee",
+    borderBottom: "1px solid #f0f0f0",
+    fontSize: 14,
   },
-  saveBtn: {
+
+  statusBadge: {
+    padding: "10px",
+    borderRadius: 20,
+    fontSize: 12,
+    fontWeight: 600,
+    display: "inline-block",
+    textAlign: "center",
+    maxWidth: 120,
+  },
+
+  publishBtn: {
+    background: "#ef6c00",
+    color: "#fff",
+    border: "none",
+    padding: "6px 14px",
+    borderRadius: 6,
+    cursor: "pointer",
     marginRight: 6,
+  },
+
+  updateBtn: {
     background: "#2e7d32",
     color: "#fff",
     border: "none",
-    padding: "4px 10px",
-    borderRadius: 4,
+    padding: "6px 14px",
+    borderRadius: 6,
     cursor: "pointer",
+    marginRight: 6,
   },
+
   blockBtn: {
-    background: "#6A2C2C",
     color: "#fff",
     border: "none",
-    padding: "4px 10px",
-    borderRadius: 4,
+    padding: "6px 14px",
+    borderRadius: 6,
     cursor: "pointer",
   },
 };
