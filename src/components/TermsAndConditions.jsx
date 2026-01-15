@@ -60,9 +60,9 @@ export default function TermsAndConditions({ onClose }) {
         <section className="terms-section">
           <h3>6. Privacy & Data Protection</h3>
           <p>
-            Personal information shared with BHR Hotels is handled with strict
-            confidentiality and used only to provide hospitality services, in
-            accordance with applicable data protection laws.
+            Personal information shared with BHR Hotels India LLP is handled
+            with strict confidentiality and used only to provide hospitality
+            services, in accordance with applicable data protection laws.
           </p>
         </section>
 
@@ -77,9 +77,9 @@ export default function TermsAndConditions({ onClose }) {
         <section className="terms-section">
           <h3>8. Modifications</h3>
           <p>
-            BHR Hotels reserves the right to modify these Terms & Conditions at
-            any time without prior notice. Continued use of our services implies
-            acceptance of updated terms.
+            BHR Hotels India LLP reserves the right to modify these Terms &
+            Conditions at any time without prior notice. Continued use of our
+            services implies acceptance of updated terms.
           </p>
         </section>
       </div>

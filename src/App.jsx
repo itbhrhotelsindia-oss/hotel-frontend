@@ -13,6 +13,10 @@ import OurHotelsSection from "./pages/OurHotelsSection";
 import DiningDetails from "./pages/DiningDetails";
 import BlogDetail from "./pages/BlogDetail";
 import HotelDetails from "./pages/HotelDetails.jsx";
+import LegalPage from "./legal/LegalPage";
+import TermsAndConditions from "./legal/TermsAndConditions";
+import PrivacyPolicy from "./legal/PrivacyPolicy";
+import RefundPolicy from "./legal/RefundPolicy";
 // ... other pages
 
 export default function App() {
@@ -32,6 +36,15 @@ export default function App() {
         <Route path="/dining/:restaurantId" element={<DiningDetails />} />
         <Route path="/blog/:slug" element={<BlogDetail />} />
         <Route path="/hotel-details/:hotelId" element={<HotelDetails />} />
+
+        {/* ================= LEGAL ROUTES (MANDATORY) ================= */}
+        <Route path="/legal" element={<LegalPage />} />
+        <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route
+          path="/refund-and-cancellation-policy"
+          element={<RefundPolicy />}
+        />
 
         {/* ... */}
       </Routes>

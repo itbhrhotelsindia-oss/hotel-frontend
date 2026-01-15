@@ -11,7 +11,7 @@ export default function AboutUs({ onClose }) {
 
         {/* HEADER */}
         <div className="about-header">
-          <h1>About BHR Hotels</h1>
+          <h1>About BHR Hotels India LLP</h1>
           <p>
             Crafting memorable stays with warmth, elegance, and authentic
             hospitality across India.
@@ -33,10 +33,10 @@ export default function AboutUs({ onClose }) {
           <section>
             <h2>Our Journey</h2>
             <p>
-              Established in <strong>2010</strong>, BHR Hotels has expanded its
-              presence across leisure destinations, pilgrimage cities, and
-              business hubs—offering guests a seamless blend of modern luxury
-              and local charm.
+              Established in <strong>2010</strong>, BHR Hotels India LLP has
+              expanded its presence across leisure destinations, pilgrimage
+              cities, and business hubs—offering guests a seamless blend of
+              modern luxury and local charm.
             </p>
           </section>
 
@@ -54,9 +54,9 @@ export default function AboutUs({ onClose }) {
             <h2>Our Promise</h2>
             <p>
               Whether you are planning a family getaway, destination wedding,
-              corporate event, or a peaceful retreat, BHR Hotels promises
-              thoughtful hospitality and experiences that stay with you long
-              after checkout.
+              corporate event, or a peaceful retreat, BHR Hotels India LLP
+              promises thoughtful hospitality and experiences that stay with you
+              long after checkout.
             </p>
           </section>
         </div>

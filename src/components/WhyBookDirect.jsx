@@ -19,8 +19,8 @@ export default function WhyBookDirect({ onClose }) {
 
         <h1 className="why-title">Why Book Direct</h1>
         <p className="why-subtitle">
-          Book directly with BHR Hotels and enjoy exclusive benefits designed
-          for comfort, savings, and peace of mind.
+          Book directly with BHR Hotels India LLP and enjoy exclusive benefits
+          designed for comfort, savings, and peace of mind.
         </p>
 
         <div className="why-grid">

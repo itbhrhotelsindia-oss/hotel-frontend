@@ -11,11 +11,11 @@ export default function Careers({ onClose }) {
 
         <h1 className="careers-title">Careers</h1>
         <p className="careers-subtitle">
-          Build a meaningful career in hospitality with BHR Hotels
+          Build a meaningful career in hospitality with BHR Hotels India LLP
         </p>
 
         <section className="careers-section">
-          <h3>Why Join BHR Hotels?</h3>
+          <h3>Why Join BHR Hotels India LLP?</h3>
           <p>
             At BHR Hotels India LLP, we believe our people are the heart of our
             success. We foster a collaborative work culture where passion,
@@ -48,14 +48,14 @@ export default function Careers({ onClose }) {
         <section className="careers-section">
           <h3>Apply With Us</h3>
           <p>
-            To explore career opportunities with BHR Hotels, please share your
-            updated resume and details with us at:
+            To explore career opportunities with BHR Hotels India LLP, please
+            share your updated resume and details with us at:
           </p>
 
           <p className="careers-email">
             📧{" "}
-            <a href="mailto:careers@bhrhotelsindia.com">
-              careers@bhrhotelsindia.com
+            <a href="mailto:bhrhotelsindia@bhrhotelsindia.com">
+              info@bhrhotelsindia.com
             </a>
           </p>
 
