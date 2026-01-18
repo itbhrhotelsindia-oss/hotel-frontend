@@ -31,7 +31,7 @@ const Inventory = () => {
     setLoading(true);
 
     const res = await fetch(
-      `${BASE_URL}/api/admin/inventory?hotelId=${hotelId}&roomTypeId=${roomTypeId}&startDate=${startDate}&endDate=${endDate}`
+      `${BASE_URL}/api/admin/inventory?hotelId=${hotelId}&roomTypeId=${roomTypeId}&startDate=${startDate}&endDate=${endDate}`,
     );
 
     const data = await res.json();
@@ -42,7 +42,7 @@ const Inventory = () => {
         published: d.published ?? false, // 🔑 KEY FLAG
         isDirty: false,
         isSaving: false,
-      }))
+      })),
     );
 
     setLoading(false);
@@ -57,10 +57,7 @@ const Inventory = () => {
       const row = { ...copy[index] };
 
       if (field === "totalRooms") {
-        row.totalRooms = Math.min(
-          Number(value),
-          selectedRoomType?.maxGuests || 0
-        );
+        row.totalRooms = Number(value);
       }
 
       if (field === "pricePerNight") {
@@ -205,83 +202,137 @@ const Inventory = () => {
             <span>Action</span>
           </div>
 
-          {rows.map((r, i) => (
-            <div
-              key={r.date}
-              style={{
-                ...styles.row,
-                background: !r.published
-                  ? "#fff8e1" // draft
-                  : r.isDirty
-                  ? "#e3f2fd" // edited
-                  : "#fff",
-              }}
-            >
-              <span>{r.date}</span>
-
-              <span>
-                <input
-                  type="number"
-                  value={r.totalRooms}
-                  onChange={(e) => updateRow(i, "totalRooms", e.target.value)}
-                />
-                <small
-                  style={{ display: "block", color: "#777", marginTop: 2 }}
-                >
-                  Max Guests: {selectedRoomType?.maxGuests}
-                </small>
-              </span>
-
-              <span>
-                <input
-                  type="number"
-                  value={r.pricePerNight}
-                  onChange={(e) =>
-                    updateRow(i, "pricePerNight", e.target.value)
-                  }
-                />
-              </span>
-
-              <span
+          {rows.map((r, i) => {
+            const booked = r.totalRooms - r.availableRooms;
+            const isLocked = r.published && booked > 0;
+            return (
+              <div
+                key={r.date}
                 style={{
-                  ...styles.statusBadge,
-                  background: r.published ? "#e8f5e9" : "#ffd693ff",
-                  color: r.published ? "#2e7d32" : "#ef6c00",
+                  ...styles.row,
+                  background: !r.published
+                    ? "#fff8e1" // draft
+                    : r.isDirty
+                      ? "#e3f2fd" // edited
+                      : "#fff",
                 }}
               >
-                {r.published ? "PUBLISHED" : "DRAFT"}
-              </span>
+                <span>{r.date}</span>
 
-              <span>
-                {!r.published && (
-                  <button
-                    onClick={() => publishRow(i)}
-                    style={styles.publishBtn}
-                  >
-                    {r.isSaving ? "Publishing…" : "Publish"}
-                  </button>
-                )}
-
-                {r.published && r.isDirty && (
-                  <button onClick={() => saveRow(i)} style={styles.updateBtn}>
-                    {r.isSaving ? "Saving…" : "Update"}
-                  </button>
-                )}
-
-                {r.published && (
-                  <button
-                    onClick={() => toggleStatus(i)}
+                <span style={{ display: "flex", flexDirection: "column" }}>
+                  {/* TOP ROW: INPUT (aligned with price) */}
+                  <div
                     style={{
-                      ...styles.blockBtn,
-                      background: r.active ? "#c9a44d" : "#2e7d32",
+                      height: 44,
+                      display: "flex",
+                      alignItems: "center",
                     }}
                   >
-                    {r.active ? "Block" : "Unblock"}
-                  </button>
-                )}
-              </span>
-            </div>
-          ))}
+                    <input
+                      type="number"
+                      value={r.totalRooms}
+                      disabled={isLocked}
+                      onChange={(e) =>
+                        updateRow(i, "totalRooms", e.target.value)
+                      }
+                      style={{
+                        height: 36,
+                        width: 80,
+                        cursor: isLocked ? "not-allowed" : "text",
+                        background: isLocked ? "#f3f4f6" : "#fff",
+                        border: "1px solid #d1d5db",
+                        borderRadius: 6,
+                        padding: "0 10px",
+                        textAlign: "center",
+                      }}
+                    />
+                  </div>
+
+                  {/* BOTTOM ROW: DETAILS */}
+                  <div
+                    style={{
+                      marginTop: 6,
+                      fontSize: 12,
+                      color: "#374151",
+                      lineHeight: "18px",
+                    }}
+                  >
+                    <div>
+                      <strong>Capacity:</strong> {r.totalRooms}
+                    </div>
+                    <div>
+                      <strong>Booked:</strong> {booked}
+                    </div>
+                    <div>
+                      <strong>Available:</strong> {r.availableRooms}
+                    </div>
+                  </div>
+                </span>
+
+                <span
+                  style={{
+                    height: 44,
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <input
+                    type="number"
+                    value={r.pricePerNight}
+                    onChange={(e) =>
+                      updateRow(i, "pricePerNight", e.target.value)
+                    }
+                    style={{
+                      height: 36,
+                      width: 110,
+                      borderRadius: 6,
+                      border: "1px solid #d1d5db",
+                      padding: "0 10px",
+                    }}
+                  />
+                </span>
+
+                <span
+                  style={{
+                    ...styles.statusBadge,
+                    background: r.published ? "#e8f5e9" : "#ffd693ff",
+                    color: r.published ? "#2e7d32" : "#ef6c00",
+                  }}
+                >
+                  {r.published ? "PUBLISHED" : "DRAFT"}
+                </span>
+
+                <span>
+                  {!r.published && (
+                    <button
+                      onClick={() => publishRow(i)}
+                      style={styles.publishBtn}
+                    >
+                      {r.isSaving ? "Publishing…" : "Publish"}
+                    </button>
+                  )}
+
+                  {r.published && r.isDirty && (
+                    <button onClick={() => saveRow(i)} style={styles.updateBtn}>
+                      {r.isSaving ? "Saving…" : "Update"}
+                    </button>
+                  )}
+
+                  {r.published && (
+                    <button
+                      onClick={() => toggleStatus(i)}
+                      style={{
+                        ...styles.blockBtn,
+                        background: r.active ? "#c9a44d" : "#2e7d32",
+                      }}
+                    >
+                      {r.active ? "Block" : "Unblock"}
+                    </button>
+                  )}
+                </span>
+              </div>
+            );
+          })}
         </div>
       )}
     </div>
