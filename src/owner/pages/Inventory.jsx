@@ -116,12 +116,8 @@ const Inventory = () => {
       }),
     });
 
-    row.published = true;
-    row.active = true;
-    row.isDirty = false;
-    row.isSaving = false;
-
-    setRows([...rows]);
+    // 🔥 KEY FIX: Reload from backend
+    await loadInventory();
   }
 
   /* ===============================
@@ -203,8 +199,14 @@ const Inventory = () => {
           </div>
 
           {rows.map((r, i) => {
-            const booked = r.totalRooms - r.availableRooms;
+            const booked = r.published
+              ? Math.max(0, r.totalRooms - r.availableRooms)
+              : 0;
+
+            const available = r.published ? r.availableRooms : r.totalRooms;
+
             const isLocked = r.published && booked > 0;
+
             return (
               <div
                 key={r.date}
@@ -220,7 +222,7 @@ const Inventory = () => {
                 <span>{r.date}</span>
 
                 <span style={{ display: "flex", flexDirection: "column" }}>
-                  {/* TOP ROW: INPUT (aligned with price) */}
+                  {/* INPUT ROW */}
                   <div
                     style={{
                       height: 44,
@@ -243,20 +245,12 @@ const Inventory = () => {
                         border: "1px solid #d1d5db",
                         borderRadius: 6,
                         padding: "0 10px",
-                        textAlign: "center",
                       }}
                     />
                   </div>
 
-                  {/* BOTTOM ROW: DETAILS */}
-                  <div
-                    style={{
-                      marginTop: 6,
-                      fontSize: 12,
-                      color: "#374151",
-                      lineHeight: "18px",
-                    }}
-                  >
+                  {/* DETAILS ROW (always same layout) */}
+                  <div style={{ fontSize: 12, color: "#555", marginTop: 6 }}>
                     <div>
                       <strong>Capacity:</strong> {r.totalRooms}
                     </div>
@@ -264,7 +258,7 @@ const Inventory = () => {
                       <strong>Booked:</strong> {booked}
                     </div>
                     <div>
-                      <strong>Available:</strong> {r.availableRooms}
+                      <strong>Available:</strong> {available}
                     </div>
                   </div>
                 </span>
