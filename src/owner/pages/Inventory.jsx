@@ -21,10 +21,8 @@ const Inventory = () => {
       .then(setRoomTypes);
   }, [hotelId]);
 
-  const selectedRoomType = roomTypes.find((r) => r.id === roomTypeId);
-
   /* ===============================
-     LOAD INVENTORY (PREVIEW + REAL)
+     LOAD INVENTORY
      =============================== */
   async function loadInventory() {
     if (!roomTypeId || !startDate || !endDate) return;
@@ -39,7 +37,7 @@ const Inventory = () => {
     setRows(
       data.map((d) => ({
         ...d,
-        published: d.published ?? false, // 🔑 KEY FLAG
+        published: d.published ?? false,
         isDirty: false,
         isSaving: false,
       })),
@@ -49,7 +47,7 @@ const Inventory = () => {
   }
 
   /* ===============================
-     UPDATE ROW (DRAFT ONLY)
+     UPDATE ROW (LOCAL ONLY)
      =============================== */
   function updateRow(index, field, value) {
     setRows((prev) => {
@@ -71,12 +69,15 @@ const Inventory = () => {
   }
 
   /* ===============================
-     UPDATE EXISTING PUBLISHED ROW
+     UPDATE PUBLISHED ROW
      =============================== */
   async function saveRow(index) {
     const row = rows[index];
     row.isSaving = true;
     setRows([...rows]);
+
+    const booked = Math.max(0, row.totalRooms - row.availableRooms);
+    const availableRooms = Math.max(0, row.totalRooms - booked);
 
     await fetch(`${BASE_URL}/api/admin/inventory/date`, {
       method: "PUT",
@@ -86,17 +87,16 @@ const Inventory = () => {
         roomTypeId,
         date: row.date,
         totalRooms: row.totalRooms,
+        availableRooms,
         pricePerNight: row.pricePerNight,
       }),
     });
 
-    row.isDirty = false;
-    row.isSaving = false;
-    setRows([...rows]);
+    await loadInventory();
   }
 
   /* ===============================
-     PUBLISH INVENTORY (FIRST TIME SAVE)
+     PUBLISH INVENTORY
      =============================== */
   async function publishRow(index) {
     const row = rows[index];
@@ -116,12 +116,11 @@ const Inventory = () => {
       }),
     });
 
-    // 🔥 KEY FIX: Reload from backend
     await loadInventory();
   }
 
   /* ===============================
-     BLOCK / UNBLOCK (PUBLISHED ONLY)
+     BLOCK / UNBLOCK
      =============================== */
   async function toggleStatus(index) {
     const row = rows[index];
@@ -137,8 +136,7 @@ const Inventory = () => {
       }),
     });
 
-    row.active = !row.active;
-    setRows([...rows]);
+    await loadInventory();
   }
 
   return (
@@ -167,21 +165,14 @@ const Inventory = () => {
           type="date"
           value={startDate}
           onChange={(e) => setStartDate(e.target.value)}
-          style={styles.input}
         />
-
         <input
           type="date"
           value={endDate}
           onChange={(e) => setEndDate(e.target.value)}
-          style={styles.input}
         />
 
-        <button
-          onClick={loadInventory}
-          disabled={!roomTypeId || !startDate || !endDate}
-          style={styles.loadBtn}
-        >
+        <button onClick={loadInventory} style={styles.loadBtn}>
           Load Inventory
         </button>
       </div>
@@ -205,125 +196,127 @@ const Inventory = () => {
 
             const available = r.published ? r.availableRooms : r.totalRooms;
 
-            const isLocked = r.published && booked > 0;
-
             return (
               <div
                 key={r.date}
                 style={{
                   ...styles.row,
-                  background: !r.published
-                    ? "#fff8e1" // draft
-                    : r.isDirty
-                      ? "#e3f2fd" // edited
-                      : "#fff",
+                  background: !r.published ? "#FFF7E6" : "#EAF4FF",
                 }}
               >
                 <span>{r.date}</span>
 
-                <span style={{ display: "flex", flexDirection: "column" }}>
-                  {/* INPUT ROW */}
-                  <div
-                    style={{
-                      height: 44,
-                      display: "flex",
-                      alignItems: "center",
-                    }}
-                  >
-                    <input
-                      type="number"
-                      value={r.totalRooms}
-                      disabled={isLocked}
-                      onChange={(e) =>
-                        updateRow(i, "totalRooms", e.target.value)
-                      }
-                      style={{
-                        height: 36,
-                        width: 80,
-                        cursor: isLocked ? "not-allowed" : "text",
-                        background: isLocked ? "#f3f4f6" : "#fff",
-                        border: "1px solid #d1d5db",
-                        borderRadius: 6,
-                        padding: "0 10px",
-                      }}
-                    />
-                  </div>
-
-                  {/* DETAILS ROW (always same layout) */}
-                  <div style={{ fontSize: 12, color: "#555", marginTop: 6 }}>
+                {/* ROOMS */}
+                <span>
+                  <input
+                    type="number"
+                    value={r.totalRooms}
+                    onChange={(e) => updateRow(i, "totalRooms", e.target.value)}
+                    style={styles.roomInput}
+                  />
+                  <div style={styles.capacityInfo}>
                     <div>
-                      <strong>Capacity:</strong> {r.totalRooms}
+                      <b>Capacity:</b> {r.totalRooms}
                     </div>
                     <div>
-                      <strong>Booked:</strong> {booked}
+                      <b>Booked:</b> {booked}
                     </div>
                     <div>
-                      <strong>Available:</strong> {available}
+                      <b>Available:</b> {available}
                     </div>
                   </div>
                 </span>
 
-                <span
-                  style={{
-                    height: 44,
-                    display: "flex",
-                    alignItems: "center",
-                  }}
-                >
+                {/* PRICE */}
+                <span>
                   <input
                     type="number"
                     value={r.pricePerNight}
                     onChange={(e) =>
                       updateRow(i, "pricePerNight", e.target.value)
                     }
-                    style={{
-                      height: 36,
-                      width: 110,
-                      borderRadius: 6,
-                      border: "1px solid #d1d5db",
-                      padding: "0 10px",
-                    }}
+                    style={styles.priceInput}
                   />
                 </span>
 
-                <span
-                  style={{
-                    ...styles.statusBadge,
-                    background: r.published ? "#e8f5e9" : "#ffd693ff",
-                    color: r.published ? "#2e7d32" : "#ef6c00",
-                  }}
-                >
-                  {r.published ? "PUBLISHED" : "DRAFT"}
+                {/* STATUS */}
+                <span style={{ display: "flex", alignItems: "center" }}>
+                  <span
+                    style={{
+                      minWidth: 130,
+                      textAlign: "center",
+                      padding: "8px 14px",
+                      borderRadius: 20,
+                      fontWeight: 600,
+                      background: r.published ? "#E8F5E9" : "#FFE0B2",
+                      color: r.published ? "#2E7D32" : "#EF6C00",
+                    }}
+                  >
+                    {r.published ? "PUBLISHED" : "DRAFT"}
+                  </span>
                 </span>
 
-                <span>
+                {/* ACTIONS */}
+                <div
+                  style={{
+                    display: "flex",
+                    gap: 10,
+                    justifyContent: "flex-start",
+                    alignItems: "center",
+                  }}
+                >
                   {!r.published && (
                     <button
                       onClick={() => publishRow(i)}
-                      style={styles.publishBtn}
-                    >
-                      {r.isSaving ? "Publishing…" : "Publish"}
-                    </button>
-                  )}
-
-                  {r.published && r.isDirty && (
-                    <button onClick={() => saveRow(i)} style={styles.updateBtn}>
-                      {r.isSaving ? "Saving…" : "Update"}
-                    </button>
-                  )}
-
-                  {r.published && (
-                    <button
-                      onClick={() => toggleStatus(i)}
                       style={{
-                        ...styles.blockBtn,
-                        background: r.active ? "#c9a44d" : "#2e7d32",
+                        padding: "6px 16px",
+                        borderRadius: 6,
+                        border: "none",
+                        fontSize: 13,
+                        fontWeight: 600,
+                        cursor: "pointer",
+                        background: "#ef6c00", // orange = publish
+                        color: "#fff",
                       }}
                     >
-                      {r.active ? "Block" : "Unblock"}
+                      Publish
                     </button>
                   )}
-                </span>
+
+                  <span style={{ display: "flex", gap: 8 }}>
+                    {r.published && r.isDirty && (
+                      <button
+                        onClick={() => saveRow(i)}
+                        style={{
+                          padding: "6px 14px",
+                          borderRadius: 6,
+                          border: "none",
+                          background: "#2e7d32",
+                          color: "#fff",
+                          cursor: "pointer",
+                        }}
+                      >
+                        Update
+                      </button>
+                    )}
+
+                    {r.published && (
+                      <button
+                        onClick={() => toggleStatus(i)}
+                        style={{
+                          padding: "6px 14px",
+                          borderRadius: 6,
+                          border: "none",
+                          background: r.active ? "#c9a44d" : "#2e7d32",
+                          color: "#fff",
+                          cursor: "pointer",
+                        }}
+                      >
+                        {r.active ? "Block" : "Unblock"}
+                      </button>
+                    )}
+                  </span>
+                </div>
               </div>
             );
           })}
@@ -334,10 +327,6 @@ const Inventory = () => {
 };
 
 export { Inventory };
-
-/* ===============================
-   STYLES
-   =============================== */
 const styles = {
   container: {
     padding: 28,
@@ -345,114 +334,41 @@ const styles = {
     minHeight: "100vh",
     fontFamily: "Inter, system-ui, sans-serif",
   },
-
-  pageTitle: {
-    fontSize: 26,
-    fontWeight: 600,
-    color: "#1f2937",
-    marginBottom: 4,
-  },
-
-  pageSubTitle: {
-    fontSize: 14,
-    color: "#6b7280",
-    marginBottom: 22,
-  },
-
-  filterBar: {
-    display: "flex",
-    gap: 12,
-    flexWrap: "wrap",
-    marginBottom: 24,
-    alignItems: "center",
-  },
-
-  select: {
-    padding: "10px 12px",
-    borderRadius: 6,
-    border: "1px solid #d1d5db",
-    minWidth: 200,
-  },
-
-  input: {
-    padding: "10px 12px",
-    borderRadius: 6,
-    border: "1px solid #d1d5db",
-  },
-
+  pageTitle: { fontSize: 26, fontWeight: 600 },
+  pageSubTitle: { fontSize: 14, marginBottom: 20 },
+  filterBar: { display: "flex", gap: 12, marginBottom: 20 },
+  select: { padding: 10, borderRadius: 6 },
   loadBtn: {
-    background: "linear-gradient(135deg,#b58b42,#9a7838)",
+    background: "#9A7838",
     color: "#fff",
     padding: "10px 22px",
     borderRadius: 6,
     border: "none",
-    cursor: "pointer",
-    fontWeight: 600,
   },
-
-  table: {
-    borderRadius: 12,
-    overflow: "hidden",
-    boxShadow: "0 10px 28px rgba(0,0,0,0.08)",
-    background: "#fff",
-  },
-
+  table: { borderRadius: 12, background: "#fff" },
   headerRow: {
     display: "grid",
     gridTemplateColumns: "1.2fr 1fr 1fr 1fr 1.4fr",
-    padding: "14px 16px",
+    padding: 14,
     fontWeight: 600,
-    background: "#f9fafb",
-    borderBottom: "1px solid #e5e7eb",
-    position: "sticky",
-    top: 0,
-    zIndex: 1,
   },
-
   row: {
     display: "grid",
     gridTemplateColumns: "1.2fr 1fr 1fr 1fr 1.4fr",
-    padding: "14px 16px",
+    padding: 16,
     alignItems: "center",
-    borderBottom: "1px solid #f0f0f0",
-    fontSize: 14,
   },
-
+  roomInput: { width: 90, height: 36, borderRadius: 8 },
+  priceInput: { width: 120, height: 36, borderRadius: 8 },
+  capacityInfo: { fontSize: 12, marginTop: 6 },
   statusBadge: {
-    padding: "10px",
-    borderRadius: 20,
-    fontSize: 12,
-    fontWeight: 600,
-    display: "inline-block",
+    padding: "6px 16px",
+    borderRadius: 999,
+    fontWeight: 700,
     textAlign: "center",
-    maxWidth: 120,
   },
-
-  publishBtn: {
-    background: "#ef6c00",
-    color: "#fff",
-    border: "none",
-    padding: "6px 14px",
-    borderRadius: 6,
-    cursor: "pointer",
-    marginRight: 6,
-  },
-
-  updateBtn: {
-    background: "#2e7d32",
-    color: "#fff",
-    border: "none",
-    padding: "6px 14px",
-    borderRadius: 6,
-    cursor: "pointer",
-    marginRight: 6,
-  },
-
-  blockBtn: {
-    color: "#fff",
-    border: "none",
-    padding: "6px 14px",
-    borderRadius: 6,
-    cursor: "pointer",
-  },
+  actions: { display: "flex", gap: 10 },
+  publishBtn: { background: "#EF6C00", color: "#fff", borderRadius: 8 },
+  updateBtn: { background: "#2E7D32", color: "#fff", borderRadius: 8 },
+  blockBtn: { color: "#fff", borderRadius: 8 },
 };
