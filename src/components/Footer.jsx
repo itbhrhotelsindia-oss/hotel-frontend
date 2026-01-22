@@ -16,7 +16,6 @@ import WhyBookDirect from "./WhyBookDirect";
 import AboutUs from "./AboutUs";
 import Careers from "./Careers";
 import ManageBooking from "./ManageBooking";
-import { useNavigate } from "react-router-dom";
 
 export default function Footer({ contactInfo = {} }) {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
@@ -36,7 +35,6 @@ export default function Footer({ contactInfo = {} }) {
       window.open(socialLinks[platform], "_blank");
     }
   };
-  const navigate = useNavigate();
   const [selectedCity, setSelectedCity] = useState("");
   const [cityHotels, setCityHotels] = useState([]);
   const [cityModalOpen, setCityModalOpen] = useState(false);
@@ -184,9 +182,6 @@ export default function Footer({ contactInfo = {} }) {
         <span onClick={() => openDialog("booking")}>Manage Booking</span>
         <span onClick={() => openDialog("contact")}>Contact Us</span>
 
-        <button className="admin-btn" onClick={() => navigate("/owner/login")}>
-          ADMIN
-        </button>
         <span
           className="footer-link"
           onClick={() => navigate("/terms-and-conditions")}
@@ -207,6 +202,9 @@ export default function Footer({ contactInfo = {} }) {
         >
           Refund and Cancellation
         </span>
+        <button className="admin-btn" onClick={() => navigate("/owner/login")}>
+          ADMIN
+        </button>
       </div>
 
       {/* --- COOKIE BAR --- */}
