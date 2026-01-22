@@ -60,10 +60,10 @@ export default function HeaderBar({
     cities.length > 30
       ? "cols-4"
       : cities.length > 20
-      ? "cols-3"
-      : cities.length > 10
-      ? "cols-2"
-      : "cols-1";
+        ? "cols-3"
+        : cities.length > 10
+          ? "cols-2"
+          : "cols-1";
 
   return (
     <div
@@ -151,12 +151,12 @@ export default function HeaderBar({
               Weddings
             </button>
 
-            <button
+            {/* <button
               className="nav-link"
               onClick={() => navigate("/events", { state: { contactInfo } })}
             >
               Plan Your Events
-            </button>
+            </button> */}
 
             <button
               className="nav-link"
@@ -223,7 +223,7 @@ export default function HeaderBar({
           setShowBooking,
           cities,
           setSelectedHotels,
-          selectedHotels
+          selectedHotels,
         )}
 
       {/* CITY HOTELS POPUP */}
