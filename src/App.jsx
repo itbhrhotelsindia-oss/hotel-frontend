@@ -19,7 +19,10 @@ import GuestDetails from "./pages/booking/GuestDetails";
 import BookingConfirmation from "./pages/booking/BookingConfirmation";
 import PaymentSuccess from "./pages/booking/PaymentSuccess";
 import PaymentFailure from "./pages/booking/PaymentFailure";
-
+import LegalPage from "./legal/LegalPage";
+import TermsAndConditions from "./legal/TermsAndConditions";
+import PrivacyPolicy from "./legal/PrivacyPolicy";
+import RefundPolicy from "./legal/RefundPolicy";
 // ... other pages
 
 // ✅ Owner pages (NEW)
@@ -65,6 +68,15 @@ export default function App() {
 
         {/* ================= FALLBACK ================= */}
         <Route path="*" element={<h2>Page Not Found</h2>} />
+
+        {/* ================= LEGAL ROUTES (MANDATORY) ================= */}
+        <Route path="/legal" element={<LegalPage />} />
+        <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route
+          path="/refund-and-cancellation-policy"
+          element={<RefundPolicy />}
+        />
 
         {/* ... */}
       </Routes>

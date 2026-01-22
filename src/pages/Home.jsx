@@ -60,7 +60,7 @@ const FALLBACK = {
   aboutSection: {
     title: "ABOUT US",
     description:
-      "Since 2016, we've been helping travelers find stays they love...",
+      "Since 2010, we've been helping travelers find stays they love — effortlessly. We're about curating unforgettable journeys! Our passionate team blends seamless technology with a love for discovery",
     buttonText: "Know More →",
     buttonLink: "/about",
     stats: [
@@ -71,30 +71,34 @@ const FALLBACK = {
   },
   brandBanner: {
     title: "Elegance Crafted With Indian Soul",
-    subtitle: "A seamless blend of heritage, culture, and world-class comfort.",
+    subtitle:
+      "From sacred pilgrimages and spiritual retreats to wildlife adventures, tranquil lakes and Himalayan vistas, discover experiences paired with immaculate spaces, refined comfort, and attentive hospitality for a truly elevated stay",
     contacts: [
       {
         type: "phone",
-        value: "18002091400",
-        displayValue: "1800 209 1400",
+        value: "+91 9211283334",
+        displayValue: "+91 9211283334",
       },
       {
         type: "email",
-        value: "centralreservations@hrchotel.com",
-        displayValue: "centralreservations@hrchotel.com",
+        value: "info@bhrhotelsindia.com",
+        displayValue: "info@bhrhotelsindia.com",
       },
     ],
   },
   contactSection: {
-    reservationPhone: "180400",
-    hotelPhone: "+91 9876543210",
-    email: "centralions@hrchotel.com",
+    reservationPhone: "+91 9211283334",
+    hotelPhone: "+91 9211283334",
+    email: "info@bhrhotelsindia.com",
     corporateAddress: "Corporate Office, Mumbai",
     supportHours: "24x7",
     socialLinks: [
-      { name: "facebook", url: "https://facebook.com/hrchotel" },
-      { name: "twitter", url: "https://twitter.com/hrchotel" },
-      { name: "instagram", url: "https://instagram.com/hrchotel" },
+      { name: "facebook", url: "https://www.facebook.com/bhrhotelsindia" },
+      { name: "twitter", url: "https://x.com/bhrhotelsindia" },
+      {
+        name: "instagram",
+        url: "https://www.instagram.com/bhrhotelsindiaofficial",
+      },
     ],
   },
 };
@@ -189,14 +193,14 @@ export default function Home() {
         setTransitionMs(0);
         setIndex(1);
         requestAnimationFrame(() =>
-          requestAnimationFrame(() => setTransitionMs(400))
+          requestAnimationFrame(() => setTransitionMs(400)),
         );
       }
       if (index === 0) {
         setTransitionMs(0);
         setIndex(total - 2);
         requestAnimationFrame(() =>
-          requestAnimationFrame(() => setTransitionMs(400))
+          requestAnimationFrame(() => setTransitionMs(400)),
         );
       }
     }

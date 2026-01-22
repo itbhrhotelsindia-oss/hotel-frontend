@@ -68,11 +68,11 @@ export default function BanquetSlider() {
       {/* DESCRIPTION */}
       <div className="banquet-description">
         <p>
-          Banquet halls at BHR Hotels Group - One of the top hotel chains in
-          India, are elegantly designed spacious venues for all your event
-          requirements. Guests get customized packages, suited for every budget
-          coupled with well-appointed rooms, varied dining options, numerous
-          recreational facilities, and seamless service.
+          Banquet halls at BHR Hotels India LLP Group - One of the top hotel
+          chains in India, are elegantly designed spacious venues for all your
+          event requirements. Guests get customized packages, suited for every
+          budget coupled with well-appointed rooms, varied dining options,
+          numerous recreational facilities, and seamless service.
         </p>
 
         <p>

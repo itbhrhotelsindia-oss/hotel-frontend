@@ -16,11 +16,14 @@ import WhyBookDirect from "./WhyBookDirect";
 import AboutUs from "./AboutUs";
 import Careers from "./Careers";
 import ManageBooking from "./ManageBooking";
+import { useNavigate } from "react-router-dom";
 
 export default function Footer({ contactInfo = {} }) {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
   const [cities, setCities] = useState([]);
   const [citiesLoading, setCitiesLoading] = useState(true);
+  const navigate = useNavigate();
+
   const handleSocialClick = (platform) => {
     const socialLinks = {
       facebook: contactInfo.socialLinks.facebook,
@@ -83,7 +86,13 @@ export default function Footer({ contactInfo = {} }) {
           <div className="footer-address">
             <h4>{contactInfo.companyName}</h4>
             <p>{contactInfo.corporateAddress}</p>
-            <p>EMAIL: {contactInfo.email}</p>
+            <p>
+              <strong>{contactInfo.email}</strong>
+            </p>
+
+            <p>
+              <strong>{contactInfo.reservationPhone}</strong>
+            </p>
           </div>
         </div>
 
@@ -171,13 +180,33 @@ export default function Footer({ contactInfo = {} }) {
         <span onClick={() => openDialog("about")}>About Us</span>
         <span onClick={() => openDialog("careers")}>Careers</span>
         <span onClick={() => openDialog("whyBook")}>Why Book Direct</span>
-        <span onClick={() => openDialog("terms")}>Terms & Conditions</span>
+        {/* <span onClick={() => openDialog("terms")}>Terms & Conditions</span> */}
         <span onClick={() => openDialog("booking")}>Manage Booking</span>
         <span onClick={() => openDialog("contact")}>Contact Us</span>
 
         <button className="admin-btn" onClick={() => navigate("/owner/login")}>
           ADMIN
         </button>
+        <span
+          className="footer-link"
+          onClick={() => navigate("/terms-and-conditions")}
+        >
+          Terms and Conditions
+        </span>
+
+        <span
+          className="footer-link"
+          onClick={() => navigate("/privacy-policy")}
+        >
+          Privacy Policy
+        </span>
+
+        <span
+          className="footer-link"
+          onClick={() => navigate("/refund-and-cancellation-policy")}
+        >
+          Refund and Cancellation
+        </span>
       </div>
 
       {/* --- COOKIE BAR --- */}
@@ -210,7 +239,7 @@ function InfoDialog({ type, onClose, contactInfo }) {
         {type === "about" && <AboutUs onClose={onClose} />}
         {type === "careers" && <Careers onClose={onClose} />}
         {type === "whyBook" && <WhyBookDirect onClose={onClose} />}
-        {type === "terms" && <TermsAndConditions onClose={onClose} />}
+        {/* {type === "terms" && <TermsAndConditions onClose={onClose} />} */}
         {type === "booking" && <ManageBooking onClose={onClose} />}
         {type === "contact" && <ContactUs onClose={onClose} />}
       </div>

@@ -48,7 +48,7 @@ export default function BookingSearchBox() {
     }
 
     const matchedCity = locations.find(
-      (c) => c.name.toLowerCase() === selectedLocation.toLowerCase()
+      (c) => c.name.toLowerCase() === selectedLocation.toLowerCase(),
     );
 
     setHotels(matchedCity ? matchedCity.hotels : []);

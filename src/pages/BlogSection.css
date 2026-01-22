@@ -92,30 +92,30 @@
   object-fit: cover;
   position: absolute;
   top: 60px;
-  left: 40px;
+  left: 20px;
 }
 
 /* RIGHT ROUND IMAGE */
 .locals-img-right img {
-  width: 450px;
-  height: 450px;
+  width: 380px;
+  height: 380px;
   margin-right: 50px;
-  border-radius: 50% 0 50% 50%;
+  border-radius: 50% 0% 50% 50%;
   object-fit: cover;
   position: absolute;
-  bottom: 60px;
-  right: 40px;
+  bottom: 80px;
+  right: 20px;
 }
 
 /* CENTER TEXT */
 .locals-content {
-  max-width: 600px;
+  max-width: 420px;
   text-align: left;
   margin: auto;
 }
 
 .locals-content h2 {
-  font-size: 26px;
+  font-size: 22px;
   line-height: 1.5;
   color: #222;
   font-weight: 500;
@@ -222,7 +222,9 @@
 }
 
 .adv-card {
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
 .adv-card:hover {
