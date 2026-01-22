@@ -37,6 +37,11 @@ const Inventory = () => {
     setRows(
       data.map((d) => ({
         ...d,
+
+        // ✅ store original values
+        originalTotalRooms: d.totalRooms,
+        originalAvailableRooms: d.availableRooms,
+
         published: d.published ?? false,
         isDirty: false,
         isSaving: false,
@@ -76,7 +81,10 @@ const Inventory = () => {
     row.isSaving = true;
     setRows([...rows]);
 
-    const booked = Math.max(0, row.totalRooms - row.availableRooms);
+    // ✅ booked must NEVER change
+    const booked = row.originalTotalRooms - row.originalAvailableRooms;
+
+    // ✅ available = new total - old booked
     const availableRooms = Math.max(0, row.totalRooms - booked);
 
     await fetch(`${BASE_URL}/api/admin/inventory/date`, {
@@ -191,10 +199,12 @@ const Inventory = () => {
 
           {rows.map((r, i) => {
             const booked = r.published
-              ? Math.max(0, r.totalRooms - r.availableRooms)
+              ? Math.max(0, r.originalTotalRooms - r.originalAvailableRooms)
               : 0;
 
-            const available = r.published ? r.availableRooms : r.totalRooms;
+            const available = r.published
+              ? Math.max(0, r.totalRooms - booked)
+              : r.totalRooms;
 
             return (
               <div
@@ -206,7 +216,6 @@ const Inventory = () => {
               >
                 <span>{r.date}</span>
 
-                {/* ROOMS */}
                 <span>
                   <input
                     type="number"
@@ -227,7 +236,6 @@ const Inventory = () => {
                   </div>
                 </span>
 
-                {/* PRICE */}
                 <span>
                   <input
                     type="number"
@@ -239,7 +247,6 @@ const Inventory = () => {
                   />
                 </span>
 
-                {/* STATUS */}
                 <span style={{ display: "flex", alignItems: "center" }}>
                   <span
                     style={{
@@ -256,15 +263,7 @@ const Inventory = () => {
                   </span>
                 </span>
 
-                {/* ACTIONS */}
-                <div
-                  style={{
-                    display: "flex",
-                    gap: 10,
-                    justifyContent: "flex-start",
-                    alignItems: "center",
-                  }}
-                >
+                <div style={{ display: "flex", gap: 10 }}>
                   {!r.published && (
                     <button
                       onClick={() => publishRow(i)}
@@ -272,50 +271,44 @@ const Inventory = () => {
                         padding: "6px 16px",
                         borderRadius: 6,
                         border: "none",
-                        fontSize: 13,
-                        fontWeight: 600,
-                        cursor: "pointer",
-                        background: "#ef6c00", // orange = publish
+                        background: "#ef6c00",
                         color: "#fff",
+                        fontWeight: 600,
                       }}
                     >
                       Publish
                     </button>
                   )}
 
-                  <span style={{ display: "flex", gap: 8 }}>
-                    {r.published && r.isDirty && (
-                      <button
-                        onClick={() => saveRow(i)}
-                        style={{
-                          padding: "6px 14px",
-                          borderRadius: 6,
-                          border: "none",
-                          background: "#2e7d32",
-                          color: "#fff",
-                          cursor: "pointer",
-                        }}
-                      >
-                        Update
-                      </button>
-                    )}
+                  {r.published && r.isDirty && (
+                    <button
+                      onClick={() => saveRow(i)}
+                      style={{
+                        padding: "6px 14px",
+                        borderRadius: 6,
+                        border: "none",
+                        background: "#2e7d32",
+                        color: "#fff",
+                      }}
+                    >
+                      Update
+                    </button>
+                  )}
 
-                    {r.published && (
-                      <button
-                        onClick={() => toggleStatus(i)}
-                        style={{
-                          padding: "6px 14px",
-                          borderRadius: 6,
-                          border: "none",
-                          background: r.active ? "#c9a44d" : "#2e7d32",
-                          color: "#fff",
-                          cursor: "pointer",
-                        }}
-                      >
-                        {r.active ? "Block" : "Unblock"}
-                      </button>
-                    )}
-                  </span>
+                  {r.published && (
+                    <button
+                      onClick={() => toggleStatus(i)}
+                      style={{
+                        padding: "6px 14px",
+                        borderRadius: 6,
+                        border: "none",
+                        background: r.active ? "#c9a44d" : "#2e7d32",
+                        color: "#fff",
+                      }}
+                    >
+                      {r.active ? "Block" : "Unblock"}
+                    </button>
+                  )}
                 </div>
               </div>
             );
@@ -327,6 +320,7 @@ const Inventory = () => {
 };
 
 export { Inventory };
+
 const styles = {
   container: {
     padding: 28,
