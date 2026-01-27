@@ -3,6 +3,7 @@ import HeaderBar from "../components/HeaderBar.jsx";
 import Footer from "../components/Footer.jsx";
 import { FaEnvelope, FaPhoneAlt } from "react-icons/fa";
 import BookingSearchBox from "./BookingSearchBox.jsx";
+import { Helmet } from "react-helmet-async";
 
 const FALLBACK = {
   heroImages: [
@@ -218,24 +219,40 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="page-home">
-      <HeaderBar
-        scrolled={scrolled}
-        dropdownOpen={dropdownOpen}
-        setDropdownOpen={setDropdownOpen}
-        contactInfo={home.contactSection}
-        setShowBooking={setShowBooking}
-      />
+    <>
+      <Helmet>
+        <title>
+          BHR Hotels India | Best Resorts in Uttarakhand | Destination Weddings
+          | Corporate Events | Conferences | Group Bookings
+        </title>
 
-      {sliderSection()}
-      {brandBanner()}
-      {/* {brandsSection()} */}
-      {ourBrands()}
-      {/* {eventsSection()} */}
-      {/* {aboutSection()} */}
+        <meta
+          name="description"
+          content="BHR Hotels India LLP offers luxury resorts and hotels across Uttarakhand and India. Destination weddings, corporate events, conferences, and group bookings."
+        />
 
-      <Footer contactInfo={home.contactSection} />
-    </div>
+        <link rel="canonical" href="https://www.bhrhotelsindia.com/" />
+      </Helmet>
+
+      <div className="page-home">
+        <HeaderBar
+          scrolled={scrolled}
+          dropdownOpen={dropdownOpen}
+          setDropdownOpen={setDropdownOpen}
+          contactInfo={home.contactSection}
+          setShowBooking={setShowBooking}
+        />
+
+        {sliderSection()}
+        {brandBanner()}
+        {/* {brandsSection()} */}
+        {ourBrands()}
+        {/* {eventsSection()} */}
+        {/* {aboutSection()} */}
+
+        <Footer contactInfo={home.contactSection} />
+      </div>
+    </>
   );
 
   function sliderSection() {
