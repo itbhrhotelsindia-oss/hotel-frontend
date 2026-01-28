@@ -16,7 +16,8 @@ const RoomTypes = () => {
   const [form, setForm] = useState({
     name: "",
     description: "",
-    maxGuests: "",
+    maxAdults: "",
+    maxChildren: "",
     basePrice: "",
   });
 
@@ -26,7 +27,7 @@ const RoomTypes = () => {
       setLoading(true);
       const res = await fetch(
         `${BASE_URL}/api/admin/room-types?hotelId=${hotelId}`,
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers: { Authorization: `Bearer ${token}` } },
       );
 
       if (!res.ok) throw new Error("Failed to load room types");
@@ -57,7 +58,8 @@ const RoomTypes = () => {
       hotelId,
       name: form.name,
       description: form.description,
-      maxGuests: Number(form.maxGuests),
+      maxAdults: Number(form.maxAdults),
+      maxChildren: Number(form.maxChildren),
       basePrice: Number(form.basePrice),
     };
 
@@ -77,7 +79,13 @@ const RoomTypes = () => {
 
     setShowForm(false);
     setEditing(null);
-    setForm({ name: "", description: "", maxGuests: "", basePrice: "" });
+    setForm({
+      name: "",
+      description: "",
+      maxAdults: "",
+      maxChildren: "",
+      basePrice: "",
+    });
     loadRoomTypes();
   };
 
@@ -113,7 +121,8 @@ const RoomTypes = () => {
             setForm({
               name: "",
               description: "",
-              maxGuests: "",
+              maxAdults: "",
+              maxChildren: "",
               basePrice: "",
             });
             setShowForm(true);
@@ -132,7 +141,10 @@ const RoomTypes = () => {
             {rt.description && <p style={styles.cardDesc}>{rt.description}</p>}
 
             <div style={styles.meta}>
-              <span>👥 Max Adults: {rt.maxGuests}</span>
+              <span>👨 Adults: {rt.maxAdults}</span>
+              <span>🧒 Children: {rt.maxChildren}</span>
+              <span>👥 Total: {rt.maxGuests}</span>
+
               <span>💰 ₹{rt.basePrice} / night</span>
             </div>
 
@@ -144,7 +156,8 @@ const RoomTypes = () => {
                   setForm({
                     name: rt.name,
                     description: rt.description || "",
-                    maxGuests: rt.maxGuests,
+                    maxAdults: rt.maxAdults,
+                    maxChildren: rt.maxChildren,
                     basePrice: rt.basePrice,
                   });
                   setShowForm(true);
@@ -190,10 +203,19 @@ const RoomTypes = () => {
 
             <input
               type="number"
-              placeholder="Max Guests"
-              value={form.maxGuests}
-              onChange={(e) => setForm({ ...form, maxGuests: e.target.value })}
+              placeholder="Max Adults"
+              value={form.maxAdults}
+              onChange={(e) => setForm({ ...form, maxAdults: e.target.value })}
               required
+            />
+
+            <input
+              type="number"
+              placeholder="Max Children"
+              value={form.maxChildren}
+              onChange={(e) =>
+                setForm({ ...form, maxChildren: e.target.value })
+              }
             />
 
             <input
