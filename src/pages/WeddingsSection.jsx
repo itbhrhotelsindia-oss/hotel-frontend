@@ -152,36 +152,13 @@ export default function WeddingsSection() {
       />
 
       <div style={{ height: "140px" }}></div>
-      <h1 className="section-heading">
-        <span
-          className="line"
-          style={{
-            display: "inline-block",
-            width: "100px",
-            height: "3px",
-            backgroundColor: "#cfa349",
-            marginRight: "10px",
-            marginBottom: "10px",
-          }}
-        />
-        {title}
-        <span
-          className="line"
-          style={{
-            display: "inline-block",
-            width: "100px",
-            height: "3px",
-            backgroundColor: "#cfa349",
-            marginLeft: "10px",
-            marginBottom: "10px",
-          }}
-        />
-      </h1>
+      <h1 className="section-heading">{title}</h1>
 
-      {videoSection()}
-      {detailSection()}
+      {/* {videoSection()} */}
+      {/* {detailSection()} */}
       {scrolledImage()}
       {weddingFestivities()}
+      {detailSection()}
       <EnquiryForm />
 
       {/* {bottomSection()} */}
@@ -193,7 +170,7 @@ export default function WeddingsSection() {
   function scrolledImage() {
     return (
       <div className="wedding-slider-wrapper">
-        <h2 className="ws-title">{typeOfWeddings.title}</h2>
+        {/* <h2 className="ws-title">{typeOfWeddings.title}</h2> */}
 
         <p className="ws-subtext">{typeOfWeddings.description}</p>
 

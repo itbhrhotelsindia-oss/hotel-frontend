@@ -247,7 +247,7 @@ export default function Home() {
         {brandBanner()}
         {/* {brandsSection()} */}
         {ourBrands()}
-        {/* {eventsSection()} */}
+        {eventsSection()}
         {/* {aboutSection()} */}
 
         <Footer contactInfo={home.contactSection} />
