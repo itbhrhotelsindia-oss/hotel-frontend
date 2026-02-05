@@ -85,8 +85,8 @@
 
 /* LEFT ROUND IMAGE */
 .locals-img-left img {
-  width: 380px;
-  height: 380px;
+  width: 350px;
+  height: 350px;
   margin-left: 50px;
   border-radius: 50% 50% 50% 0%;
   object-fit: cover;
@@ -222,7 +222,9 @@
 }
 
 .adv-card {
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
 .adv-card:hover {

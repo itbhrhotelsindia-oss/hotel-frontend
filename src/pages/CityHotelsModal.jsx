@@ -11,6 +11,17 @@ export default function CityHotelsModal({
 }) {
   const navigate = useNavigate();
   const BASE_URL = import.meta.env.VITE_BASE_URL;
+
+  const handleBookNow = (hotel) => {
+    navigate("/booking", {
+      state: {
+        citySelect: city,
+        hotelSelect: hotel.name,
+        hotelIdSelect: hotel.hotelId,
+      },
+    });
+  };
+
   if (!open) return null;
 
   return (
@@ -26,12 +37,13 @@ export default function CityHotelsModal({
           {hotels.map((hotel, i) => (
             <div key={i} className="hotel-card">
               <img
-                src={`${hotel.imageUrl}`}
+                src={hotel.imageUrl}
                 alt={hotel.name}
                 className="modal-image"
               />
+
               <h3>{hotel.name}</h3>
-              {/* <p>From {hotel.price} INR/Night</p> */}
+
               <div className="hotel-services">
                 {hotel.services.map((service, i) => (
                   <span key={i} className="service-badge">
@@ -44,6 +56,7 @@ export default function CityHotelsModal({
                   </span>
                 ))}
               </div>
+
               <div className="hotel-card-btns">
                 <button
                   className={`visit-btn ${
@@ -51,8 +64,7 @@ export default function CityHotelsModal({
                   }`}
                   disabled={!hotel.imageUrl}
                   onClick={() => {
-                    if (!hotel.imageUrl) return; // extra safety
-
+                    if (!hotel.imageUrl) return;
                     onClose();
                     navigate(`/hotel-details/${hotel.hotelId}`, {
                       state: { contactInfo },
@@ -61,7 +73,13 @@ export default function CityHotelsModal({
                 >
                   Visit Hotel
                 </button>
-                <button className="book-btn">Book Now</button>
+
+                <button
+                  className="book-btn"
+                  onClick={() => handleBookNow(hotel)}
+                >
+                  Book Now
+                </button>
               </div>
             </div>
           ))}

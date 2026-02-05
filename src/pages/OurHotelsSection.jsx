@@ -3,7 +3,7 @@ import HeaderBar from "../components/HeaderBar.jsx";
 import "./OurHotelsSection.css";
 import Footer from "../components/Footer.jsx";
 import { useLocation } from "react-router-dom";
-import { bookingDialog } from "../components/bookingDialog.jsx";
+import BookingDialog from "../components/BookingDialog";
 import { useNavigate } from "react-router-dom";
 import CityHotelsModal from "../pages/CityHotelsModal";
 
@@ -182,7 +182,7 @@ export default function OurHotelsSection() {
       {/* {eventsCategoriesSection()} */}
 
       {bookingOpen &&
-        bookingDialog(
+        BookingDialog(
           setBookingOpen,
           setShowBooking,
           cities,

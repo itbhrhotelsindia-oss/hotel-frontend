@@ -1,13 +1,28 @@
 import React, { useState, useEffect } from "react";
 import { FaTimes } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import "./BookingSearchBox.css";
 
 export default function BookingSearchBox() {
   const BASE_URL = import.meta.env.VITE_BASE_URL;
+  const navigate = useNavigate();
 
   const [locations, setLocations] = useState([]); // API cities list
   const [selectedLocation, setSelectedLocation] = useState("");
   const [hotels, setHotels] = useState([]);
+  const [selectedHotel, setSelectedHotel] = useState(null);
+
+  const handleBookNow = () => {
+    if (!selectedLocation || !selectedHotel) return;
+
+    navigate("/booking", {
+      state: {
+        citySelect: selectedLocation,
+        hotelSelect: selectedHotel.name,
+        hotelIdSelect: selectedHotel.hotelId,
+      },
+    });
+  };
 
   // Load locations from API
   useEffect(() => {
@@ -33,7 +48,7 @@ export default function BookingSearchBox() {
     }
 
     const matchedCity = locations.find(
-      (c) => c.name.toLowerCase() === selectedLocation.toLowerCase()
+      (c) => c.name.toLowerCase() === selectedLocation.toLowerCase(),
     );
 
     setHotels(matchedCity ? matchedCity.hotels : []);
@@ -65,28 +80,43 @@ export default function BookingSearchBox() {
           {/* Hotel Dropdown */}
           <div className="field-group">
             <label>Hotel</label>
-            <select className="input-select">
-              <option value="">Select Your BHR Hotels India LLP</option>
+            <select
+              className="input-select"
+              value={selectedHotel?.hotelId || ""}
+              onChange={(e) => {
+                const hotel = hotels.find((h) => h.hotelId === e.target.value);
+                setSelectedHotel(hotel || null);
+              }}
+              disabled={!hotels.length}
+            >
+              <option value="">
+                {hotels.length
+                  ? "Select Your BHR Hotel"
+                  : "Select location first"}
+              </option>
 
-              {hotels.length > 0 ? (
-                hotels.map((hotel, index) => (
-                  <option key={index} value={hotel.name}>
-                    {hotel.name}
-                  </option>
-                ))
-              ) : (
-                <option disabled>No hotels available</option>
-              )}
+              {hotels.map((hotel) => (
+                <option key={hotel.hotelId} value={hotel.hotelId}>
+                  {hotel.name}
+                </option>
+              ))}
             </select>
           </div>
 
           {/* Booking Section */}
           <div className="booking-actions">
             <div className="why-book">Why Book Direct?</div>
-            <button className="booking-btn">BOOK NOW</button>
-            <div className="price-text">
+            <button
+              className="booking-btn"
+              onClick={handleBookNow}
+              disabled={!selectedLocation || !selectedHotel}
+            >
+              BOOK NOW
+            </button>
+
+            {/* <div className="price-text">
               From <strong>6,435</strong> INR/Night
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
