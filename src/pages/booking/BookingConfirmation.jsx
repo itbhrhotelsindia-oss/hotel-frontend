@@ -5,10 +5,8 @@ import "./BookingConfirmation.css";
 function BookingConfirmation() {
   const navigate = useNavigate();
   const location = useLocation();
-
   const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-  // 1️⃣ Read booking from router OR localStorage (refresh-safe)
   const booking =
     location.state?.booking ||
     JSON.parse(localStorage.getItem("confirmedBooking"));
@@ -17,7 +15,6 @@ function BookingConfirmation() {
     location.state?.roomTypeName ||
     JSON.parse(localStorage.getItem("bookingAvailability"))?.roomTypeName;
 
-  // 2️⃣ Redirect if no booking found
   useEffect(() => {
     if (!booking) {
       navigate("/booking");
@@ -26,40 +23,72 @@ function BookingConfirmation() {
 
   if (!booking) return null;
 
-  const handleMockPaymentSuccess = async () => {
+  /* ===============================
+     ✅ RAZORPAY PAYMENT HANDLER
+     =============================== */
+  const handleRazorpayPayment = async () => {
     try {
-      await fetch(
-        `${BASE_URL}/api/dev/payments/mock/success?bookingId=${booking.bookingId}`,
-        { method: "POST" }
+      // ✅ 1️⃣ Create Razorpay order (QUERY PARAM ONLY)
+      const res = await fetch(
+        `${BASE_URL}/api/public/payments/razorpay/order`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            bookingId: booking.bookingId,
+          }),
+        },
       );
 
-      alert("✅ Payment Successful (Mock)");
-      navigate("/booking/success");
-    } catch (err) {
-      alert("❌ Mock payment failed");
-    }
-  };
+      if (!res.ok) {
+        const errText = await res.text();
+        console.error("Order API failed:", errText);
+        throw new Error("Order creation failed");
+      }
 
-  const handleMockPaymentFailure = async () => {
-    try {
-      await fetch(
-        `${BASE_URL}/api/dev/payments/mock/failure?bookingId=${booking.bookingId}`,
-        { method: "POST" }
-      );
+      const orderData = await res.json();
+      console.log("Order created:", orderData);
 
-      alert("❌ Payment Failed (Mock)");
-      navigate("/booking/failure");
+      // ✅ 2️⃣ Razorpay Checkout options
+      const options = {
+        key: orderData.keyId, // 🔐 FROM BACKEND
+        amount: orderData.amount, // paise
+        currency: orderData.currency,
+        name: "BHR Hotels India",
+        description: "Hotel Booking Payment",
+        order_id: orderData.orderId,
+
+        handler: function (response) {
+          console.log("Payment success:", response);
+          // Webhook will mark booking CONFIRMED
+          navigate("/");
+        },
+
+        prefill: {
+          name: booking.guestName || "Guest",
+          email: booking.guestEmail || "guest@bhrhotelsindia.com",
+          contact: booking.guestPhone || "9999999999",
+        },
+
+        theme: {
+          color: "#6b2d2d",
+        },
+      };
+
+      // ✅ 3️⃣ Open Razorpay popup
+      const razorpay = new window.Razorpay(options);
+      razorpay.open();
     } catch (err) {
-      alert("❌ Mock payment failed");
+      console.error(err);
+      alert("❌ Unable to initiate payment");
     }
   };
 
   return (
     <div className="confirmation-page">
-      {/* <h2 className="confirmation-title">Booking Confirmed</h2> */}
-
       <div className="confirmation-card">
-        {/* SUCCESS */}
         <div className="success-box">
           <h3>🎉 Booking Created Successfully</h3>
           <p>
@@ -69,7 +98,6 @@ function BookingConfirmation() {
           </p>
         </div>
 
-        {/* BOOKING DETAILS */}
         <div className="details-box">
           <h4>Booking Details</h4>
 
@@ -109,14 +137,10 @@ function BookingConfirmation() {
           </div>
         </div>
 
-        {/* CTA */}
+        {/* ✅ PAY BUTTON */}
         <div className="action-buttons">
-          <button className="pay-btn" onClick={handleMockPaymentSuccess}>
-            Mock Pay – Success
-          </button>
-
-          <button className="home-btn" onClick={handleMockPaymentFailure}>
-            Mock Pay – Failure
+          <button className="pay-btn" onClick={handleRazorpayPayment}>
+            Pay ₹{booking.totalAmount} with Razorpay
           </button>
         </div>
       </div>

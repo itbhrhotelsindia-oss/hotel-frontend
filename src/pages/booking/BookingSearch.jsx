@@ -68,7 +68,7 @@ function BookingSearch() {
     }
 
     const cityObj = cities.find(
-      (c) => c.name.toLowerCase() === place.toLowerCase()
+      (c) => c.name.toLowerCase() === place.toLowerCase(),
     );
 
     if (cityObj) {
@@ -88,7 +88,7 @@ function BookingSearch() {
 
       try {
         const res = await fetch(
-          `${BASE_URL}/api/admin/room-types?hotelId=${selectedHotelId}`
+          `${BASE_URL}/api/admin/room-types?hotelId=${selectedHotelId}`,
         );
 
         if (!res.ok) throw new Error("Failed to load room types");
@@ -108,14 +108,16 @@ function BookingSearch() {
   useEffect(() => {
     if (!selectedRoomType) return;
 
-    const maxGuests = selectedRoomType.maxGuests * numberOfRooms;
+    const maxAdults = selectedRoomType.maxAdults * numberOfRooms;
 
-    if (adults > maxGuests) {
-      setAdults(maxGuests);
+    const maxChildren = selectedRoomType.maxChildren * numberOfRooms;
+
+    if (adults > maxAdults) {
+      setAdults(maxAdults);
     }
 
-    if (adults + children > maxGuests) {
-      setChildren(Math.max(0, maxGuests - adults));
+    if (children > maxChildren) {
+      setChildren(maxChildren);
     }
   }, [numberOfRooms, selectedRoomType]);
 
@@ -291,67 +293,6 @@ function BookingSearch() {
           </div>
 
           <div className="form-row">
-            <div className="form-group small">
-              <label>Number of Rooms</label>
-              <input
-                type="number"
-                value={numberOfRooms}
-                onChange={(e) => {
-                  setNumberOfRooms(+e.target.value);
-                  resetAvailability();
-                }}
-              />
-            </div>
-
-            <div className="form-group small">
-              <label>Adults</label>
-              <input
-                type="number"
-                min="1"
-                max={
-                  selectedRoomType
-                    ? selectedRoomType.maxGuests * numberOfRooms
-                    : 1
-                }
-                value={adults}
-                onChange={(e) => {
-                  if (!selectedRoomType) return;
-
-                  const value = Number(e.target.value);
-                  const maxGuests = selectedRoomType.maxGuests * numberOfRooms;
-
-                  setAdults(Math.min(value, maxGuests));
-                  resetAvailability();
-                }}
-              />
-            </div>
-
-            <div className="form-group small">
-              <label>Children</label>
-              <input
-                type="number"
-                min="0"
-                max={
-                  selectedRoomType
-                    ? numberOfRooms * 2
-                    : // ? selectedRoomType.maxGuests * numberOfRooms - adults
-                      0
-                }
-                value={children}
-                onChange={(e) => {
-                  if (!selectedRoomType) return;
-
-                  const value = Number(e.target.value);
-                  // const maxGuests = selectedRoomType.maxGuests * numberOfRooms;
-                  const maxGuests = numberOfRooms * 2;
-
-                  setChildren(Math.min(value, maxGuests));
-                  resetAvailability();
-                }}
-              />
-            </div>
-          </div>
-          <div className="form-row">
             <div className="form-group">
               <label>Room Type</label>
               <select
@@ -359,7 +300,7 @@ function BookingSearch() {
                 onChange={(e) => {
                   const roomTypeId = e.target.value;
                   const roomTypeObj = roomTypes.find(
-                    (rt) => rt.id === roomTypeId
+                    (rt) => rt.id === roomTypeId,
                   );
 
                   setSelectedRoomTypeId(roomTypeId);
@@ -381,6 +322,70 @@ function BookingSearch() {
             </div>
           </div>
 
+          <div className="form-row">
+            <div className="form-group small">
+              <label>Adults</label>
+              <input
+                type="number"
+                min="1"
+                max={
+                  selectedRoomType
+                    ? selectedRoomType.maxAdults * numberOfRooms
+                    : 1
+                }
+                value={adults}
+                onChange={(e) => {
+                  if (!selectedRoomType) return;
+
+                  const value = Number(e.target.value);
+                  const maxAdults = selectedRoomType.maxAdults * numberOfRooms;
+
+                  setAdults(Math.min(value, maxAdults));
+
+                  resetAvailability();
+                }}
+              />
+            </div>
+
+            <div className="form-group small">
+              <label>Children</label>
+              <input
+                type="number"
+                min="0"
+                max={
+                  selectedRoomType
+                    ? selectedRoomType.maxChildren * numberOfRooms
+                    : 0
+                }
+                value={children}
+                onChange={(e) => {
+                  if (!selectedRoomType) return;
+
+                  const value = Number(e.target.value);
+                  // const maxGuests = selectedRoomType.maxGuests * numberOfRooms;
+                  const maxChildren =
+                    selectedRoomType.maxChildren * numberOfRooms;
+
+                  setChildren(Math.min(value, maxChildren));
+
+                  resetAvailability();
+                }}
+              />
+            </div>
+
+            <div className="form-group small">
+              <label>Number of Rooms</label>
+              <input
+                type="number"
+                value={numberOfRooms}
+                onChange={(e) => {
+                  setNumberOfRooms(+e.target.value);
+                  resetAvailability();
+                }}
+              />
+            </div>
+          </div>
+
           {selectedRoomType && (
             <div>
               <div className="price-preview">
@@ -388,8 +393,10 @@ function BookingSearch() {
               </div>
 
               <div className="price-preview">
-                <strong>Max Guests:</strong> {selectedRoomType.maxGuests} adults
-                and 2 children per room
+                <strong>Max Guests:</strong> {selectedRoomType.maxAdults} adults
+                {selectedRoomType.maxChildren > 0 &&
+                  ` and ${selectedRoomType.maxChildren} children`}{" "}
+                per room
               </div>
             </div>
           )}
