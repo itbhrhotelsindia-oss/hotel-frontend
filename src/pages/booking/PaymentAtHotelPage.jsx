@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
-export default function PaymentSuccess() {
+export default function PaymentAtHotelPage() {
   const navigate = useNavigate();
   const [seconds, setSeconds] = useState(30);
-
+  const { state } = useLocation();
+  const amount = state?.amount;
   useEffect(() => {
     const timer = setInterval(() => {
       setSeconds((prev) => prev - 1);
@@ -25,21 +27,21 @@ export default function PaymentSuccess() {
       <div style={styles.card}>
         <div style={styles.icon}>✔</div>
 
-        <h2 style={styles.title}>Payment Successful</h2>
-        <p style={styles.subtitle}>
-          Your booking has been confirmed. We look forward to hosting you.
-        </p>
+        <h2 style={styles.title}>Booking Confirmed</h2>
+        <p style={styles.subtitle}>Your stay has been successfully reserved.</p>
 
-        {/* 🏨 Booking Note */}
-        <div style={styles.infoBox}>
-          <p style={styles.infoText}>
-            A confirmation has been sent to your registered email address.
+        {/* 💰 Pay at Hotel Highlight */}
+        <div style={styles.payBox}>
+          <p style={styles.payLabel}>Pay at Hotel</p>
+          <p style={styles.amount}>₹{amount}</p>
+          <p style={styles.payNote}>
+            Please pay the above amount at the hotel reception during check-in.
           </p>
         </div>
 
         {/* 📞 Support */}
         <p style={styles.support}>
-          Need help? Contact us at{" "}
+          Need help? Reach us at{" "}
           <a href="mailto:info@bhrhotelsindia.com" style={styles.link}>
             info@bhrhotelsindia.com
           </a>{" "}
@@ -73,7 +75,7 @@ const styles = {
 
   card: {
     background: "#ffffff",
-    padding: "46px",
+    padding: "44px",
     borderRadius: "18px",
     width: "100%",
     maxWidth: "460px",
@@ -91,40 +93,55 @@ const styles = {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    margin: "0 auto 26px",
+    margin: "0 auto 24px",
   },
 
   title: {
     fontSize: "26px",
     fontWeight: "700",
-    marginBottom: "8px",
+    marginBottom: "6px",
     color: "#0f172a",
   },
 
   subtitle: {
     fontSize: "15px",
     color: "#64748b",
-    marginBottom: "22px",
-    lineHeight: "1.6",
-  },
-
-  infoBox: {
-    background: "#f0fdf4",
-    border: "1px solid #bbf7d0",
-    borderRadius: "14px",
-    padding: "16px",
     marginBottom: "24px",
   },
 
-  infoText: {
+  payBox: {
+    background: "#fefce8",
+    border: "1px solid #fde68a",
+    borderRadius: "14px",
+    padding: "20px",
+    marginBottom: "24px",
+  },
+
+  payLabel: {
+    fontSize: "13px",
+    textTransform: "uppercase",
+    letterSpacing: "1px",
+    color: "#92400e",
+    marginBottom: "6px",
+    fontWeight: "600",
+  },
+
+  amount: {
+    fontSize: "32px",
+    fontWeight: "800",
+    color: "#78350f",
+    marginBottom: "6px",
+  },
+
+  payNote: {
     fontSize: "14px",
-    color: "#166534",
+    color: "#92400e",
   },
 
   support: {
     fontSize: "14px",
     color: "#475569",
-    marginBottom: "22px",
+    marginBottom: "20px",
     lineHeight: "1.6",
   },
 
@@ -137,7 +154,7 @@ const styles = {
   divider: {
     height: "1px",
     background: "#e5e7eb",
-    marginBottom: "18px",
+    marginBottom: "20px",
   },
 
   redirectText: {

@@ -19,6 +19,7 @@ import GuestDetails from "./pages/booking/GuestDetails";
 import BookingConfirmation from "./pages/booking/BookingConfirmation";
 import PaymentSuccess from "./pages/booking/PaymentSuccess";
 import PaymentFailure from "./pages/booking/PaymentFailure";
+import PaymentAtHotelPage from "./pages/booking/PaymentAtHotelPage";
 import LegalPage from "./legal/LegalPage";
 import TermsAndConditions from "./legal/TermsAndConditions";
 import PrivacyPolicy from "./legal/PrivacyPolicy";
@@ -55,6 +56,7 @@ export default function App() {
         <Route path="/booking/confirmation" element={<BookingConfirmation />} />
         <Route path="/booking/success" element={<PaymentSuccess />} />
         <Route path="/booking/failure" element={<PaymentFailure />} />
+        <Route path="/booking/atHotelPage" element={<PaymentAtHotelPage />} />
 
         {/* ================= OWNER ROUTES ================= */}
         <Route path="/owner/login" element={<OwnerLogin />} />

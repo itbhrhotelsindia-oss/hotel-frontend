@@ -118,7 +118,7 @@
 
 .pay-btn {
   flex: 1;
-  background: linear-gradient(135deg, #6b2f2f, #5a2525);
+  background: var(--brand-gold-btn-gradient);
   color: #fff;
   border: none;
   padding: 14px 0;
@@ -126,7 +126,9 @@
   font-weight: 700;
   border-radius: 10px;
   cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
   box-shadow: 0 6px 14px rgba(107, 47, 47, 0.25);
 }
 
@@ -145,7 +147,9 @@
   font-weight: 600;
   border-radius: 10px;
   cursor: pointer;
-  transition: background 0.15s ease, transform 0.15s ease;
+  transition:
+    background 0.15s ease,
+    transform 0.15s ease;
 }
 
 .home-btn:hover {

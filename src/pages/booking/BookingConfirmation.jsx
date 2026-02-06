@@ -45,7 +45,7 @@ function BookingConfirmation() {
       if (!res.ok) {
         const errText = await res.text();
         console.error("Order API failed:", errText);
-        throw new Error("Order creation failed");
+        throw new Error("ORDER_CREATION_FAILED");
       }
 
       const orderData = await res.json();
@@ -63,7 +63,7 @@ function BookingConfirmation() {
         handler: function (response) {
           console.log("Payment success:", response);
           // Webhook will mark booking CONFIRMED
-          navigate("/");
+          navigate("/booking/success");
         },
 
         prefill: {
@@ -75,14 +75,27 @@ function BookingConfirmation() {
         theme: {
           color: "#6b2d2d",
         },
+        modal: {
+          ondismiss: function () {
+            console.warn("Razorpay popup closed by user");
+            navigate("/booking/failure");
+          },
+        },
       };
 
       // ✅ 3️⃣ Open Razorpay popup
       const razorpay = new window.Razorpay(options);
+
+      // 🔥 IMPORTANT: payment failure listener
+      razorpay.on("payment.failed", function (response) {
+        console.error("Payment failed:", response.error);
+        navigate("/booking/failure");
+      });
+
       razorpay.open();
     } catch (err) {
-      console.error(err);
-      alert("❌ Unable to initiate payment");
+      console.error("Payment flow error:", err);
+      navigate("/booking/failure");
     }
   };
 
@@ -107,8 +120,8 @@ function BookingConfirmation() {
           </div>
 
           <div className="detail-row">
-            <span>Hotel ID</span>
-            <strong>{booking.hotelId}</strong>
+            <span>Hotel Name</span>
+            <strong>{booking.hotelName}</strong>
           </div>
 
           <div className="detail-row">
@@ -139,8 +152,23 @@ function BookingConfirmation() {
 
         {/* ✅ PAY BUTTON */}
         <div className="action-buttons">
-          <button className="pay-btn" onClick={handleRazorpayPayment}>
-            Pay ₹{booking.totalAmount} with Razorpay
+          {/* <button className="pay-btn" onClick={handleRazorpayPayment}> */}
+          <button
+            className="pay-btn"
+            onClick={() => navigate("/booking/success")}
+          >
+            Pay ₹{booking.totalAmount} Here
+          </button>
+
+          <button
+            className="pay-btn"
+            onClick={() =>
+              navigate("/booking/atHotelPage", {
+                state: { amount: booking.totalAmount },
+              })
+            }
+          >
+            Pay ₹{booking.totalAmount} At Hotel
           </button>
         </div>
       </div>
