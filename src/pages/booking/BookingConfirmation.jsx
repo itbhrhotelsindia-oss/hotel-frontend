@@ -152,11 +152,11 @@ function BookingConfirmation() {
 
         {/* ✅ PAY BUTTON */}
         <div className="action-buttons">
-          {/* <button className="pay-btn" onClick={handleRazorpayPayment}> */}
-          <button
+          <button className="pay-btn" onClick={handleRazorpayPayment}>
+            {/* <button
             className="pay-btn"
             onClick={() => navigate("/booking/success")}
-          >
+          > */}
             Pay ₹{booking.totalAmount} Here
           </button>
 
