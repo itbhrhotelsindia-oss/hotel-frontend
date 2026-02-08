@@ -7,6 +7,7 @@ function BookingConfirmation() {
   const location = useLocation();
   const BASE_URL = import.meta.env.VITE_BASE_URL;
 
+  // ✅ Booking data (state → fallback to localStorage)
   const booking =
     location.state?.booking ||
     JSON.parse(localStorage.getItem("confirmedBooking"));
@@ -23,78 +24,63 @@ function BookingConfirmation() {
 
   if (!booking) return null;
 
+  const isPayNow = booking.payMode === "PAY_NOW";
+  const isPayAtHotel = booking.payMode === "PAY_AT_HOTEL";
+
   /* ===============================
      ✅ RAZORPAY PAYMENT HANDLER
      =============================== */
   const handleRazorpayPayment = async () => {
     try {
-      // ✅ 1️⃣ Create Razorpay order (QUERY PARAM ONLY)
       const res = await fetch(
         `${BASE_URL}/api/public/payments/razorpay/order`,
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             bookingId: booking.bookingId,
           }),
         },
       );
 
-      if (!res.ok) {
-        const errText = await res.text();
-        console.error("Order API failed:", errText);
-        throw new Error("ORDER_CREATION_FAILED");
-      }
+      if (!res.ok) throw new Error("ORDER_CREATION_FAILED");
 
       const orderData = await res.json();
-      console.log("Order created:", orderData);
 
-      // ✅ 2️⃣ Razorpay Checkout options
       const options = {
-        key: orderData.keyId, // 🔐 FROM BACKEND
-        amount: orderData.amount, // paise
+        key: orderData.keyId,
+        amount: orderData.amount,
         currency: orderData.currency,
         name: "BHR Hotels India",
         description: "Hotel Booking Payment",
         order_id: orderData.orderId,
 
-        handler: function (response) {
-          console.log("Payment success:", response);
-          // Webhook will mark booking CONFIRMED
+        handler: function () {
           navigate("/booking/success");
         },
 
         prefill: {
-          name: booking.guestName || "Guest",
-          email: booking.guestEmail || "guest@bhrhotelsindia.com",
-          contact: booking.guestPhone || "9999999999",
+          name: booking.guestName,
+          email: booking.guestEmail,
+          contact: booking.guestPhone,
         },
 
-        theme: {
-          color: "#6b2d2d",
-        },
+        theme: { color: "#b08d44" },
+
         modal: {
-          ondismiss: function () {
-            console.warn("Razorpay popup closed by user");
-            navigate("/booking/failure");
-          },
+          ondismiss: () => navigate("/booking/failure"),
         },
       };
 
-      // ✅ 3️⃣ Open Razorpay popup
       const razorpay = new window.Razorpay(options);
 
-      // 🔥 IMPORTANT: payment failure listener
-      razorpay.on("payment.failed", function (response) {
-        console.error("Payment failed:", response.error);
+      razorpay.on("payment.failed", () => {
         navigate("/booking/failure");
       });
 
       razorpay.open();
     } catch (err) {
-      console.error("Payment flow error:", err);
+      console.error(err);
       navigate("/booking/failure");
     }
   };
@@ -102,15 +88,19 @@ function BookingConfirmation() {
   return (
     <div className="confirmation-page">
       <div className="confirmation-card">
+        {/* SUCCESS HEADER */}
         <div className="success-box">
           <h3>🎉 Booking Created Successfully</h3>
           <p>
             Your booking is currently <strong>PENDING</strong>.
             <br />
-            Please complete payment to confirm your reservation.
+            {isPayNow
+              ? "Please complete payment to confirm your reservation."
+              : "Please pay at the hotel during check-in."}
           </p>
         </div>
 
+        {/* DETAILS */}
         <div className="details-box">
           <h4>Booking Details</h4>
 
@@ -150,26 +140,26 @@ function BookingConfirmation() {
           </div>
         </div>
 
-        {/* ✅ PAY BUTTON */}
+        {/* ACTION BUTTONS */}
         <div className="action-buttons">
-          <button className="pay-btn" onClick={handleRazorpayPayment}>
-            {/* <button
-            className="pay-btn"
-            onClick={() => navigate("/booking/success")}
-          > */}
-            Pay ₹{booking.totalAmount} Here
-          </button>
+          {isPayNow && (
+            <button className="pay-btn" onClick={handleRazorpayPayment}>
+              Pay ₹{booking.totalAmount} Now
+            </button>
+          )}
 
-          <button
-            className="pay-btn"
-            onClick={() =>
-              navigate("/booking/atHotelPage", {
-                state: { amount: booking.totalAmount },
-              })
-            }
-          >
-            Pay ₹{booking.totalAmount} At Hotel
-          </button>
+          {isPayAtHotel && (
+            <button
+              className="pay-btn"
+              onClick={() =>
+                navigate("/booking/atHotelPage", {
+                  state: { amount: booking.totalAmount },
+                })
+              }
+            >
+              Pay ₹{booking.totalAmount} At Hotel
+            </button>
+          )}
         </div>
       </div>
     </div>

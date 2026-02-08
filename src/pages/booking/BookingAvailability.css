@@ -1,152 +1,112 @@
-/* PAGE WRAPPER */
-.availability-page {
-  padding: 40px 30px;
-  background: #f5f5f5;
-  min-height: 100vh;
-}
-.availability-card {
-  width: 100%;
+.price-page {
   background: #ffffff;
-  padding: 26px 28px;
-  border-radius: 12px;
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
-  border-top: 4px solid #b58b42;
+  padding: 32px;
+  border-radius: 16px;
+  max-width: 900px;
+  margin: 24px auto;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+  font-family: Inter, system-ui, sans-serif;
 }
 
-.availability-container {
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-/* TITLE */
-.page-title {
+.price-title {
   font-size: 26px;
-  font-weight: 600;
-  color: #3b2f1e;
-  margin-bottom: 18px;
-}
-
-/* SUMMARY */
-.summary {
-  background: #faf6ef;
-  padding: 14px 16px;
-  border-radius: 6px;
-  margin-bottom: 18px;
-}
-
-.summary p {
-  margin: 6px 0;
-  font-size: 14.5px;
-  color: #4a3a24;
-}
-
-/* PRICE BREAKUP */
-.breakup {
-  margin-top: 10px;
-}
-
-.breakup h4 {
-  font-size: 16px;
-  margin-bottom: 10px;
-  color: #5a3f12;
-  border-bottom: 1px dashed #d8c49a;
-  padding-bottom: 6px;
-}
-
-.breakup-row {
-  display: flex;
-  justify-content: space-between;
-  padding: 7px 0;
-  font-size: 14.5px;
-  color: #3d2f1b;
-}
-
-/* TOTAL */
-.total-row {
-  display: flex;
-  justify-content: space-between;
-  font-size: 18px;
   font-weight: 700;
-  color: #8b5e1a;
-  margin-top: 14px;
-  padding-top: 10px;
-  border-top: 1px solid #e3d4b3;
+  margin-bottom: 20px;
+  color: #3b2f1c;
 }
 
-/* CTA BUTTON */
-.continue-btn {
-  width: 100%;
-  margin-top: 22px;
-  padding: 14px;
-  background: linear-gradient(135deg, #b58b42, #9a7838);
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  font-size: 16px;
-  font-weight: 600;
+.summary-box {
+  background: #faf7f2;
+  padding: 16px;
+  border-radius: 12px;
+  margin-bottom: 24px;
+  font-size: 14px;
+}
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.pricing-card {
+  border: 2px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 18px;
   cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.continue-btn:hover {
-  background: linear-gradient(135deg, #9a7838, #7d602c);
-  transform: translateY(-1px);
-}
-
-/* ERROR */
-.error-text {
-  padding: 30px;
-  color: #b00020;
-  font-weight: 500;
+  transition: all 0.25s ease;
   text-align: center;
 }
 
-.availability-layout {
-  display: flex;
-  gap: 40px;
-  align-items: flex-start;
-  margin-top: 20px;
+.pricing-card:hover {
+  border-color: #c9a44d;
 }
 
-/* Left & Right Columns */
-.availability-left,
-.availability-right {
-  flex: 1;
-}
-.availability-right .availability-card {
-  border-top: 4px solid #c9a44d;
+.pricing-card.active {
+  border-color: #c9a44d;
+  background: #fffaf0;
+  box-shadow: 0 8px 24px rgba(201, 164, 77, 0.25);
 }
 
-/* Responsive (Mobile Friendly) */
-@media (max-width: 900px) {
-  .availability-layout {
-    flex-direction: column;
-  }
-}
-
-/* Vertical guest input list */
-.details-column {
-  padding: 20px 20px 20px 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-/* Input styling */
-.details-column input {
-  width: 100%;
-  padding: 14px 16px;
-  border-radius: 10px;
-  border: 1px solid #d6d6d6;
+.pricing-card h4 {
   font-size: 15px;
-  background: #fafafa;
-  transition: all 0.25s ease;
+  font-weight: 600;
+  margin-bottom: 4px;
 }
 
-/* Focus state */
-.details-column input:focus {
-  border-color: #b58b42;
-  background: #ffffff;
-  box-shadow: 0 0 0 3px rgba(181, 139, 66, 0.15);
-  outline: none;
+.paymode {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.price {
+  font-size: 22px;
+  font-weight: 700;
+  color: #3b2f1c;
+  margin-top: 10px;
+}
+
+.guest-box {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.guest-box input {
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+}
+
+.total-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.continue-btn {
+  width: 100%;
+  padding: 16px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #b89246, #9c7c3a);
+  color: white;
+  border: none;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.continue-btn:hover {
+  opacity: 0.95;
+}
+
+.error-text {
+  color: #dc2626;
+  font-size: 14px;
+  margin-bottom: 12px;
 }

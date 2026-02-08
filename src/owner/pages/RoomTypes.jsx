@@ -19,6 +19,9 @@ const RoomTypes = () => {
     maxAdults: "",
     maxChildren: "",
     basePrice: "",
+    breakfastPrice: "",
+    lunchDinnerPrice: "",
+    payAtHotelMarkupPercent: "",
   });
 
   /* ================= LOAD ROOM TYPES ================= */
@@ -61,6 +64,9 @@ const RoomTypes = () => {
       maxAdults: Number(form.maxAdults),
       maxChildren: Number(form.maxChildren),
       basePrice: Number(form.basePrice),
+      breakfastPrice: Number(form.breakfastPrice),
+      lunchDinnerPrice: Number(form.lunchDinnerPrice),
+      payAtHotelMarkupPercent: Number(form.payAtHotelMarkupPercent),
     };
 
     const res = await fetch(url, {
@@ -79,14 +85,21 @@ const RoomTypes = () => {
 
     setShowForm(false);
     setEditing(null);
+    resetForm();
+    loadRoomTypes();
+  };
+
+  const resetForm = () => {
     setForm({
       name: "",
       description: "",
       maxAdults: "",
       maxChildren: "",
       basePrice: "",
+      breakfastPrice: "",
+      lunchDinnerPrice: "",
+      payAtHotelMarkupPercent: "",
     });
-    loadRoomTypes();
   };
 
   /* ================= DELETE ================= */
@@ -118,13 +131,7 @@ const RoomTypes = () => {
           style={styles.primaryBtn}
           onClick={() => {
             setEditing(null);
-            setForm({
-              name: "",
-              description: "",
-              maxAdults: "",
-              maxChildren: "",
-              basePrice: "",
-            });
+            resetForm();
             setShowForm(true);
           }}
         >
@@ -137,15 +144,15 @@ const RoomTypes = () => {
         {roomTypes.map((rt) => (
           <div key={rt.id} style={styles.card}>
             <h3 style={styles.cardTitle}>{rt.name}</h3>
-
             {rt.description && <p style={styles.cardDesc}>{rt.description}</p>}
 
-            <div style={styles.meta}>
-              <span>👨 Adults: {rt.maxAdults}</span>
-              <span>🧒 Children: {rt.maxChildren}</span>
-              <span>👥 Total: {rt.maxGuests}</span>
-
-              <span>💰 ₹{rt.basePrice} / night</span>
+            <div style={styles.metaCol}>
+              <div>👨 Adults: {rt.maxAdults}</div>
+              <div>🧒 Children: {rt.maxChildren}</div>
+              <div>💰 Base: ₹{rt.basePrice}</div>
+              <div>🥞 Breakfast: ₹{rt.breakfastPrice}</div>
+              <div>🍽 Meals: ₹{rt.lunchDinnerPrice}</div>
+              <div>🏨 Pay@Hotel Markup: {rt.payAtHotelMarkupPercent}%</div>
             </div>
 
             <div style={styles.actions}>
@@ -159,6 +166,9 @@ const RoomTypes = () => {
                     maxAdults: rt.maxAdults,
                     maxChildren: rt.maxChildren,
                     basePrice: rt.basePrice,
+                    breakfastPrice: rt.breakfastPrice,
+                    lunchDinnerPrice: rt.lunchDinnerPrice,
+                    payAtHotelMarkupPercent: rt.payAtHotelMarkupPercent,
                   });
                   setShowForm(true);
                 }}
@@ -185,46 +195,22 @@ const RoomTypes = () => {
               {editing ? "Edit Room Type" : "Add Room Type"}
             </h3>
 
-            <input
-              placeholder="Room Type Name"
-              value={form.name}
-              onChange={(e) => setForm({ ...form, name: e.target.value })}
-              required
-            />
-
-            <textarea
-              placeholder="Description (optional)"
-              value={form.description}
-              rows={3}
-              onChange={(e) =>
-                setForm({ ...form, description: e.target.value })
-              }
-            />
-
-            <input
-              type="number"
-              placeholder="Max Adults"
-              value={form.maxAdults}
-              onChange={(e) => setForm({ ...form, maxAdults: e.target.value })}
-              required
-            />
-
-            <input
-              type="number"
-              placeholder="Max Children"
-              value={form.maxChildren}
-              onChange={(e) =>
-                setForm({ ...form, maxChildren: e.target.value })
-              }
-            />
-
-            <input
-              type="number"
-              placeholder="Base Price"
-              value={form.basePrice}
-              onChange={(e) => setForm({ ...form, basePrice: e.target.value })}
-              required
-            />
+            {renderInput("Room Type Name", "name")}
+            {renderTextarea("Description", "description")}
+            {renderInput("Max Adults", "maxAdults", "number")}
+            {renderInput("Max Children", "maxChildren", "number")}
+            {renderInput("Base Price (₹)", "basePrice", "number")}
+            {renderInput("Breakfast Price (₹)", "breakfastPrice", "number")}
+            {renderInput(
+              "Lunch + Dinner Price (₹)",
+              "lunchDinnerPrice",
+              "number",
+            )}
+            {renderInput(
+              "Pay at Hotel Markup (%)",
+              "payAtHotelMarkupPercent",
+              "number",
+            )}
 
             <div style={styles.modalActions}>
               <button type="submit" style={styles.primaryBtn}>
@@ -243,9 +229,40 @@ const RoomTypes = () => {
       )}
     </div>
   );
+
+  function renderInput(label, key, type = "text") {
+    return (
+      <div style={styles.field}>
+        <label style={styles.label}>{label}</label>
+        <input
+          type={type}
+          value={form[key]}
+          onChange={(e) => setForm({ ...form, [key]: e.target.value })}
+          required
+          style={styles.input}
+        />
+      </div>
+    );
+  }
+
+  function renderTextarea(label, key) {
+    return (
+      <div style={styles.field}>
+        <label style={styles.label}>{label}</label>
+        <textarea
+          rows={3}
+          value={form[key]}
+          onChange={(e) => setForm({ ...form, [key]: e.target.value })}
+          style={styles.input}
+        />
+      </div>
+    );
+  }
 };
 
 export { RoomTypes };
+
+/* ================= STYLES ================= */
 
 const styles = {
   page: {
@@ -254,64 +271,28 @@ const styles = {
     minHeight: "100vh",
     fontFamily: "Inter, system-ui, sans-serif",
   },
-
   header: {
     display: "flex",
     justifyContent: "space-between",
-    alignItems: "center",
     marginBottom: 24,
   },
-
-  title: {
-    fontSize: 26,
-    fontWeight: 600,
-    color: "#1f2937",
-  },
-
-  subtitle: {
-    fontSize: 13,
-    color: "#6b7280",
-  },
-
+  title: { fontSize: 26, fontWeight: 600 },
+  subtitle: { fontSize: 13, color: "#6b7280" },
   grid: {
     display: "grid",
-    gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))",
+    gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
     gap: 20,
   },
-
   card: {
-    background: "#ffffff",
+    background: "#fff",
     padding: 20,
     borderRadius: 12,
     boxShadow: "0 8px 22px rgba(0,0,0,0.06)",
-    transition: "transform 0.2s ease",
   },
-
-  cardTitle: {
-    fontSize: 18,
-    fontWeight: 600,
-    marginBottom: 6,
-  },
-
-  cardDesc: {
-    fontSize: 14,
-    color: "#6b7280",
-    marginBottom: 10,
-  },
-
-  meta: {
-    display: "flex",
-    justifyContent: "space-between",
-    fontSize: 13,
-    color: "#374151",
-    marginBottom: 14,
-  },
-
-  actions: {
-    display: "flex",
-    gap: 10,
-  },
-
+  cardTitle: { fontSize: 18, fontWeight: 600 },
+  cardDesc: { fontSize: 14, color: "#6b7280" },
+  metaCol: { fontSize: 13, marginTop: 10, lineHeight: "20px" },
+  actions: { display: "flex", gap: 10, marginTop: 12 },
   primaryBtn: {
     background: "#c9a44d",
     color: "#fff",
@@ -319,18 +300,14 @@ const styles = {
     padding: "10px 16px",
     borderRadius: 6,
     cursor: "pointer",
-    fontWeight: 500,
   },
-
   secondaryBtn: {
     background: "#e5e7eb",
-    color: "#111827",
     border: "none",
     padding: "10px 16px",
     borderRadius: 6,
     cursor: "pointer",
   },
-
   dangerBtn: {
     background: "#fee2e2",
     color: "#b91c1c",
@@ -339,37 +316,35 @@ const styles = {
     borderRadius: 6,
     cursor: "pointer",
   },
-
   overlay: {
     position: "fixed",
     inset: 0,
     background: "rgba(0,0,0,0.45)",
     display: "flex",
-    alignItems: "center",
     justifyContent: "center",
-    zIndex: 1000,
+    alignItems: "center",
   },
-
   modal: {
     background: "#fff",
     padding: 24,
     borderRadius: 12,
-    width: 360,
+    width: 420,
     display: "flex",
     flexDirection: "column",
     gap: 12,
   },
-
-  modalTitle: {
-    fontSize: 18,
-    fontWeight: 600,
-    marginBottom: 6,
-  },
-
+  modalTitle: { fontSize: 18, fontWeight: 600 },
   modalActions: {
     display: "flex",
     justifyContent: "flex-end",
     gap: 10,
     marginTop: 10,
+  },
+  field: { display: "flex", flexDirection: "column", gap: 4 },
+  label: { fontSize: 13, color: "#374151", fontWeight: 500 },
+  input: {
+    padding: "10px 12px",
+    borderRadius: 6,
+    border: "1px solid #d1d5db",
   },
 };
