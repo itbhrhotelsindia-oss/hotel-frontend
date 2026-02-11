@@ -430,7 +430,6 @@ function BookingSearch() {
             <li>Early Bird: Extra 10% Off</li>
             <li>Last Minute Deal: Extra 5% Off</li>
             <li>Hourly Rooms Available</li>
-            <li>Bathtub (Deluxe & Suite rooms)</li>
           </ul>
         </div>
       </div>
