@@ -77,8 +77,8 @@ const FALLBACK = {
     contacts: [
       {
         type: "phone",
-        value: "+91 9211283334",
-        displayValue: "+91 9211283334",
+        value: "+91 7900008944",
+        displayValue: "+91 7900008944",
       },
       {
         type: "email",
@@ -88,8 +88,8 @@ const FALLBACK = {
     ],
   },
   contactSection: {
-    reservationPhone: "+91 9211283334",
-    hotelPhone: "+91 9211283334",
+    reservationPhone: "+91 7900008944",
+    hotelPhone: "+91 7900008944",
     email: "info@bhrhotelsindia.com",
     corporateAddress: "Corporate Office, Mumbai",
     supportHours: "24x7",
@@ -228,7 +228,7 @@ export default function Home() {
 
         <meta
           name="description"
-          content="BHR Hotels India LLP offers luxury resorts and hotels across Uttarakhand and India. Destination weddings, corporate events, conferences, and group bookings."
+          content="BHR Hotels India - A Brand of Hotaality RevTech Private Limited offers luxury resorts and hotels across Uttarakhand and India. Destination weddings, corporate events, conferences, and group bookings."
         />
 
         <link rel="canonical" href="https://www.bhrhotelsindia.com/" />

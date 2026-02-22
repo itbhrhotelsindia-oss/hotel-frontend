@@ -45,7 +45,7 @@ export default function PaymentAtHotelPage() {
           <a href="mailto:info@bhrhotelsindia.com" style={styles.link}>
             info@bhrhotelsindia.com
           </a>{" "}
-          or call <b>+91 9211283334</b>
+          or call <b>+91 7900008944</b>
         </p>
 
         <div style={styles.divider} />

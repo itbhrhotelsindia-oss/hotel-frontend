@@ -19,7 +19,10 @@ export default function ContactUs({ onClose }) {
 
         <h2 className="contact-title">Contact Us</h2>
         <p className="contact-subtitle">
-          <strong>BHR Hotels India LLP</strong> <br />
+          <strong>
+            BBHR Hotels India - A Brand of Hotaality RevTech Private Limited
+          </strong>{" "}
+          <br />
           Delivering trusted hospitality since <strong>2010</strong>
         </p>
 
@@ -27,7 +30,7 @@ export default function ContactUs({ onClose }) {
           <h3>Reservations & Support</h3>
 
           <div className="contact-item">
-            <FaPhoneAlt /> <span>+91 9211283334</span>
+            <FaPhoneAlt /> <span>+91 7900008944</span>
           </div>
 
           <div className="contact-item">
@@ -57,7 +60,7 @@ export default function ContactUs({ onClose }) {
           <div className="contact-item">
             <FaWhatsapp />
             <a
-              href="https://wa.me/919211283334"
+              href="https://wa.me/9917900008944"
               target="_blank"
               rel="noreferrer"
             >

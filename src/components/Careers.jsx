@@ -11,16 +11,21 @@ export default function Careers({ onClose }) {
 
         <h1 className="careers-title">Careers</h1>
         <p className="careers-subtitle">
-          Build a meaningful career in hospitality with BHR Hotels India LLP
+          Build a meaningful career in hospitality with BHR Hotels India - A
+          Brand of Hotaality RevTech Private Limited
         </p>
 
         <section className="careers-section">
-          <h3>Why Join BHR Hotels India LLP?</h3>
+          <h3>
+            Why Join BHR Hotels India - A Brand of Hotaality RevTech Private
+            Limited?
+          </h3>
           <p>
-            At BHR Hotels India LLP, we believe our people are the heart of our
-            success. We foster a collaborative work culture where passion,
-            professionalism, and personal growth come together to create
-            exceptional hospitality experiences.
+            At BHR Hotels India - A Brand of Hotaality RevTech Private Limited,
+            we believe our people are the heart of our success. We foster a
+            collaborative work culture where passion, professionalism, and
+            personal growth come together to create exceptional hospitality
+            experiences.
           </p>
         </section>
 
@@ -48,8 +53,9 @@ export default function Careers({ onClose }) {
         <section className="careers-section">
           <h3>Apply With Us</h3>
           <p>
-            To explore career opportunities with BHR Hotels India LLP, please
-            share your updated resume and details with us at:
+            To explore career opportunities with BHR Hotels India - A Brand of
+            Hotaality RevTech Private Limited, please share your updated resume
+            and details with us at:
           </p>
 
           <p className="careers-email">
