@@ -1,256 +1,220 @@
-/* ================================
-   FOOTER BASE
-================================ */
 .footer-wrapper {
-  width: 100%;
-  background: #ffffff;
-  padding-top: 40px;
-  padding-bottom: 20px;
+  border-top: 4px solid #c59b47;
 
-  border-top: 4px solid #c39a4a;
-  box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.05);
+  background: white;
+
+  font-family: Arial;
 }
 
-/* ================================
-   TOP SECTION (3 COLUMNS)
-================================ */
+/* TOP SECTION */
+
 .footer-top {
-  max-width: 1400px;
-  margin: auto;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 40px;
-  padding: 0 40px 40px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+
+  grid-template-columns:
+    1fr
+    2fr
+    2fr
+    1.5fr
+    1.5fr;
+
+  gap: 30px;
+
+  padding: 30px 5%;
+
+  border-bottom: 1px solid #ddd;
 }
 
-/* LEFT SECTION */
-.footer-left {
-  display: flex;
-  align-items: flex-start;
-  gap: 18px;
-}
+/* LOGO */
 
 .footer-logo {
-  width: 150px;
-  height: auto;
-  margin-top: -15px;
+  width: 220px;
 }
 
-.footer-address h4 {
-  font-size: 20px;
-  color: var(--brand-footer-text);
-  margin-bottom: 6px;
+/* BRAND */
+
+.brand-line {
+  color: #c59b47;
+
+  font-weight: 600;
+
+  margin: 6px 0;
 }
 
-.footer-address p {
-  font-size: 15px;
-  color: var(--brand-footer-text);
-  margin: 2px 0;
+.address {
+  color: #555;
+
+  font-size: 14px;
+
+  line-height: 1.6;
 }
 
-/* ================================
-   CENTER SECTION – SOCIAL
-================================ */
-.footer-center {
-  text-align: center;
+/* CONTACT */
+
+.contact-col p {
+  font-size: 14px;
+
+  margin: 3px 0;
 }
 
-.footer-heading {
-  font-size: 18px;
-  color: var(--brand-footer-text);
-  margin-bottom: 12px;
-}
-
-.footer-social-large {
-  display: flex;
-  justify-content: center;
-  gap: 18px;
-}
-
-.footer-social-large svg {
-  font-size: 30px;
-  color: var(--brand-footer-text);
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.footer-social-large svg:hover {
-  transform: translateY(-4px);
-  color: #d8a045;
-}
-
-/* ================================
-   RIGHT SECTION – SUBSCRIBE
-================================ */
-.footer-right {
-  text-align: center;
-}
-
-.footer-subscribe {
-  margin-top: 10px;
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-}
+/* SUBSCRIBE */
 
 .footer-subscribe input {
-  width: 230px;
-  padding: 12px;
+  width: 100%;
+
+  padding: 10px;
+
   border-radius: 6px;
-  border: 1px solid #ccc;
+
+  border: 1px solid #ddd;
+
+  margin-bottom: 10px;
 }
 
 .footer-subscribe button {
-  padding: 12px 20px;
-  background: #b88644;
+  width: 100%;
+
+  background: #c59b47;
+
   color: white;
-  border-radius: 6px;
+
   border: none;
+
+  padding: 10px;
+
+  border-radius: 6px;
+
   cursor: pointer;
 }
 
-.footer-subscribe button:hover {
-  background: #996d38;
+/* SOCIAL */
+
+.footer-social {
+  display: flex;
+
+  gap: 12px;
+
+  font-size: 20px;
+
+  margin-bottom: 10px;
 }
 
-/* ================================
-   CITY LIST
-================================ */
-.footer-inner {
-  max-width: 1400px;
-  margin: auto;
-  padding: 25px 40px;
-  border-bottom: 1px solid #ccc;
+.footer-social a {
+  cursor: pointer;
+
+  transition: 0.3s;
+}
+
+.footer-social a:hover {
+  color: #c59b47;
+}
+
+.whatsapp a {
+  color: #c59b47;
+
+  font-weight: 600;
+
+  text-decoration: none;
+}
+
+/* CITIES */
+
+.footer-cities-section {
+  border-top: 1px solid #ddd;
+
+  padding: 20px 5%;
+
+  text-align: center;
+
+  background: #fafafa;
+}
+
+.cities-title {
+  margin-bottom: 10px;
+
+  font-size: 18px;
 }
 
 .footer-cities {
   display: flex;
-  justify-content: center; /* center horizontally */
-  align-items: center;
-  flex-wrap: wrap; /* wrap on smaller screens */
-  gap: 6px;
-  text-align: center;
-  margin: 20px auto;
+
+  flex-wrap: wrap;
+
+  justify-content: center;
+
+  gap: 12px;
 }
 
 .footer-city {
-  font-size: 17px;
-  color: #555;
-  white-space: nowrap;
-}
+  cursor: pointer;
 
-/* ================================
-   NAV LINKS
-================================ */
-.footer-links {
-  max-width: 1400px;
-  margin: 25px auto 0;
-  padding: 0 20px;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 18px;
   font-size: 15px;
 }
 
-.footer-links a {
-  color: var(--brand-footer-text);
-  text-decoration: none;
+.footer-city:hover {
+  color: #c59b47;
 }
 
-.footer-links a:hover {
-  color: #d8a045;
+/* LINKS */
+
+.footer-links-section {
+  border-top: 1px solid #ddd;
+
+  padding: 20px 5%;
 }
 
-/* ================================
-   RESPONSIVE — TABLET
-================================ */
+.footer-links {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  justify-content: center;
+
+  gap: 20px;
+}
+
+.footer-links span {
+  cursor: pointer;
+}
+
+.footer-links span:hover {
+  color: #c59b47;
+}
+
+/* ADMIN BUTTON */
+
+.admin-btn {
+  background: #c59b47;
+
+  color: white;
+
+  border: none;
+
+  padding: 8px 20px;
+
+  border-radius: 20px;
+
+  cursor: pointer;
+}
+
+/* MOBILE */
+
 @media (max-width: 900px) {
   .footer-top {
+    grid-template-columns:
+      1fr
+      1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .footer-top {
     grid-template-columns: 1fr;
+
     text-align: center;
   }
 
-  .footer-left {
+  .footer-social {
     justify-content: center;
-  }
-
-  .footer-subscribe {
-    flex-direction: column;
-    width: 100%;
-  }
-
-  .footer-subscribe input {
-    width: 100%;
-  }
-
-  .footer-inner {
-    text-align: center;
-  }
-
-  .footer-cities {
-    justify-content: center;
-  }
-}
-.footer-city:hover {
-  text-decoration: underline;
-  color: #b7832f;
-}
-.dialog-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.6);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-}
-
-.dialog-box {
-  background: #fff;
-  width: 90%;
-  max-width: 600px;
-  padding: 30px;
-  border-radius: 8px;
-  position: relative;
-}
-.admin-btn {
-  margin-top: -10px;
-  margin-left: 50px;
-  background: linear-gradient(135deg, #cfa349, #a6781f);
-  color: #fff;
-  border: none;
-  padding: 10px 26px;
-  border-radius: 999px;
-  font-weight: 700;
-  cursor: pointer;
-  font-size: 13px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  transition:
-    transform 0.15s ease,
-    box-shadow 0.15s ease;
-}
-
-.admin-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
-}
-/* ================================
-   RESPONSIVE — MOBILE
-================================ */
-@media (max-width: 480px) {
-  .footer-logo {
-    width: 120px;
-  }
-
-  .footer-social-large svg {
-    font-size: 26px;
-  }
-
-  .footer-links {
-    gap: 10px;
-    font-size: 14px;
   }
 }
