@@ -3,9 +3,12 @@
 ================================ */
 .footer-wrapper {
   width: 100%;
-  background: var(--brand-gold-footer);
+  background: #ffffff;
   padding-top: 40px;
   padding-bottom: 20px;
+
+  border-top: 4px solid #c39a4a;
+  box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.05);
 }
 
 /* ================================
@@ -225,7 +228,9 @@
   font-size: 13px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
 .admin-btn:hover {
