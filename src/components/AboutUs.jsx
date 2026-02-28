@@ -59,8 +59,8 @@ export default function AboutUs({ onClose }) {
             <h2>Our Promise</h2>
             <p>
               Whether you are planning a family getaway, destination wedding,
-              corporate event, or a peaceful retreat, BBHR Hotels India - A
-              Brand of Hotaality RevTech Private Limited promises thoughtful
+              corporate event, or a peaceful retreat, BHR Hotels India - A Brand
+              of Hotaality RevTech Private Limited promises thoughtful
               hospitality and experiences that stay with you long after
               checkout.
             </p>
