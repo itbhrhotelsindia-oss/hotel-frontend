@@ -121,38 +121,6 @@ export default function Footer({ contactInfo = {} }) {
           <p>🕒 Support: 24x7</p>
         </div>
 
-        {/* GET IN TOUCH */}
-
-        <div className="touch-col">
-          <h4>Get In Touch</h4>
-
-          <div className="footer-social">
-            <a onClick={() => handleSocialClick("facebook")}>
-              <FaFacebookF />
-            </a>
-
-            <a onClick={() => handleSocialClick("instagram")}>
-              <FaInstagram />
-            </a>
-
-            <a onClick={() => handleSocialClick("youtube")}>
-              <FaYoutube />
-            </a>
-
-            <a onClick={() => handleSocialClick("twitterX")}>
-              <FaTwitter />
-            </a>
-
-            <a onClick={() => handleSocialClick("linkedIn")}>
-              <FaLinkedinIn />
-            </a>
-          </div>
-
-          <p className="whatsapp">
-            <a href="https://wa.me/917900008944">WhatsApp: +91 7900008944</a>
-          </p>
-        </div>
-
         {/* SUBSCRIBE */}
 
         <div className="subscribe-col">

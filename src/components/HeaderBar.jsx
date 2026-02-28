@@ -1,8 +1,18 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FaEnvelope, FaPhoneAlt, FaBars } from "react-icons/fa";
+import {
+  FaEnvelope,
+  FaPhoneAlt,
+  FaBars,
+  FaFacebookF,
+  FaInstagram,
+  FaTwitter,
+  FaYoutube,
+  FaLinkedinIn,
+} from "react-icons/fa";
 import CityHotelsModal from "../pages/CityHotelsModal";
 import BookingDialog from "../components/BookingDialog";
+import "./HeaderBar.css";
 
 export default function HeaderBar({
   scrolled,
@@ -39,6 +49,19 @@ export default function HeaderBar({
     setCityModalOpen(true);
   };
 
+  const handleSocialClick = (platform) => {
+    const socialLinks = {
+      facebook: contactInfo?.socialLinks?.facebook,
+      instagram: contactInfo?.socialLinks?.instagram,
+      youtube: contactInfo?.socialLinks?.youtube,
+      twitterX: contactInfo?.socialLinks?.twitterX,
+      linkedIn: contactInfo?.socialLinks?.linkedIn,
+    };
+
+    if (socialLinks[platform]) {
+      window.open(socialLinks[platform], "_blank");
+    }
+  };
   // Close dropdown when user clicks outside
   useEffect(() => {
     function handleClickOutside(e) {
@@ -251,6 +274,15 @@ export default function HeaderBar({
               </a>
             </span>
             <span className="topbar-item">
+              <FaEnvelope />
+              <a
+                href={`mailto:${"info@bhrhotelsindia.com"}`}
+                className="topbar-link"
+              >
+                info@bhrhotelsindia.com
+              </a>
+            </span>
+            <span className="topbar-item">
               <FaPhoneAlt /> For Reservation’s:
               <a
                 href={`tel:${contactInfo.reservationPhone}`}
@@ -265,6 +297,27 @@ export default function HeaderBar({
             <span className="topbar-tag">
               Luxury Hospitality · Since {contactInfo.companySince}
             </span>
+            <div className="Header-social">
+              <a onClick={() => handleSocialClick("facebook")}>
+                <FaFacebookF />
+              </a>
+
+              <a onClick={() => handleSocialClick("instagram")}>
+                <FaInstagram />
+              </a>
+
+              <a onClick={() => handleSocialClick("youtube")}>
+                <FaYoutube />
+              </a>
+
+              <a onClick={() => handleSocialClick("twitterX")}>
+                <FaTwitter />
+              </a>
+
+              <a onClick={() => handleSocialClick("linkedIn")}>
+                <FaLinkedinIn />
+              </a>
+            </div>
           </div>
         </div>
       </div>
