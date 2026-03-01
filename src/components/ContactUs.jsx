@@ -48,11 +48,6 @@ export default function ContactUs({ onClose }) {
           <a href="mailto:info@bhrhotelsindia.com">info@bhrhotelsindia.com</a>
         </div>
 
-        <div className="contact-item">
-          <FaEnvelope />
-          <a href="mailto:support@hotaality.com">support@hotaality.com</a>
-        </div>
-
         <div className="contact-section">
           <h3>Corporate Office</h3>
 
