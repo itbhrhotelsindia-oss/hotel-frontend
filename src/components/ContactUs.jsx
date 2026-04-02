@@ -21,6 +21,7 @@ export default function ContactUs({ onClose }) {
         <p className="contact-subtitle">
           <strong>
             Hotaality Group of Hotels - A Brand of Hotaality RevTech Private
+            Limited BHR Hotels India - A Brand of Hotaality RevTech Private
             Limited
           </strong>{" "}
           <br />
@@ -39,35 +40,14 @@ export default function ContactUs({ onClose }) {
           </div>
         </div>
 
-        <div className="contact-section">
-          <h3>Online Support</h3>
+        <div className="contact-item">
+          <FaEnvelope />
+          <a href="mailto:info@hotaality.com">info@hotaality.com</a>
+        </div>
 
-          <div className="contact-item">
-            <FaEnvelope />
-            <a href="mailto:info@bhrhotelsindia.com">info@bhrhotelsindia.com</a>
-          </div>
-
-          <div className="contact-item">
-            <FaGlobe />
-            <a
-              href="https://www.bhrhotelsindia.com"
-              target="_blank"
-              rel="noreferrer"
-            >
-              www.bhrhotelsindia.com
-            </a>
-          </div>
-
-          <div className="contact-item">
-            <FaWhatsapp />
-            <a
-              href="https://wa.me/9917900008944"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Chat on WhatsApp
-            </a>
-          </div>
+        <div className="contact-item">
+          <FaEnvelope />
+          <a href="mailto:info@bhrhotelsindia.com">info@bhrhotelsindia.com</a>
         </div>
 
         <div className="contact-section">
@@ -76,8 +56,8 @@ export default function ContactUs({ onClose }) {
           <div className="contact-item">
             <FaMapMarkerAlt />
             <span>
-              B-128, C-49, First Floor, Sector-2, <br />
-              Noida, Gautam Buddha Nagar – 201301, India
+              898, 8th Floor, Gaur City Mall, Sector-4, <br />
+              Greater Noida West, Gautam Buddha Nagar - 201306, India
             </span>
           </div>
         </div>

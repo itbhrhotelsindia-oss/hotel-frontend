@@ -1,0 +1,19 @@
+.Header-social {
+  display: flex;
+
+  gap: 15px;
+
+  font-size: 20px;
+  margin-left: 50px;
+  margin-bottom: 0px;
+}
+
+.Header-social a {
+  cursor: pointer;
+
+  transition: 0.3s;
+}
+
+.Header-social a:hover {
+  color: #c59b47;
+}

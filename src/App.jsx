@@ -24,6 +24,7 @@ import LegalPage from "./legal/LegalPage";
 import TermsAndConditions from "./legal/TermsAndConditions";
 import PrivacyPolicy from "./legal/PrivacyPolicy";
 import RefundPolicy from "./legal/RefundPolicy";
+import WhatsAppPopup from "./components/WhatsAppPopup";
 // ... other pages
 
 // ✅ Owner pages (NEW)
@@ -82,6 +83,7 @@ export default function App() {
 
         {/* ... */}
       </Routes>
+      <WhatsAppPopup />
     </>
   );
 }
