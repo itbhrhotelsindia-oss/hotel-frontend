@@ -19,9 +19,9 @@ export default function WhyBookDirect({ onClose }) {
 
         <h1 className="why-title">Why Book Direct</h1>
         <p className="why-subtitle">
-          Book directly with BHR Hotels India - A Brand of Hotaality RevTech
-          Private Limited and enjoy exclusive benefits designed for comfort,
-          savings, and peace of mind.
+          Book directly with Hotaality Group of Hotels - A Brand of Hotaality
+          RevTech Private Limited and enjoy exclusive benefits designed for
+          comfort, savings, and peace of mind.
         </p>
 
         <div className="why-grid">

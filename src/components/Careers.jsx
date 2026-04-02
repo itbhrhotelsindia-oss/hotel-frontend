@@ -11,20 +11,20 @@ export default function Careers({ onClose }) {
 
         <h1 className="careers-title">Careers</h1>
         <p className="careers-subtitle">
-          Build a meaningful career in hospitality with BHR Hotels India - A
-          Brand of Hotaality RevTech Private Limited
+          Build a meaningful career in hospitality with Hotaality Group of
+          Hotels - A Brand of Hotaality RevTech Private Limited
         </p>
 
         <section className="careers-section">
           <h3>
-            Why Join BHR Hotels India - A Brand of Hotaality RevTech Private
-            Limited?
+            Why Join Hotaality Group of Hotels - A Brand of Hotaality RevTech
+            Private Limited?
           </h3>
           <p>
-            At BHR Hotels India - A Brand of Hotaality RevTech Private Limited,
-            we believe our people are the heart of our success. We foster a
-            collaborative work culture where passion, professionalism, and
-            personal growth come together to create exceptional hospitality
+            At Hotaality Group of Hotels - A Brand of Hotaality RevTech Private
+            Limited, we believe our people are the heart of our success. We
+            foster a collaborative work culture where passion, professionalism,
+            and personal growth come together to create exceptional hospitality
             experiences.
           </p>
         </section>
@@ -53,9 +53,9 @@ export default function Careers({ onClose }) {
         <section className="careers-section">
           <h3>Apply With Us</h3>
           <p>
-            To explore career opportunities with BHR Hotels India - A Brand of
-            Hotaality RevTech Private Limited, please share your updated resume
-            and details with us at:
+            To explore career opportunities with Hotaality Group of Hotels - A
+            Brand of Hotaality RevTech Private Limited, please share your
+            updated resume and details with us at:
           </p>
 
           <p className="careers-email">

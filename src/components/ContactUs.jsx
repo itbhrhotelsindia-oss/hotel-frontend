@@ -20,7 +20,8 @@ export default function ContactUs({ onClose }) {
         <h2 className="contact-title">Contact Us</h2>
         <p className="contact-subtitle">
           <strong>
-            BBHR Hotels India - A Brand of Hotaality RevTech Private Limited
+            Hotaality Group of Hotels - A Brand of Hotaality RevTech Private
+            Limited
           </strong>{" "}
           <br />
           Delivering trusted hospitality since <strong>2010</strong>
