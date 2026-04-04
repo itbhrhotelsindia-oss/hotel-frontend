@@ -90,9 +90,7 @@ export default function BookingSearchBox() {
               disabled={!hotels.length}
             >
               <option value="">
-                {hotels.length
-                  ? "Select Your BHR Hotel"
-                  : "Select location first"}
+                {hotels.length ? "Select Your Hotel" : "Select location first"}
               </option>
 
               {hotels.map((hotel) => (

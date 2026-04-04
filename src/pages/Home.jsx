@@ -82,15 +82,15 @@ const FALLBACK = {
       },
       {
         type: "email",
-        value: "info@bhrhotelsindia.com",
-        displayValue: "info@bhrhotelsindia.com",
+        value: "info@hotaality.com",
+        displayValue: "info@hotaality.com",
       },
     ],
   },
   contactSection: {
     reservationPhone: "+91 7900008944",
     hotelPhone: "+91 7900008944",
-    email: "info@bhrhotelsindia.com",
+    email: "info@hotaality.com",
     corporateAddress: "Corporate Office, Mumbai",
     supportHours: "24x7",
     socialLinks: [

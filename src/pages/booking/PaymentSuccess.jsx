@@ -40,8 +40,8 @@ export default function PaymentSuccess() {
         {/* 📞 Support */}
         <p style={styles.support}>
           Need help? Contact us at{" "}
-          <a href="mailto:info@bhrhotelsindia.com" style={styles.link}>
-            info@bhrhotelsindia.com
+          <a href="mailto:info@hotaality.com" style={styles.link}>
+            info@hotaality.com
           </a>{" "}
           or call <b>+91 7900008944</b>
         </p>

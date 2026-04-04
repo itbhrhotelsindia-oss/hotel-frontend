@@ -61,7 +61,7 @@ export default function Careers({ onClose }) {
           <p className="careers-email">
             📧{" "}
             <a href="mailto:bhrhotelsindia@bhrhotelsindia.com">
-              info@bhrhotelsindia.com
+              info@hotaality.com
             </a>
           </p>
 

@@ -59,8 +59,8 @@ export default function ManageBooking({ onClose }) {
         <div className="manage-help">
           <p>
             Need assistance? Contact our support team at{" "}
-            <a href="mailto:info@bhrhotelsindia.com">info@bhrhotelsindia.com</a>{" "}
-            or call <strong>+91 7900008944</strong>
+            <a href="mailto:info@hotaality.com">info@hotaality.com</a> or call{" "}
+            <strong>+91 7900008944</strong>
           </p>
         </div>
       </div>
