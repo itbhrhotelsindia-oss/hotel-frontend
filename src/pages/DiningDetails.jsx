@@ -32,7 +32,7 @@ export default function DiningDetails() {
       images: ["/assets/dining2-1.jpg", "/assets/dining2-2.jpg"],
       description: `
         Enjoy global cuisines with a modern ambience at Café BHR. 
-        With buffet and A-la-carte choices, Café BHR offers the perfect dining experience.
+        With buffet and A-la-carte choices, Café offers the perfect dining experience.
       `,
       timings: "6:30 AM – 11:00 PM",
       alcohol: "Yes",

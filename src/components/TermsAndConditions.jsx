@@ -15,10 +15,10 @@ export default function TermsAndConditions({ onClose }) {
         <section className="terms-section">
           <h3>1. General</h3>
           <p>
-            These Terms & Conditions govern your use of BHR Hotels India - A
-            Brand of Hotaality RevTech Private Limited’s website, services, and
-            accommodations. By accessing or booking with us, you agree to comply
-            with these terms.
+            These Terms & Conditions govern your use of Hotaality Group of
+            Hotels - A Brand of Hotaality RevTech Private Limited’s website,
+            services, and accommodations. By accessing or booking with us, you
+            agree to comply with these terms.
           </p>
         </section>
 
@@ -61,8 +61,8 @@ export default function TermsAndConditions({ onClose }) {
         <section className="terms-section">
           <h3>6. Privacy & Data Protection</h3>
           <p>
-            Personal information shared with BHR Hotels India - A Brand of
-            Hotaality RevTech Private Limited is handled with strict
+            Personal information shared with Hotaality Group of Hotels - A Brand
+            of Hotaality RevTech Private Limited is handled with strict
             confidentiality and used only to provide hospitality services, in
             accordance with applicable data protection laws.
           </p>
@@ -71,18 +71,18 @@ export default function TermsAndConditions({ onClose }) {
         <section className="terms-section">
           <h3>7. Limitation of Liability</h3>
           <p>
-            BHR Hotels India - A Brand of Hotaality RevTech Private Limited
-            shall not be held liable for loss, injury, or damage caused due to
-            circumstances beyond reasonable control.
+            Hotaality Group of Hotels - A Brand of Hotaality RevTech Private
+            Limited shall not be held liable for loss, injury, or damage caused
+            due to circumstances beyond reasonable control.
           </p>
         </section>
 
         <section className="terms-section">
           <h3>8. Modifications</h3>
           <p>
-            BHR Hotels India - A Brand of Hotaality RevTech Private Limited
-            reserves the right to modify these Terms & Conditions at any time
-            without prior notice. Continued use of our services implies
+            Hotaality Group of Hotels - A Brand of Hotaality RevTech Private
+            Limited reserves the right to modify these Terms & Conditions at any
+            time without prior notice. Continued use of our services implies
             acceptance of updated terms.
           </p>
         </section>

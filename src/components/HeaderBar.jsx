@@ -276,10 +276,10 @@ export default function HeaderBar({
             <span className="topbar-item">
               <FaEnvelope />
               <a
-                href={`mailto:${"info@bhrhotelsindia.com"}`}
+                href={`mailto:${"team@hotaality.com"}`}
                 className="topbar-link"
               >
-                info@bhrhotelsindia.com
+                team@hotaality.com
               </a>
             </span>
             <span className="topbar-item">

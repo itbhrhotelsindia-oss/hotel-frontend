@@ -82,15 +82,15 @@ const FALLBACK = {
       },
       {
         type: "email",
-        value: "info@bhrhotelsindia.com",
-        displayValue: "info@bhrhotelsindia.com",
+        value: "info@hotaality.com",
+        displayValue: "info@hotaality.com",
       },
     ],
   },
   contactSection: {
     reservationPhone: "+91 7900008944",
     hotelPhone: "+91 7900008944",
-    email: "info@bhrhotelsindia.com",
+    email: "info@hotaality.com",
     corporateAddress: "Corporate Office, Mumbai",
     supportHours: "24x7",
     socialLinks: [
@@ -222,13 +222,13 @@ export default function Home() {
     <>
       <Helmet>
         <title>
-          BHR Hotels India | Best Resorts in Uttarakhand | Destination Weddings
-          | Corporate Events | Conferences | Group Bookings
+          Hotaality Group of Hotels | Best Resorts in Uttarakhand | Destination
+          Weddings | Corporate Events | Conferences | Group Bookings
         </title>
 
         <meta
           name="description"
-          content="BHR Hotels India - A Brand of Hotaality RevTech Private Limited offers luxury resorts and hotels across Uttarakhand and India. Destination weddings, corporate events, conferences, and group bookings."
+          content="Hotaality Group of Hotels - A Brand of Hotaality RevTech Private Limited offers luxury resorts and hotels across Uttarakhand and India. Destination weddings, corporate events, conferences, and group bookings."
         />
 
         <link rel="canonical" href="https://www.bhrhotelsindia.com/" />

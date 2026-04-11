@@ -51,7 +51,7 @@ function BookingConfirmation() {
         key: orderData.keyId,
         amount: orderData.amount,
         currency: orderData.currency,
-        name: "BHR Hotels India",
+        name: "Hotaality Group of Hotels",
         description: "Hotel Booking Payment",
         order_id: orderData.orderId,
 

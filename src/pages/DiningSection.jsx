@@ -26,7 +26,7 @@ export default function DiningSection() {
     },
     {
       id: "3",
-      title: "BHR restaurent",
+      title: "Restaurant 3",
       image: "/assets/g1.png",
       logo: "/assets/g4.png",
     },
