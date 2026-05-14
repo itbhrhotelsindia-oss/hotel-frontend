@@ -72,6 +72,7 @@ import { z } from "zod";
 import emailjs from "@emailjs/browser";
 import { toast } from "sonner";
 import { Toaster } from "../../components/ui/sonner";
+import { Helmet } from "react-helmet-async";
 
 const scrollToForm = () => {
   document
@@ -175,7 +176,10 @@ const leadSchema = z.object({
   notes: z.string().max(400).optional(),
 });
 
-function LeadForm({ variant = "card", ctaLabel = "REQUEST CALLBACK" }) {
+function LeadForm({
+  variant = "card",
+  ctaLabel = "Get Your Free Package Quote",
+}) {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [date, setDate] = useState();
@@ -247,7 +251,7 @@ function LeadForm({ variant = "card", ctaLabel = "REQUEST CALLBACK" }) {
           <h3 className="font-serif text-2xl mb-2">Thank you!</h3>
           <p className="text-muted-foreground">
             Our team will call you within 15 minutes with the best available
-            rate for Savana Retreat.
+            rate for Savanna Retreat.
           </p>
         </div>
       </div>
@@ -398,6 +402,19 @@ function LeadForm({ variant = "card", ctaLabel = "REQUEST CALLBACK" }) {
           </>
         )}
       </Button>
+
+      <div className="mt-6 pt-4 border-t border-primary/10 flex flex-col items-center">
+        <p className="text-[10px] uppercase tracking-widest text-muted-foreground mb-1.5">
+          Or call us directly
+        </p>
+        <a
+          href="tel:+917900008944"
+          className="flex items-center gap-2.5 text-secondary text-lg font-serif hover:text-primary transition-colors"
+        >
+          <Phone className="size-5 text-primary" /> +91 7900008944
+        </a>
+      </div>
+
       <p className="flex items-center gap-2 justify-center text-xs text-muted-foreground mt-3">
         <Shield className="size-3.5 text-primary" /> Your info is safe. We'll
         call within 15 minutes.
@@ -413,7 +430,7 @@ function Hero() {
       <div className="absolute inset-0 z-0">
         <img
           src={heroTiger}
-          alt="Savana Retreat Jim Corbett"
+          alt="Savanna Retreat Jim Corbett"
           className="w-full h-full object-cover opacity-50"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-secondary/90 via-secondary/60 to-transparent" />
@@ -427,7 +444,7 @@ function Hero() {
             A Serene Escape in the Heart of the Wild
           </h1>
           <p className="font-serif text-2xl md:text-3xl text-primary mb-5">
-            Savana Retreat by Hotaality
+            Savanna Retreat by Hotaality
           </p>
           <p className="text-secondary-foreground/80 max-w-xl mb-7 leading-relaxed">
             Elegant rooms. Warm hospitality. Tranquil surroundings — right in
@@ -493,12 +510,12 @@ function Property() {
         <div className="grid grid-cols-2 gap-3">
           <img
             src={savannaRoom1}
-            alt="Savana Retreat Room"
+            alt="Savanna Retreat Room"
             className="rounded-md aspect-[4/5] object-cover col-span-1 row-span-2"
           />
           <img
             src={savannaRoom2}
-            alt="Savana Retreat Room"
+            alt="Savanna Retreat Room"
             className="rounded-md aspect-[4/5] object-cover col-span-1 row-span-1"
           />
         </div>
@@ -507,10 +524,10 @@ function Property() {
             Our Jim Corbett Property
           </div>
           <h2 className="font-serif text-4xl md:text-5xl text-secondary mb-5">
-            Savana Retreat
+            Savanna Retreat
           </h2>
           <p className="text-muted-foreground leading-relaxed mb-6">
-            Wake up to birdsong and the sounds of the jungle. Savana Retreat is
+            Wake up to birdsong and the sounds of the jungle. Savanna Retreat is
             designed for guests who want genuine comfort without losing touch
             with nature. Elegant rooms, attentive staff, and everything you need
             — all in one place.
@@ -697,7 +714,7 @@ function EventsStrip() {
             <span className="text-primary italic">Moments.</span>
           </h2>
           <p className="text-white/80 text-lg mb-10 leading-relaxed">
-            From fairytale weddings to high-impact corporate retreats, Savana
+            From fairytale weddings to high-impact corporate retreats, Savanna
             Retreat provides the perfect canvas for your most cherished events
             in the heart of the wild.
           </p>
@@ -880,7 +897,7 @@ function PropertyGallery() {
             Property Gallery
           </h2>
           <p className="text-muted-foreground mt-3">
-            Explore the beauty of Savana Retreat Jim Corbett — where luxury
+            Explore the beauty of Savanna Retreat Jim Corbett — where luxury
             meets the wild.
           </p>
         </div>
@@ -947,8 +964,8 @@ function InlineLead() {
 function FAQ() {
   const items = [
     [
-      "Where exactly is Savana Retreat located?",
-      "Savana Retreat is located in Jim Corbett, Uttarakhand — close to Bijrani and Dhikala safari zones. Exact pin and directions are shared on enquiry.",
+      "Where exactly is Savanna Retreat located?",
+      "Savanna Retreat is located in Jim Corbett, Uttarakhand — close to Bijrani and Dhikala safari zones. Exact pin and directions are shared on enquiry.",
     ],
     [
       "What is the check-in and check-out time?",
@@ -1207,25 +1224,40 @@ function MobileSticky() {
 /* ---------------- APP ---------------- */
 export default function JimcorbettLandingPage() {
   return (
-    <div className="bg-background text-foreground scroll-smooth">
-      <TopBar />
-      <Nav />
-      <Hero />
-      <SocialProof />
-      <Property />
-      <Rooms />
-      <Amenities />
-      <EventsStrip />
-      <WhyDirect />
-      <Reviews />
-      <PropertyGallery />
-      <InlineLead />
-      <FAQ />
-      <FinalCTA />
-      <Footer />
-      {/* <WhatsAppFAB /> */}
-      <MobileSticky />
-      <Toaster />
-    </div>
+    <>
+      <Helmet>
+        <title>
+          Hotel Savanna Retreat Jim Corbett | Resorts in Jim Corbett | Corporate
+          Events | Conferences | Destination Wedding | Events | Jeep Safari
+        </title>
+
+        <meta
+          name="description"
+          content="Luxury Resort in Jim Corbett for Family Stays, Corporate Offsites, Destination Weddings & Jeep Safari. Serving Delhi NCR & Pan India. Get Free Quote!"
+        />
+
+        {/* <link rel="canonical" href="https://www.bhrhotelsindia.com/" /> */}
+      </Helmet>
+      <div className="bg-background text-foreground scroll-smooth">
+        <TopBar />
+        <Nav />
+        <Hero />
+        <SocialProof />
+        <Property />
+        <Rooms />
+        <Amenities />
+        <EventsStrip />
+        <WhyDirect />
+        <Reviews />
+        <PropertyGallery />
+        <InlineLead />
+        <FAQ />
+        <FinalCTA />
+        <Footer />
+        {/* <WhatsAppFAB /> */}
+        <MobileSticky />
+        <Toaster />
+      </div>
+    </>
   );
 }
