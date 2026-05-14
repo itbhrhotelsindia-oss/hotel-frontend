@@ -218,6 +218,34 @@ export default function Home() {
     return () => window.removeEventListener("scroll", scroll);
   }, []);
 
+  useEffect(() => {
+    const revealItems = document.querySelectorAll(
+      ".page-home section, .brand-card, .left-card",
+    );
+
+    if (!("IntersectionObserver" in window)) {
+      revealItems.forEach((item) => item.classList.add("is-visible"));
+      return;
+    }
+
+    revealItems.forEach((item) => item.classList.add("luxury-reveal"));
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.16 },
+    );
+
+    revealItems.forEach((item) => observer.observe(item));
+    return () => observer.disconnect();
+  }, [home]);
+
   return (
     <>
       <Helmet>
@@ -283,10 +311,18 @@ export default function Home() {
           </div>
         </div>
 
-        <button className="slider-arrow left" onClick={prev}>
+        <button
+          className="slider-arrow left"
+          onClick={prev}
+          aria-label="Previous slide"
+        >
           ‹
         </button>
-        <button className="slider-arrow right" onClick={next}>
+        <button
+          className="slider-arrow right"
+          onClick={next}
+          aria-label="Next slide"
+        >
           ›
         </button>
 
@@ -299,6 +335,8 @@ export default function Home() {
               key={i}
               className={`dot ${i + 1 === index ? "active" : ""}`}
               onClick={() => setIndex(i + 1)}
+              role="button"
+              aria-label={`Go to slide ${i + 1}`}
             />
           ))}
         </div>
@@ -461,6 +499,7 @@ export default function Home() {
             <button
               className="nav-arrow left"
               onClick={() => setIdx((idx - 1 + events.length) % events.length)}
+              aria-label="Previous event"
             >
               ‹
             </button>
@@ -483,6 +522,7 @@ export default function Home() {
             <button
               className="nav-arrow right"
               onClick={() => setIdx((idx + 1) % events.length)}
+              aria-label="Next event"
             >
               ›
             </button>
