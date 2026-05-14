@@ -262,7 +262,7 @@ export default function Home() {
         <link rel="canonical" href="https://www.bhrhotelsindia.com/" />
       </Helmet>
 
-      <div className="page-home">
+      <div className="page-home bg-white text-[#2B2B2B] selection:bg-[#F57C00]/20 selection:text-[#062B4F]">
         <HeaderBar
           scrolled={scrolled}
           dropdownOpen={dropdownOpen}
@@ -285,7 +285,7 @@ export default function Home() {
 
   function sliderSection() {
     return (
-      <section className="main-image-slider">
+      <section className="main-image-slider relative isolate min-h-[720px] overflow-hidden bg-[#062B4F] md:min-h-[760px]">
         <div
           className="main-image-slider-wrapper"
           ref={wrapperRef}
@@ -312,14 +312,14 @@ export default function Home() {
         </div>
 
         <button
-          className="slider-arrow left"
+          className="slider-arrow left !border-white/30 !bg-white/10 !text-white !shadow-[0_18px_44px_rgba(6,43,79,0.32)] backdrop-blur-xl transition hover:!border-[#F57C00]/70 hover:!bg-[#F57C00]/25"
           onClick={prev}
           aria-label="Previous slide"
         >
           ‹
         </button>
         <button
-          className="slider-arrow right"
+          className="slider-arrow right !border-white/30 !bg-white/10 !text-white !shadow-[0_18px_44px_rgba(6,43,79,0.32)] backdrop-blur-xl transition hover:!border-[#F57C00]/70 hover:!bg-[#F57C00]/25"
           onClick={next}
           aria-label="Next slide"
         >
@@ -333,7 +333,11 @@ export default function Home() {
           {home.heroImages.map((_, i) => (
             <div
               key={i}
-              className={`dot ${i + 1 === index ? "active" : ""}`}
+              className={`dot h-1 rounded-full transition-all ${
+                i + 1 === index
+                  ? "active !w-10 !bg-[#F57C00]"
+                  : "!w-7 !bg-white/50 hover:!bg-white/80"
+              }`}
               onClick={() => setIndex(i + 1)}
               role="button"
               aria-label={`Go to slide ${i + 1}`}
@@ -347,14 +351,18 @@ export default function Home() {
   function brandBanner() {
     const banner = home.brandBanner;
     return (
-      <section className="brand-banner-premium">
-        <div className="brand-banner-inner">
-          <h2 className="brand-banner-title">{banner.title}</h2>
-          <p className="brand-banner-sub">{banner.subtitle}</p>
+      <section className="brand-banner-premium !bg-[radial-gradient(circle_at_50%_-10%,rgba(245,124,0,0.18),transparent_42%),linear-gradient(135deg,rgba(0,119,200,0.96),rgba(6,43,79,0.98))] px-5 py-16 text-white md:py-20">
+        <div className="brand-banner-inner mx-auto max-w-6xl">
+          <h2 className="brand-banner-title text-balance !text-[clamp(2.25rem,5vw,4.75rem)] !font-medium !tracking-[0.04em]">
+            {banner.title}
+          </h2>
+          <p className="brand-banner-sub mx-auto mt-4 max-w-4xl text-pretty !text-white/80">
+            {banner.subtitle}
+          </p>
 
-          <div className="brand-banner-contacts">
+          <div className="brand-banner-contacts mt-9 flex flex-wrap justify-center gap-4">
             <div
-              className="bb-contact"
+              className="bb-contact !border-[#F57C00]/30 !bg-white/10 !text-white shadow-xl shadow-[#062B4F]/20 backdrop-blur-xl transition hover:!-translate-y-1 hover:!border-[#F57C00]/70 hover:!bg-[#F57C00]/15"
               onClick={() =>
                 (window.location.href = `tel:${home.contactSection.reservationPhone}`)
               }
@@ -362,7 +370,7 @@ export default function Home() {
               {<FaPhoneAlt />} {home.contactSection.reservationPhone}
             </div>
             <div
-              className="bb-contact"
+              className="bb-contact !border-[#F57C00]/30 !bg-white/10 !text-white shadow-xl shadow-[#062B4F]/20 backdrop-blur-xl transition hover:!-translate-y-1 hover:!border-[#F57C00]/70 hover:!bg-[#F57C00]/15"
               onClick={() =>
                 (window.location.href = `mailto:${home.contactSection.email}`)
               }
@@ -381,33 +389,37 @@ export default function Home() {
     const brands = section.blocks || [];
     const description = section.description || "OUR BRANDS";
     return (
-      <section
-        className="events-conf-section"
-        style={{ background: "#e9e6e6ff" }}
-      >
+      <section className="events-conf-section !bg-[#F5F5F5] px-[8%] py-20 md:py-28">
         {/* HEADER ROW */}
-        <div className="events-conf-header">
-          <div className="events-conf-title-wrap">
-            <span className="line" />
-            <h2 className="events-conf-title">{title}</h2>
+        <div className="events-conf-header flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+          <div className="events-conf-title-wrap flex items-center gap-5">
+            <span className="line !bg-[linear-gradient(90deg,#0077C8,#F57C00,transparent)]" />
+            <h2 className="events-conf-title text-[#2B2B2B]">{title}</h2>
           </div>
 
-          <p className="events-conf-sub">{description}</p>
+          <p className="events-conf-sub max-w-2xl text-[#686868]">
+            {description}
+          </p>
         </div>
 
-        <div className="brand-card-wrapper">
+        <div className="brand-card-wrapper grid gap-8 md:grid-cols-2 xl:grid-cols-4">
           {brands.map((brand, index) => (
-            <div className="brand-card" key={index}>
-              <div className="brand-image-wrapper">
+            <div
+              className="brand-card group !rounded-3xl !border !border-[#E4E4E4] !bg-white !p-6 !shadow-[0_24px_70px_rgba(0,95,163,0.12)] transition duration-300 hover:!-translate-y-2 hover:!border-[#0077C8]/35 hover:!shadow-[0_32px_90px_rgba(0,95,163,0.18)]"
+              key={index}
+            >
+              <div className="brand-image-wrapper !rounded-2xl !bg-[linear-gradient(180deg,rgba(0,119,200,0.05),rgba(245,124,0,0.06)),#F5F5F5]">
                 <img
                   src={brand.imageUrl}
                   alt={brand.title}
-                  className="brand-image"
+                  className="brand-image transition duration-500 group-hover:scale-105"
                 />
               </div>
 
-              <h3 className="brand-title">{brand.name}</h3>
-              <p className="brand-description">{brand.text}</p>
+              <h3 className="brand-title mt-5 text-[#062B4F]">
+                {brand.name}
+              </h3>
+              <p className="brand-description text-[#686868]">{brand.text}</p>
             </div>
           ))}
         </div>
@@ -480,51 +492,92 @@ export default function Home() {
     const right = events[(idx + 1) % events.length];
 
     return (
-      <section className="events-conf-section">
-        <div className="events-conf-header">
-          <div className="events-conf-title-wrap">
-            <span className="line" />
-            <h2 className="events-conf-title">{title}</h2>
+      <section className="events-conf-section bg-white px-[8%] py-20 md:py-28">
+        <div className="events-conf-header flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+          <div className="events-conf-title-wrap flex items-center gap-5">
+            <span className="line !bg-[linear-gradient(90deg,#0077C8,#F57C00,transparent)]" />
+            <h2 className="events-conf-title text-[#2B2B2B]">{title}</h2>
           </div>
 
-          <p className="events-conf-sub">{description}</p>
+          <p className="events-conf-sub max-w-2xl text-[#686868]">
+            {description}
+          </p>
         </div>
 
-        <div className="left-card">
-          {/* Left */}
-          <div className="side-card">
-            <img src={`${left.imageUrl}`} className="side-img" />
-            <div className="side-border" />
-            <div className="side-label">{left.title}</div>
-            <button
-              className="nav-arrow left"
-              onClick={() => setIdx((idx - 1 + events.length) % events.length)}
-              aria-label="Previous event"
-            >
-              ‹
-            </button>
-          </div>
+        <div className="left-card event-story-carousel grid min-h-[620px] gap-5 rounded-[30px] border border-[#0077C8]/20 bg-[radial-gradient(circle_at_18%_8%,rgba(245,124,0,0.14),transparent_26%),linear-gradient(135deg,rgba(0,95,163,0.96),rgba(6,43,79,0.98))] p-4 shadow-[0_28px_76px_rgba(0,95,163,0.20)] lg:grid-cols-[1.65fr_0.75fr]">
+          <article className="event-feature-card group relative min-h-[520px] overflow-hidden rounded-3xl bg-[#062B4F] shadow-2xl shadow-[#062B4F]/25 md:min-h-[584px]">
+            <img
+              src={`${center.imageUrl}`}
+              className="event-feature-img h-full min-h-[520px] w-full object-cover transition duration-700 group-hover:scale-105 md:min-h-[584px]"
+              alt={center.title}
+            />
+            <div className="event-feature-shade absolute inset-0 bg-[linear-gradient(90deg,rgba(6,43,79,0.84),rgba(6,43,79,0.44)_45%,rgba(6,43,79,0.12)),linear-gradient(180deg,rgba(6,43,79,0.08),rgba(6,43,79,0.74))]" />
 
-          {/* Center */}
-          <div className="center-card">
-            <img src={`${center.imageUrl}`} className="center-img" />
-            <div className="center-box">
-              <h3>{center.title}</h3>
-              <p>{center.description}</p>
+            <div className="event-feature-content absolute bottom-24 left-6 right-6 z-10 max-w-2xl text-left text-white md:bottom-14 md:left-14 md:right-auto">
+              <span className="event-kicker mb-4 inline-flex items-center gap-3 text-xs font-extrabold uppercase tracking-[0.16em] text-[#FFCF99] before:h-px before:w-11 before:bg-[#F57C00]">
+                Featured Experience
+              </span>
+              <h3 className="text-balance font-serif text-[clamp(2.3rem,5vw,4.75rem)] font-medium leading-none tracking-normal text-white drop-shadow-2xl">
+                {center.title}
+              </h3>
+              <p className="mt-4 max-w-xl text-pretty leading-8 text-white/85">
+                {center.description}
+              </p>
             </div>
-          </div>
 
-          {/* Right */}
-          <div className="side-card">
-            <img src={right.imageUrl} className="side-img" />
-            <div className="side-border" />
-            <div className="side-label">{right.title}</div>
+            <div className="event-carousel-controls absolute bottom-6 left-6 z-20 flex gap-3 md:left-auto md:right-7">
+              <button
+                className="event-control grid size-12 place-items-center rounded-full border border-white/40 bg-white/15 text-3xl text-white shadow-xl backdrop-blur-xl transition hover:-translate-y-0.5 hover:border-[#F57C00] hover:bg-[#F57C00]"
+                onClick={() =>
+                  setIdx((idx - 1 + events.length) % events.length)
+                }
+                aria-label="Previous event"
+              >
+                ‹
+              </button>
+              <button
+                className="event-control grid size-12 place-items-center rounded-full border border-white/40 bg-white/15 text-3xl text-white shadow-xl backdrop-blur-xl transition hover:-translate-y-0.5 hover:border-[#F57C00] hover:bg-[#F57C00]"
+                onClick={() => setIdx((idx + 1) % events.length)}
+                aria-label="Next event"
+              >
+                ›
+              </button>
+            </div>
+          </article>
+
+          <div className="event-preview-stack grid gap-5 md:grid-cols-2 lg:grid-cols-1">
             <button
-              className="nav-arrow right"
-              onClick={() => setIdx((idx + 1) % events.length)}
-              aria-label="Next event"
+              className="event-preview-card group relative min-h-56 overflow-hidden rounded-3xl border border-white/15 bg-white/10 text-left text-white shadow-xl transition hover:-translate-y-1 hover:border-[#F57C00]/60"
+              onClick={() => setIdx((idx - 1 + events.length) % events.length)}
             >
-              ›
+              <img
+                src={`${left.imageUrl}`}
+                className="event-preview-img h-full min-h-56 w-full object-cover brightness-75 transition duration-500 group-hover:scale-105"
+                alt={left.title}
+              />
+              <span className="event-preview-label absolute bottom-20 left-6 z-10 text-xs font-extrabold uppercase tracking-[0.16em] text-[#FFCF99]">
+                Previous
+              </span>
+              <strong className="absolute bottom-7 left-6 right-6 z-10 font-serif text-3xl font-medium leading-tight">
+                {left.title}
+              </strong>
+            </button>
+
+            <button
+              className="event-preview-card group relative min-h-56 overflow-hidden rounded-3xl border border-white/15 bg-white/10 text-left text-white shadow-xl transition hover:-translate-y-1 hover:border-[#F57C00]/60"
+              onClick={() => setIdx((idx + 1) % events.length)}
+            >
+              <img
+                src={right.imageUrl}
+                className="event-preview-img h-full min-h-56 w-full object-cover brightness-75 transition duration-500 group-hover:scale-105"
+                alt={right.title}
+              />
+              <span className="event-preview-label absolute bottom-20 left-6 z-10 text-xs font-extrabold uppercase tracking-[0.16em] text-[#FFCF99]">
+                Next
+              </span>
+              <strong className="absolute bottom-7 left-6 right-6 z-10 font-serif text-3xl font-medium leading-tight">
+                {right.title}
+              </strong>
             </button>
           </div>
         </div>

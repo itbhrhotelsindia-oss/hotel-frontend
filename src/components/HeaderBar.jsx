@@ -136,7 +136,7 @@ export default function HeaderBar({
                         key={cityObj.id}
                         className="city-item"
                         onClick={() => openCityDialog(cityObj)}
-                        style={{ cursor: "pointer", color: "#cca15f" }}
+                        style={{ cursor: "pointer", color: "#ff9a2f" }}
                       >
                         {cityObj.name}
                       </span>

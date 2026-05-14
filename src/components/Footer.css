@@ -1,8 +1,8 @@
 .footer-wrapper {
-  border-top: 1px solid rgba(200, 164, 93, 0.34);
+  border-top: 1px solid rgba(245, 124, 0, 0.34);
   background:
-    radial-gradient(circle at 12% 0%, rgba(200, 164, 93, 0.16), transparent 30%),
-    linear-gradient(135deg, #081220 0%, #111827 58%, #0a101b 100%);
+    radial-gradient(circle at 12% 0%, rgba(245, 124, 0, 0.15), transparent 30%),
+    linear-gradient(135deg, #062b4f 0%, #073c6d 58%, #041c34 100%);
   color: rgba(255, 255, 255, 0.8);
   font-family:
     "Inter",
@@ -45,7 +45,7 @@
     "Playfair Display",
     Georgia,
     serif;
-  color: #fff8e8;
+  color: #ffffff;
   font-weight: 500;
   letter-spacing: 0.04em;
 }
@@ -53,7 +53,7 @@
 /* BRAND */
 
 .brand-line {
-  color: #d9bd79;
+  color: #ffb15c;
   font-weight: 600;
   margin: 10px 0;
   letter-spacing: 0.05em;
@@ -96,15 +96,15 @@
 }
 
 .footer-subscribe input:focus {
-  border-color: rgba(200, 164, 93, 0.76);
+  border-color: rgba(245, 124, 0, 0.76);
   background: rgba(255, 255, 255, 0.11);
-  box-shadow: 0 0 0 4px rgba(200, 164, 93, 0.12);
+  box-shadow: 0 0 0 4px rgba(245, 124, 0, 0.12);
 }
 
 .footer-subscribe button {
   width: 100%;
-  background: linear-gradient(135deg, #dcc27f 0%, #b98d46 52%, #8d662f 100%);
-  color: #111827;
+  background: linear-gradient(135deg, #ff9a2f 0%, #f57c00 52%, #e56700 100%);
+  color: #ffffff;
   border: none;
   padding: 14px;
   border-radius: 999px;
@@ -112,7 +112,7 @@
   font-weight: 800;
   letter-spacing: 0.13em;
   text-transform: uppercase;
-  box-shadow: 0 16px 34px rgba(95, 63, 24, 0.25);
+  box-shadow: 0 16px 34px rgba(245, 124, 0, 0.26);
   transition:
     transform 180ms ease,
     box-shadow 180ms ease;
@@ -120,7 +120,7 @@
 
 .footer-subscribe button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 22px 44px rgba(95, 63, 24, 0.32);
+  box-shadow: 0 22px 44px rgba(245, 124, 0, 0.34);
 }
 
 /* SOCIAL */
@@ -142,11 +142,11 @@
 }
 
 .footer-social a:hover {
-  color: #d9bd79;
+  color: #ffb15c;
 }
 
 .whatsapp a {
-  color: #d9bd79;
+  color: #ffb15c;
 
   font-weight: 600;
 
@@ -190,9 +190,9 @@
 }
 
 .footer-city:hover {
-  color: #fff8e8;
-  border-color: rgba(200, 164, 93, 0.5);
-  background: rgba(200, 164, 93, 0.12);
+  color: #ffffff;
+  border-color: rgba(245, 124, 0, 0.5);
+  background: rgba(245, 124, 0, 0.12);
   transform: translateY(-2px);
 }
 
@@ -221,16 +221,16 @@
 }
 
 .footer-links span:hover {
-  color: #d9bd79;
+  color: #ffb15c;
   transform: translateY(-1px);
 }
 
 /* ADMIN BUTTON */
 
 .admin-btn {
-  background: rgba(200, 164, 93, 0.12);
-  color: #f2dca8;
-  border: 1px solid rgba(200, 164, 93, 0.34);
+  background: rgba(245, 124, 0, 0.12);
+  color: #ffcf99;
+  border: 1px solid rgba(245, 124, 0, 0.34);
   font-weight: 800;
   letter-spacing: 0.12em;
   padding: 8px 18px;
@@ -242,7 +242,7 @@
 }
 
 .admin-btn:hover {
-  background: rgba(200, 164, 93, 0.2);
+  background: rgba(245, 124, 0, 0.2);
   transform: translateY(-1px);
 }
 
