@@ -250,8 +250,7 @@ export default function Home() {
     <>
       <Helmet>
         <title>
-          Hotaality Group of Hotels | Best Resorts in Uttarakhand | Destination
-          Weddings | Corporate Events | Conferences | Group Bookings
+          Hotaality Group of Hotels - Jim Corbett | Rishikesh | Lucknow | Ayodhya | Varanasi | Shravasti | Agra | Vrindavan Celebrate Every Occasion With Us Corporate Events | Conferences | Weddings | Anniversary Celebrations | Birthday Parties | Corporate Events | Award Nights | Product Launch | MICE Events
         </title>
 
         <meta
