@@ -1,4 +1,4 @@
-import React from "react";
+import React, { lazy } from "react";
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import HotelList from "./pages/HotelList";
@@ -33,12 +33,16 @@ import OwnerDashboard from "./owner/pages/OwnerDashboard";
 import HotelDashboard from "./owner/pages/HotelDashboard";
 import { RoomTypes } from "./owner/pages/RoomTypes";
 import { Inventory } from "./owner/pages/Inventory";
+const JimcorbettLandingPage = lazy(
+  () => import("./pages/landing/Jimcorbett.jsx"),
+);
 
 export default function App() {
   return (
     <>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/jimcorbett" element={<JimcorbettLandingPage />} />
         <Route path="/hotels" element={<HotelList />} />
         <Route path="/our-hotels" element={<OurHotelsSection />} />
         <Route path="/offers" element={<OffersSection />} />
