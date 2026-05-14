@@ -1,4 +1,4 @@
-import React, { lazy } from "react";
+import React, { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import HotelList from "./pages/HotelList";
@@ -25,6 +25,7 @@ import TermsAndConditions from "./legal/TermsAndConditions";
 import PrivacyPolicy from "./legal/PrivacyPolicy";
 import RefundPolicy from "./legal/RefundPolicy";
 import WhatsAppPopup from "./components/WhatsAppPopup";
+import ThankYou from "./pages/ThankYou";
 // ... other pages
 
 // ✅ Owner pages (NEW)
@@ -40,53 +41,71 @@ const JimcorbettLandingPage = lazy(
 export default function App() {
   return (
     <>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/jim-corbett-resort" element={<JimcorbettLandingPage />} />
-        <Route path="/hotels" element={<HotelList />} />
-        <Route path="/our-hotels" element={<OurHotelsSection />} />
-        <Route path="/offers" element={<OffersSection />} />
-        <Route path="/weddings" element={<WeddingsSection />} />
-        <Route path="/events" element={<EventsSection />} />
-        <Route path="/dining" element={<DiningSection />} />
-        <Route path="/blog" element={<BlogSection />} />
-        <Route path="/news" element={<NewsSection />} />
-        <Route path="/partners" element={<PartnersSection />} />
-        <Route path="/dining/:restaurantId" element={<DiningDetails />} />
-        <Route path="/blog/:slug" element={<BlogDetail />} />
-        <Route path="/hotel-details/:hotelId" element={<HotelDetails />} />
-        <Route path="/booking" element={<BookingSearch />} />
-        <Route path="/booking/availability" element={<BookingAvailability />} />
-        <Route path="/booking/guest-details" element={<GuestDetails />} />
-        <Route path="/booking/confirmation" element={<BookingConfirmation />} />
-        <Route path="/booking/success" element={<PaymentSuccess />} />
-        <Route path="/booking/failure" element={<PaymentFailure />} />
-        <Route path="/booking/atHotelPage" element={<PaymentAtHotelPage />} />
+      <Suspense fallback={null}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route
+            path="/jim-corbett-resort"
+            element={<JimcorbettLandingPage />}
+          />
+          <Route path="/hotels" element={<HotelList />} />
+          <Route path="/our-hotels" element={<OurHotelsSection />} />
+          <Route path="/offers" element={<OffersSection />} />
+          <Route path="/weddings" element={<WeddingsSection />} />
+          <Route path="/events" element={<EventsSection />} />
+          <Route path="/dining" element={<DiningSection />} />
+          <Route path="/blog" element={<BlogSection />} />
+          <Route path="/news" element={<NewsSection />} />
+          <Route path="/partners" element={<PartnersSection />} />
+          <Route path="/dining/:restaurantId" element={<DiningDetails />} />
+          <Route path="/blog/:slug" element={<BlogDetail />} />
+          <Route path="/hotel-details/:hotelId" element={<HotelDetails />} />
+          <Route path="/booking" element={<BookingSearch />} />
+          <Route
+            path="/booking/availability"
+            element={<BookingAvailability />}
+          />
+          <Route path="/booking/guest-details" element={<GuestDetails />} />
+          <Route
+            path="/booking/confirmation"
+            element={<BookingConfirmation />}
+          />
+          <Route path="/booking/success" element={<PaymentSuccess />} />
+          <Route path="/booking/failure" element={<PaymentFailure />} />
+          <Route path="/booking/atHotelPage" element={<PaymentAtHotelPage />} />
+          <Route path="/thank-you" element={<ThankYou />} />
 
-        {/* ================= OWNER ROUTES ================= */}
-        <Route path="/owner/login" element={<OwnerLogin />} />
-        <Route path="/owner/dashboard" element={<OwnerDashboard />} />
-        <Route path="/owner/hotel/:hotelId" element={<HotelDashboard />} />
-        <Route
-          path="/owner/hotel/:hotelId/room-types"
-          element={<RoomTypes />}
-        />
-        <Route path="/owner/hotel/:hotelId/inventory" element={<Inventory />} />
+          {/* ================= OWNER ROUTES ================= */}
+          <Route path="/owner/login" element={<OwnerLogin />} />
+          <Route path="/owner/dashboard" element={<OwnerDashboard />} />
+          <Route path="/owner/hotel/:hotelId" element={<HotelDashboard />} />
+          <Route
+            path="/owner/hotel/:hotelId/room-types"
+            element={<RoomTypes />}
+          />
+          <Route
+            path="/owner/hotel/:hotelId/inventory"
+            element={<Inventory />}
+          />
 
-        {/* ================= FALLBACK ================= */}
-        <Route path="*" element={<h2>Page Not Found</h2>} />
+          {/* ================= FALLBACK ================= */}
+          <Route path="*" element={<h2>Page Not Found</h2>} />
 
-        {/* ================= LEGAL ROUTES (MANDATORY) ================= */}
-        <Route path="/legal" element={<LegalPage />} />
-        <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
-        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-        <Route
-          path="/refund-and-cancellation-policy"
-          element={<RefundPolicy />}
-        />
+          {/* ================= LEGAL ROUTES (MANDATORY) ================= */}
+          <Route path="/legal" element={<LegalPage />} />
+          <Route
+            path="/terms-and-conditions"
+            element={<TermsAndConditions />}
+          />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route
+            path="/refund-and-cancellation-policy"
+            element={<RefundPolicy />}
+          />
 
-        {/* ... */}
-      </Routes>
+          {/* ... */}
+        </Routes>
+      </Suspense>
       <WhatsAppPopup />
     </>
   );

@@ -68,6 +68,7 @@ import {
   FaYoutube as Youtube,
 } from "react-icons/fa";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 import emailjs from "@emailjs/browser";
 import { toast } from "sonner";
@@ -180,6 +181,7 @@ function LeadForm({
   variant = "card",
   ctaLabel = "Get Your Free Package Quote",
 }) {
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [date, setDate] = useState();
@@ -187,7 +189,6 @@ function LeadForm({
   const [room, setRoom] = useState("");
   const [notes, setNotes] = useState("");
   const [errors, setErrors] = useState({});
-  const [done, setDone] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const submit = async (e) => {
@@ -226,8 +227,8 @@ function LeadForm({
         },
         "HlvTAvB3Snzbe4bqO", // PUBLIC_KEY
       );
-      setDone(true);
       toast.success("Inquiry sent successfully!");
+      navigate("/thank-you");
     } catch (err) {
       console.error("EmailJS Error:", err);
       toast.error("Failed to send inquiry. Please try again or call us.");
@@ -240,23 +241,6 @@ function LeadForm({
     variant === "card"
       ? "bg-card text-card-foreground rounded-lg shadow-2xl border border-primary/20 p-6 md:p-7"
       : "bg-card/95 text-card-foreground rounded-lg shadow-2xl border border-primary/30 p-6 md:p-8";
-
-  if (done) {
-    return (
-      <div className={wrapClass}>
-        <div className="flex flex-col items-center text-center py-8">
-          <div className="size-16 rounded-full bg-primary/15 text-primary flex items-center justify-center mb-4">
-            <Check className="size-8" />
-          </div>
-          <h3 className="font-serif text-2xl mb-2">Thank you!</h3>
-          <p className="text-muted-foreground">
-            Our team will call you within 15 minutes with the best available
-            rate for Savanna Retreat.
-          </p>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <form onSubmit={submit} className={wrapClass}>
