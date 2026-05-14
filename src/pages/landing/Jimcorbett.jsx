@@ -366,8 +366,10 @@ function LeadForm({
               <SelectValue placeholder="Select room type" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="delux">Delux</SelectItem>
-              <SelectItem value="super-delux">Super Delux</SelectItem>
+              <SelectItem value="without-balcony">Premium Room</SelectItem>
+              <SelectItem value="with-balcony">
+                Premium Room With Balcony
+              </SelectItem>
               <SelectItem value="not-sure">Not Sure — Suggest Best</SelectItem>
             </SelectContent>
           </Select>
@@ -409,7 +411,7 @@ function LeadForm({
         </p>
         <a
           href="tel:+917900008944"
-          className="flex items-center gap-2.5 text-secondary text-lg font-serif hover:text-primary transition-colors"
+          className="flex items-center gap-2.5 text-secondary text-lg font-sans hover:text-primary transition-colors"
         >
           <Phone className="size-5 text-primary" /> +91 7900008944
         </a>
