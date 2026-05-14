@@ -253,6 +253,27 @@ function LeadForm({
         </p>
       </div>
 
+      {/* URGENCY ELEMENTS */}
+      <div className="mb-5 p-3.5 bg-primary/5 border border-primary/20 rounded-lg">
+        <div className="flex items-center gap-2 text-primary font-bold text-[11px] uppercase tracking-widest mb-1.5">
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+          </span>
+          Limited Rooms Available
+        </div>
+        <div className="space-y-1">
+          <p className="text-xs text-muted-foreground flex items-center gap-1.5">
+            <Clock className="size-3 text-primary" /> Peak season filling fast —
+            check availability now
+          </p>
+          <p className="text-xs text-secondary font-semibold flex items-center gap-1.5">
+            <Gift className="size-3 text-primary" /> Get 15% off on direct
+            bookings — valid this week only
+          </p>
+        </div>
+      </div>
+
       <div className="space-y-3.5">
         <div>
           <Label className="text-xs uppercase tracking-wider text-muted-foreground">
@@ -437,6 +458,12 @@ function Hero() {
             the lap of Jim Corbett National Park.
           </p>
           <ul className="space-y-2.5 text-sm">
+            <li className="flex items-start gap-3 text-primary font-bold animate-pulse">
+              <span className="size-5 rounded-full bg-primary text-primary-foreground flex items-center justify-center mt-0.5 shrink-0">
+                <Clock className="size-3" />
+              </span>
+              <span>Limited rooms available — Peak season filling fast!</span>
+            </li>
             {[
               "Best Rate — Book direct for prices lower than OTAs",
               "Free Cancellation — Up to 7 days before arrival",
