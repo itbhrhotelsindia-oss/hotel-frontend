@@ -25,6 +25,8 @@ import TermsAndConditions from "./legal/TermsAndConditions";
 import PrivacyPolicy from "./legal/PrivacyPolicy";
 import RefundPolicy from "./legal/RefundPolicy";
 import WhatsAppPopup from "./components/WhatsAppPopup";
+import { AgentLogin } from "./pages/agent/AgentLogin.jsx";
+import { AgentDashboard } from "./pages/agent/AgentDashboard";
 // ... other pages
 
 // ✅ Owner pages (NEW)
@@ -69,6 +71,9 @@ export default function App() {
         />
         <Route path="/owner/hotel/:hotelId/inventory" element={<Inventory />} />
 
+        {/* ================= AGENT ROUTE (NEW) ================= */}
+        <Route path="/agent/login" element={<AgentLogin />} />
+        <Route path="/agent/dashboard" element={<AgentDashboard />} />
         {/* ================= FALLBACK ================= */}
         <Route path="*" element={<h2>Page Not Found</h2>} />
 

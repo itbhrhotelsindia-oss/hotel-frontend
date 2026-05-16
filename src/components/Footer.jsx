@@ -180,12 +180,23 @@ export default function Footer({ contactInfo = {} }) {
             Refund Policy
           </span>
 
-          <button
-            className="admin-btn"
-            onClick={() => navigate("/owner/login")}
-          >
-            ADMIN
-          </button>
+          <div className="admin-agent-buttons">
+            {/* ADMIN BUTTON — existing */}
+            <button
+              className="admin-btn"
+              onClick={() => navigate("/owner/login")}
+            >
+              ADMIN
+            </button>
+
+            {/* NEW AGENT BUTTON */}
+            <button
+              className="agent-btn"
+              onClick={() => navigate("/agent/login")}
+            >
+              AGENT
+            </button>
+          </div>
         </div>
       </div>
 

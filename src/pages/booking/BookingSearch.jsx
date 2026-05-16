@@ -20,6 +20,10 @@ function BookingSearch() {
 
   const location = useLocation();
 
+  const params = new URLSearchParams(location.search);
+
+  const hotelIdFromAgent = params.get("hotelId");
+
   const { citySelect, hotelSelect, hotelIdSelect } = location.state || {};
 
   const [place, setPlace] = useState(citySelect || "");
@@ -127,6 +131,27 @@ function BookingSearch() {
     }
   }, [hotelIdSelect]);
 
+  useEffect(() => {
+    if (hotelIdFromAgent && cities.length > 0) {
+      // Find city that contains this hotel
+      for (const city of cities) {
+        const hotelObj = city.hotels.find(
+          (h) => h.hotelId === hotelIdFromAgent,
+        );
+
+        if (hotelObj) {
+          setPlace(city.name);
+
+          setSelectedHotelId(hotelObj.hotelId);
+
+          setHotel(hotelObj.name);
+
+          break;
+        }
+      }
+    }
+  }, [hotelIdFromAgent, cities]);
+
   // ================= API CALL =================
   const handleCheckAvailability = async () => {
     setError("");
@@ -221,6 +246,7 @@ function BookingSearch() {
               <label>Place</label>
               <select
                 value={place}
+                disabled={localStorage.getItem("loginType") === "AGENT"}
                 onChange={(e) => {
                   setPlace(e.target.value);
                   resetAvailability();
@@ -240,6 +266,7 @@ function BookingSearch() {
               <label>Hotel</label>
               <select
                 value={selectedHotelId}
+                disabled={localStorage.getItem("loginType") === "AGENT"}
                 onChange={(e) => {
                   const hotelId = e.target.value;
                   const hotelObj = hotels.find((h) => h.hotelId === hotelId);

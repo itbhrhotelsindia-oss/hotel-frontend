@@ -1,0 +1,39 @@
+.agent-login-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f5f5f5;
+}
+
+.agent-login-box {
+  background: white;
+  padding: 30px;
+  border-radius: 8px;
+  width: 320px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.agent-login-box h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.agent-login-box input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 12px;
+}
+
+.agent-login-box button {
+  width: 100%;
+  padding: 10px;
+  background: #b8903c;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.agent-login-box button:hover {
+  background: #a07d30;
+}

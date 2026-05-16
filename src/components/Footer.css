@@ -217,3 +217,24 @@
     justify-content: center;
   }
 }
+
+/* ADMIN + AGENT BUTTONS */
+
+.admin-agent-buttons {
+  display: inline-flex;
+  gap: 10px;
+}
+
+.agent-btn {
+  background-color: #b8903c;
+  color: white;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.agent-btn:hover {
+  background-color: #a07d30;
+}
