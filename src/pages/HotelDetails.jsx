@@ -37,6 +37,7 @@ export default function HotelDetails() {
   const [scrolled, setScrolled] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [showBooking, setShowBooking] = useState(true);
+  const [roomTypes, setRoomTypes] = useState([]);
 
   const location = useLocation();
   const contactInfo = location.state?.contactInfo || {};
@@ -49,14 +50,22 @@ export default function HotelDetails() {
   useEffect(() => {
     async function fetchHotelDetails() {
       try {
-        // const res = await fetch(`${BASE_URL}/api/hotel-details/${hotelId}`);
         const res = await fetch(`${BASE_URL}/api/hotel-details/${hotelId}`);
 
         if (!res.ok) {
-          throw new Error("Failed to fetch hotel details");
+          console.warn(`Hotel details not found for ${hotelId}`);
+          setLoading(false);
+          return;
         }
 
-        const data = await res.json();
+        const text = await res.text();
+        if (!text) {
+          console.warn("Empty response from hotel details API");
+          setLoading(false);
+          return;
+        }
+
+        const data = JSON.parse(text);
         setHotel(data);
       } catch (err) {
         console.error("Hotel Details API Error:", err);
@@ -66,6 +75,25 @@ export default function HotelDetails() {
     }
 
     fetchHotelDetails();
+  }, [hotelId]);
+
+  useEffect(() => {
+    async function fetchRoomTypes() {
+      try {
+        const res = await fetch(
+          `${BASE_URL}/api/room-types?hotelId=${hotelId}`,
+        );
+        if (!res.ok) {
+          throw new Error("Failed to fetch room types");
+        }
+        const data = await res.json();
+        setRoomTypes(data);
+      } catch (err) {
+        console.error("Room Types API Error:", err);
+      }
+    }
+
+    fetchRoomTypes();
   }, [hotelId]);
 
   // autoplay
@@ -82,25 +110,38 @@ export default function HotelDetails() {
     return () => window.removeEventListener("scroll", scroll);
   }, []);
 
-  if (loading || !hotel) {
+  if (loading) {
     return (
       <div style={{ padding: "200px", textAlign: "center" }}>
         Loading hotel details...
       </div>
     );
   }
+
+  if (!hotel) {
+    return (
+      <div style={{ padding: "100px 40px", textAlign: "center" }}>
+        <h2>Hotel Details Not Found</h2>
+        <p>The hotel details for ID: {hotelId} are not available.</p>
+        <p>
+          Please check if hotel details have been configured in the admin panel.
+        </p>
+      </div>
+    );
+  }
+
   const {
-    basicInfo,
-    hotelSlider,
-    services,
-    aboutSection,
-    roomsSection,
-    amenitiesSection,
-    gallerySection,
-    policiesSection,
-    locationSection,
-    faqSection,
-  } = hotel;
+    basicInfo = {},
+    hotelSlider = { images: [], title: "", subtitle: "" },
+    services = [],
+    aboutSection = {},
+    roomsSection = { title: "Rooms & Suites", rooms: [] },
+    amenitiesSection = { title: "Amenities", amenities: [] },
+    gallerySection = {},
+    policiesSection = {},
+    locationSection = {},
+    faqSection = {},
+  } = hotel || {};
 
   return (
     <div className="page-home">
@@ -112,13 +153,11 @@ export default function HotelDetails() {
         setShowBooking={setShowBooking}
       />
 
-      {/* {sliderSection()} */}
-
-      {imageSection()}
+      {hotel && imageSection()}
 
       {roomSection()}
 
-      {servicesSection()}
+      {hotel && servicesSection()}
 
       <Footer contactInfo={contactInfo} />
     </div>
@@ -148,39 +187,44 @@ export default function HotelDetails() {
   }
 
   function roomSection() {
+    const rooms = roomTypes.length ? roomTypes : roomsSection?.rooms || [];
+    const title = roomTypes.length
+      ? roomsSection?.title || "Rooms & Suites"
+      : roomsSection?.title || "Rooms & Suites";
+
     return (
       <section className="rooms-section">
         <div className="rooms-header">
           <h4 className="rooms-subtitle">ROOMS & SUITES</h4>
-          <h2 className="rooms-title">{roomsSection.title}</h2>
+          <h2 className="rooms-title">{title}</h2>
         </div>
 
         <div className="rooms-grid">
-          {roomsSection.rooms.map((room) => (
-            <div key={room.roomTypeId} className="room-card">
+          {rooms.map((room) => (
+            <div key={room.roomTypeId || room.id} className="room-card">
               <div className="room-image-wrapper">
                 <img
-                  src={room.images[0]}
+                  src={room.images?.[0] || room.image || "/assets/img1.jpg"}
                   alt={room.name}
                   className="room-image"
                 />
-                {/* <div className="room-price">{room.price}</div> */}
               </div>
 
               <div className="room-content">
-                <div className="room-id">{room.id}</div>
+                <div className="room-id">{room.roomTypeId || room.id}</div>
                 <h3 className="room-name">{room.name}</h3>
-
-                {/* <div className="room-stars">{"⭐".repeat(room.stars)}</div> */}
 
                 <p className="room-desc">{room.description}</p>
 
-                {/* <div className="room-features">
-                  <span>🛏 {room.bed}</span>
-                  <span>📐 {room.size}</span>
-                </div> */}
-
-                {/* <button className="room-btn">VIEW DETAILS</button> */}
+                {room.amenities?.length ? (
+                  <div className="room-amenities">
+                    {room.amenities.map((amenity) => (
+                      <span key={amenity} className="room-amenity">
+                        {amenity}
+                      </span>
+                    ))}
+                  </div>
+                ) : null}
               </div>
             </div>
           ))}
@@ -241,32 +285,32 @@ export default function HotelDetails() {
                 {item === "Swimming Pool"
                   ? "Refresh and unwind in our beautifully maintained swimming pool, perfect for relaxation and leisure."
                   : item === "Multi-Cuisine Restaurant"
-                  ? "Enjoy delightful culinary experiences with a range of thoughtfully prepared local and international dishes."
-                  : item === "Coworking Space"
-                  ? "Stay productive in a comfortable and well-equipped coworking environment designed for focus and flexibility."
-                  : item === "Homy & Cozy Place"
-                  ? "Experience the warmth of a homelike ambiance that makes every stay relaxing and comfortable."
-                  : item === "Conference Hall"
-                  ? "Host seamless meetings and events in our spacious conference hall with modern facilities."
-                  : item === "Brewery"
-                  ? "Savor freshly brewed beverages crafted to complement your moments of relaxation."
-                  : item === "Coffee"
-                  ? "Enjoy freshly brewed coffee served just the way you like, perfect for energizing your day."
-                  : item === "Kid-Zone"
-                  ? "A safe and fun-filled play area designed to keep children entertained and happy"
-                  : item === "Souvenir shop"
-                  ? "Take home memorable keepsakes and locally inspired souvenirs from your stay"
-                  : item === "Rain Dance"
-                  ? "Enjoy lively rain dance experiences with music and refreshing moments of pure fun"
-                  : item === "Serenity Spa & Yoga"
-                  ? "Rejuvenate your body and mind with calming spa therapies and guided yoga sessions."
-                  : item === "Activities"
-                  ? "Engage in a variety of curated indoor and outdoor activities for all age groups."
-                  : item === "Parking"
-                  ? "Convenient and secure parking facilities for a hassle-free stay."
-                  : item === "Free Wifi"
-                  ? "Stay connected with complimentary high-speed WiFi throughout the property."
-                  : null}
+                    ? "Enjoy delightful culinary experiences with a range of thoughtfully prepared local and international dishes."
+                    : item === "Coworking Space"
+                      ? "Stay productive in a comfortable and well-equipped coworking environment designed for focus and flexibility."
+                      : item === "Homy & Cozy Place"
+                        ? "Experience the warmth of a homelike ambiance that makes every stay relaxing and comfortable."
+                        : item === "Conference Hall"
+                          ? "Host seamless meetings and events in our spacious conference hall with modern facilities."
+                          : item === "Brewery"
+                            ? "Savor freshly brewed beverages crafted to complement your moments of relaxation."
+                            : item === "Coffee"
+                              ? "Enjoy freshly brewed coffee served just the way you like, perfect for energizing your day."
+                              : item === "Kid-Zone"
+                                ? "A safe and fun-filled play area designed to keep children entertained and happy"
+                                : item === "Souvenir shop"
+                                  ? "Take home memorable keepsakes and locally inspired souvenirs from your stay"
+                                  : item === "Rain Dance"
+                                    ? "Enjoy lively rain dance experiences with music and refreshing moments of pure fun"
+                                    : item === "Serenity Spa & Yoga"
+                                      ? "Rejuvenate your body and mind with calming spa therapies and guided yoga sessions."
+                                      : item === "Activities"
+                                        ? "Engage in a variety of curated indoor and outdoor activities for all age groups."
+                                        : item === "Parking"
+                                          ? "Convenient and secure parking facilities for a hassle-free stay."
+                                          : item === "Free Wifi"
+                                            ? "Stay connected with complimentary high-speed WiFi throughout the property."
+                                            : null}
               </p>
             </div>
           ))}
