@@ -23,7 +23,7 @@ export default function OwnerLogin() {
 
       const { token, role, ownerId } = response.data;
 
-      if (!token || role !== "OWNER") {
+      if (!token || (role !== "OWNER" && role !== "SUPER_ADMIN")) {
         throw new Error("Unauthorized access");
       }
 
@@ -32,8 +32,12 @@ export default function OwnerLogin() {
       localStorage.setItem("role", role);
       localStorage.setItem("ownerId", ownerId);
 
-      // ✅ Redirect
-      navigate("/owner/dashboard");
+      // ✅ Redirect based on role
+      if (role === "SUPER_ADMIN") {
+        navigate("/superadmin/dashboard");
+      } else {
+        navigate("/owner/dashboard");
+      }
     } catch (err) {
       setError(err.response?.data?.message || "Invalid username or password");
     } finally {
@@ -44,7 +48,7 @@ export default function OwnerLogin() {
   return (
     <div style={styles.container}>
       <form onSubmit={handleSubmit} style={styles.form}>
-        <h2 style={styles.title}>Owner Login</h2>
+        <h2 style={styles.title}>Hotel Management Login</h2>
 
         {error && <p style={styles.error}>{error}</p>}
 
