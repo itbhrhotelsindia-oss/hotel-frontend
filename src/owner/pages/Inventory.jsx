@@ -4,6 +4,8 @@ import { useParams } from "react-router-dom";
 const Inventory = () => {
   const { hotelId } = useParams();
   const BASE_URL = import.meta.env.VITE_BASE_URL;
+  const token = localStorage.getItem("token");
+  const authHeader = { Authorization: `Bearer ${token}` };
 
   const [roomTypes, setRoomTypes] = useState([]);
   const [roomTypeId, setRoomTypeId] = useState("");
@@ -16,7 +18,9 @@ const Inventory = () => {
      LOAD ROOM TYPES
      =============================== */
   useEffect(() => {
-    fetch(`${BASE_URL}/api/admin/room-types?hotelId=${hotelId}`)
+    fetch(`${BASE_URL}/api/admin/room-types?hotelId=${hotelId}`, {
+      headers: authHeader,
+    })
       .then((res) => res.json())
       .then(setRoomTypes);
   }, [hotelId]);
@@ -30,6 +34,7 @@ const Inventory = () => {
 
     const res = await fetch(
       `${BASE_URL}/api/admin/inventory?hotelId=${hotelId}&roomTypeId=${roomTypeId}&startDate=${startDate}&endDate=${endDate}`,
+      { headers: authHeader },
     );
 
     const data = await res.json();
@@ -89,7 +94,7 @@ const Inventory = () => {
 
     await fetch(`${BASE_URL}/api/admin/inventory/date`, {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", ...authHeader },
       body: JSON.stringify({
         hotelId,
         roomTypeId,
@@ -113,7 +118,7 @@ const Inventory = () => {
 
     await fetch(`${BASE_URL}/api/admin/inventory/publish`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", ...authHeader },
       body: JSON.stringify({
         hotelId,
         roomTypeId,
@@ -135,7 +140,7 @@ const Inventory = () => {
 
     await fetch(`${BASE_URL}/api/admin/inventory/status`, {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", ...authHeader },
       body: JSON.stringify({
         hotelId,
         roomTypeId,
