@@ -10,6 +10,7 @@ export default function SuperAdminDashboard() {
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [toggling, setToggling] = useState(null); // hotelId being toggled
+  const [togglingCity, setTogglingCity] = useState(null); // cityId being toggled
   const [cleaning, setCleaning] = useState(false);
   const [cleanupResult, setCleanupResult] = useState(null);
 
@@ -59,6 +60,26 @@ export default function SuperAdminDashboard() {
       alert("Failed to update hotel status: " + e.message);
     } finally {
       setToggling(null);
+    }
+  };
+
+  // ── Toggle city active/inactive ────────────────────────────────────────
+  const toggleCityStatus = async (cityId, currentActive) => {
+    setTogglingCity(cityId);
+    try {
+      const newActive = !currentActive;
+      const res = await fetch(
+        `${BASE_URL}/api/cities/${cityId}/status?active=${newActive}`,
+        { method: "PATCH", headers: { Authorization: `Bearer ${token}` } }
+      );
+      if (!res.ok) throw new Error("Failed to update status");
+      setCities(prev => prev.map(c =>
+        c.id !== cityId ? c : { ...c, active: newActive }
+      ));
+    } catch (e) {
+      alert("Failed to update city status: " + e.message);
+    } finally {
+      setTogglingCity(null);
     }
   };
 
@@ -155,13 +176,29 @@ export default function SuperAdminDashboard() {
           <p>No hotels found. <button style={styles.linkBtn} onClick={() => navigate("/superadmin/hotels/new")}>Add your first hotel →</button></p>
         </div>
       ) : (
-        cities.map(city => (
-          <div key={city.id} style={styles.cityBlock}>
+        cities.map(city => {
+          const cityActive = city.active !== false;
+          return (
+          <div key={city.id} style={{ ...styles.cityBlock, opacity: cityActive ? 1 : 0.6 }}>
             <div style={styles.cityHeader}>
-              <div>
-                <h2 style={styles.cityName}>{city.name}</h2>
-                <span style={styles.cityState}>{city.state}</span>
+              <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                <div>
+                  <h2 style={styles.cityName}>{city.name}</h2>
+                  <span style={styles.cityState}>{city.state}</span>
+                </div>
+                <span style={{ ...styles.statusBadge, ...(cityActive ? styles.badgeActive : styles.badgeInactive) }}>
+                  {cityActive ? "Active" : "Inactive"}
+                </span>
               </div>
+              <button
+                style={cityActive ? styles.deactivateBtnInline : styles.activateBtnInline}
+                disabled={togglingCity === city.id}
+                onClick={() => toggleCityStatus(city.id, cityActive)}
+              >
+                {togglingCity === city.id
+                  ? "Updating..."
+                  : cityActive ? "⏸ Deactivate City" : "▶ Activate City"}
+              </button>
             </div>
 
             {(!city.hotels || city.hotels.length === 0) ? (
@@ -219,7 +256,8 @@ export default function SuperAdminDashboard() {
               </div>
             )}
           </div>
-        ))
+          );
+        })
       )}
     </div>
   );
@@ -261,6 +299,8 @@ const styles = {
   actionBtnSecondary: { padding: "7px 14px", background: "#f3f4f6", color: "#374151", border: "none", borderRadius: "5px", cursor: "pointer", fontSize: "13px" },
   deactivateBtn: { width: "100%", padding: "7px", background: "#fff", color: "#dc2626", border: "1px solid #fca5a5", borderRadius: "5px", cursor: "pointer", fontSize: "13px", marginTop: "4px" },
   activateBtn: { width: "100%", padding: "7px", background: "#f0fdf4", color: "#16a34a", border: "1px solid #86efac", borderRadius: "5px", cursor: "pointer", fontSize: "13px", marginTop: "4px" },
+  deactivateBtnInline: { padding: "8px 16px", background: "#fff", color: "#dc2626", border: "1px solid #fca5a5", borderRadius: "6px", cursor: "pointer", fontSize: "13px", fontWeight: "600", whiteSpace: "nowrap" },
+  activateBtnInline: { padding: "8px 16px", background: "#f0fdf4", color: "#16a34a", border: "1px solid #86efac", borderRadius: "6px", cursor: "pointer", fontSize: "13px", fontWeight: "600", whiteSpace: "nowrap" },
   emptyState: { textAlign: "center", padding: "60px 20px", color: "#6b7280" },
   linkBtn: { background: "none", border: "none", color: "#c9a44d", cursor: "pointer", fontSize: "14px", fontWeight: "600" },
 };
