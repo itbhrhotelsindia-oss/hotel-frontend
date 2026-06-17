@@ -45,7 +45,7 @@ export default function PaymentAtHotelPage() {
           <a href="mailto:info@hotaality.com" style={styles.link}>
             info@hotaality.com
           </a>{" "}
-          or call <b>+91 7900008944</b>
+          or call <b>+91 9211283334</b>
         </p>
 
         <div style={styles.divider} />

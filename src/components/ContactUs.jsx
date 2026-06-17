@@ -32,7 +32,7 @@ export default function ContactUs({ onClose }) {
           <h3>Reservations & Support</h3>
 
           <div className="contact-item">
-            <FaPhoneAlt /> <span>+91 7900008944</span>
+            <FaPhoneAlt /> <span>+91 9211283334</span>
           </div>
 
           <div className="contact-item">
@@ -47,7 +47,7 @@ export default function ContactUs({ onClose }) {
 
         <div className="contact-item">
           <FaEnvelope />
-          <a href="mailto:team@hotaality.com">team@hotaality.com</a>
+          <a href="mailto:info@hotaality.com">info@hotaality.com</a>
         </div>
 
         <div className="contact-section">

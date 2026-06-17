@@ -60,7 +60,7 @@ export default function ManageBooking({ onClose }) {
           <p>
             Need assistance? Contact our support team at{" "}
             <a href="mailto:info@hotaality.com">info@hotaality.com</a> or call{" "}
-            <strong>+91 7900008944</strong>
+            <strong>+91 9211283334</strong>
           </p>
         </div>
       </div>

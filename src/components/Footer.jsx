@@ -108,13 +108,13 @@ export default function Footer({ contactInfo = {} }) {
         <div className="contact-col">
           <h4>Contact</h4>
 
-          <p>📞 Reservations: +91 7900008944</p>
+          <p>📞 Reservations: +91 9211283334</p>
 
           <p>📞 Travel Partner / Wedding: +91 9211283334</p>
 
           <p>📞 Corporate Tie-Ups: +91 9211283334</p>
 
-          <p>📞 Hotel Registration: +91 9211283335</p>
+          <p>📞 Hotel Registration: +91 9211283334</p>
 
           <p>📧 info@hotaality.com</p>
 

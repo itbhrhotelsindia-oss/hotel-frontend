@@ -77,8 +77,8 @@ const FALLBACK = {
     contacts: [
       {
         type: "phone",
-        value: "+91 7900008944",
-        displayValue: "+91 7900008944",
+        value: "+91 9211283334",
+        displayValue: "+91 9211283334",
       },
       {
         type: "email",
@@ -88,8 +88,8 @@ const FALLBACK = {
     ],
   },
   contactSection: {
-    reservationPhone: "+91 7900008944",
-    hotelPhone: "+91 7900008944",
+    reservationPhone: "+91 9211283334",
+    hotelPhone: "+91 9211283334",
     email: "info@hotaality.com",
     corporateAddress: "Corporate Office, Mumbai",
     supportHours: "24x7",

@@ -87,10 +87,10 @@ function TopBar() {
     <div className="hidden md:flex items-center justify-between px-8 py-2 bg-secondary text-secondary-foreground text-xs">
       <div className="flex items-center gap-6">
         <a
-          href="tel:+917900008944"
+          href="tel:+919211283334"
           className="flex items-center gap-2 hover:text-primary transition"
         >
-          <Phone className="size-3.5" /> +91 7900008944
+          <Phone className="size-3.5" /> +91 9211283334
         </a>
         <a
           href="mailto:info@hotaality.com"
@@ -415,10 +415,10 @@ function LeadForm({
           Or call us directly
         </p>
         <a
-          href="tel:+917900008944"
+          href="tel:+919211283334"
           className="flex items-center gap-2.5 text-secondary text-lg font-sans hover:text-primary transition-colors"
         >
-          <Phone className="size-5 text-primary" /> +91 7900008944
+          <Phone className="size-5 text-primary" /> +91 9211283334
         </a>
       </div>
 
@@ -1042,8 +1042,8 @@ function FinalCTA() {
           variant="outline"
           className="border-primary text-primary hover:bg-primary hover:text-primary-foreground font-semibold tracking-wider"
         >
-          <a href="tel:+917900008944">
-            <Phone className="size-4" /> CALL NOW: +91 7900008944
+          <a href="tel:+919211283334">
+            <Phone className="size-4" /> CALL NOW: +91 9211283334
           </a>
         </Button>
       </div>
@@ -1082,8 +1082,8 @@ function Footer() {
           <ul className="space-y-2 text-sm">
             <li className="flex items-center gap-2">
               <Phone className="size-3.5 text-primary" /> Reservations:{" "}
-              <a href="tel:+917900008944" className="hover:text-primary">
-                +91 7900008944
+              <a href="tel:+919211283334" className="hover:text-primary">
+                +91 9211283334
               </a>
             </li>
             <li className="flex items-center gap-2">
@@ -1100,8 +1100,8 @@ function Footer() {
             </li>
             <li className="flex items-center gap-2">
               <Phone className="size-3.5 text-primary" /> Hotel Registration:{" "}
-              <a href="tel:+919211283335" className="hover:text-primary">
-                +91 9211283335
+              <a href="tel:+919211283334" className="hover:text-primary">
+                +91 9211283334
               </a>
             </li>
             <li className="flex items-center gap-2">
@@ -1201,7 +1201,7 @@ function Footer() {
 function WhatsAppFAB() {
   return (
     <a
-      href="https://wa.me/917900008944"
+      href="https://wa.me/919211283334"
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chat with us on WhatsApp"
@@ -1220,7 +1220,7 @@ function MobileSticky() {
         variant="outline"
         className="flex-1 border-primary text-primary hover:bg-primary hover:text-primary-foreground"
       >
-        <a href="tel:+917900008944">
+        <a href="tel:+919211283334">
           <Phone className="size-4" /> Call Now
         </a>
       </Button>

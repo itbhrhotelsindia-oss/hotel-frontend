@@ -30,7 +30,7 @@ export default function ThankYou() {
               <Phone className="size-5 text-primary shrink-0" />
               <div>
                 <p className="text-[10px] uppercase tracking-widest text-muted-foreground">Immediate Assistance</p>
-                <p className="text-sm font-medium">+91 7900008944</p>
+                <p className="text-sm font-medium">+91 9211283334</p>
               </div>
             </div>
             <div className="flex items-center gap-3 p-4 bg-muted/50 rounded-xl text-left border border-border">
