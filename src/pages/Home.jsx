@@ -317,18 +317,18 @@ export default function Home() {
             <div
               className="bb-contact"
               onClick={() =>
-                (window.location.href = `tel:${home.contactSection.reservationPhone}`)
+                (window.location.href = `tel:+919211283334`)
               }
             >
-              {<FaPhoneAlt />} {home.contactSection.reservationPhone}
+              {<FaPhoneAlt />} +91 9211283334
             </div>
             <div
               className="bb-contact"
               onClick={() =>
-                (window.location.href = `mailto:${home.contactSection.email}`)
+                (window.location.href = `mailto:info@hotaality.com`)
               }
             >
-              {<FaEnvelope />} {home.contactSection.email}
+              {<FaEnvelope />} info@hotaality.com
             </div>
           </div>
         </div>

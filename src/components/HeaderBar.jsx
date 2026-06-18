@@ -269,26 +269,14 @@ export default function HeaderBar({
           <div className="topbar-left">
             <span className="topbar-item">
               <FaEnvelope />
-              <a href={`mailto:${contactInfo.email}`} className="topbar-link">
-                {contactInfo.email}
-              </a>
-            </span>
-            <span className="topbar-item">
-              <FaEnvelope />
-              <a
-                href={`mailto:${"info@hotaality.com"}`}
-                className="topbar-link"
-              >
+              <a href="mailto:info@hotaality.com" className="topbar-link">
                 info@hotaality.com
               </a>
             </span>
             <span className="topbar-item">
               <FaPhoneAlt /> For Reservation’s:
-              <a
-                href={`tel:${contactInfo.reservationPhone}`}
-                className="topbar-link"
-              >
-                {contactInfo.reservationPhone}
+              <a href="tel:+919211283334" className="topbar-link">
+                +91 9211283334
               </a>
             </span>
           </div>
