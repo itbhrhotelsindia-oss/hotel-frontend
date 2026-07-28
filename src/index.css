@@ -225,16 +225,21 @@ button {
 }
 
 .topbar-link {
-  color: inherit; /* same color as text */
+  color: var(--brand-gold);
+  font-weight: 700;
+  font-size: 15.5px;
+  letter-spacing: 0.5px;
   text-decoration: none;
-  margin-left: 5px;
+  margin-left: 6px;
 }
 
 .topbar-link:hover {
   text-decoration: underline;
 }
 .topbar-item {
-  opacity: 0.95;
+  opacity: 1;
+  font-size: 15px;
+  font-weight: 600;
   transition: 0.18s ease;
   display: inline-flex;
   align-items: center;
